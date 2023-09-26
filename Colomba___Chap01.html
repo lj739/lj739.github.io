@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://westonruter.github.io/html5-audio-read-along/ -->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Colomba___Chap01 - 听语族</title>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<style>
+html {
+    background: #333;
+    font-family: Verdana, sans-serif;
+}
+body {
+    padding: 0;
+    margin: 5px;
+}
+article {
+    background: white;
+    border-radius: 1em;
+    margin-top: 130px;
+    padding: 1em;
+}
+a {
+    color: #0E2560;
+}
+h1 {
+    font-size: 14pt;
+    white-space: nowrap;
+    word-wrap: keep-all;
+}
+h2 {
+    margin-bottom: 1em;
+}
+#passage-text.speaking {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+q {
+    quotes: "“" "”" "‘" "’";
+}
+.section-heading {
+    display: none;
+}
+.passage p {
+    line-height: 1.4em;
+}
+.verse-start {
+    line-height: 0;
+}
+.initialized span[data-begin]:focus,
+.initialized span[data-begin]:hover {
+    background-color: #FFFFCA;
+    box-shadow: 0px 0px 4px #FFFFCA;
+}
+.initialized span[data-begin].speaking {
+    background-color: yellow;
+    box-shadow: 0px 0px 4px yellow;
+}
+.initialized span[data-begin] {
+    cursor: pointer;
+}
+.initialized span.nomatch {
+    background-color: lightgray;
+    color: purple;
+}
+.error {
+    color: red;
+}
+
+article > footer {
+    border-top: solid 1px gray;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+
+footer {
+    margin-bottom: 0.5em;
+    line-height: 1.4em;
+    font-size: small;
+}
+footer img {
+    vertical-align: text-bottom;
+}
+
+header {
+    width: 100%;
+    color: #cce;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    text-align: center;
+}
+header h1 {
+    color: #cce;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+header .passage-audio {
+    width: 100%;
+    text-align: center;
+}
+header .passage-audio #passage-audio {
+    width: 100%;
+}
+header .passage-control {
+    display: block;
+    width: 520px;
+    height: 40px;
+    margin: 5px auto 0 auto;
+}
+header .playback-rate {
+    height: 40px;
+    padding: 0px 0px 0px 6px;
+    display: block;
+    float: left;
+}
+header .autofocus-current-word {
+    height: 40px;
+    padding: 0px 0px 0px 6px;
+    display: block;
+    float: left;
+}
+header .playback-rate label,
+header .playback-rate output,
+header .autofocus-current-word label,
+header .autofocus-current-word input {
+    vertical-align: middle;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+body.sticky-header {
+    padding-top: 10px;
+}
+body.sticky-header header {
+    background-color: rgba(127, 127, 127, 0.9);
+}
+body.sticky-header header h1 {
+    display: none;
+}
+body.sticky-header header .passage-audio {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+body.sticky-header header .passage-control {
+    width: 240px;
+}
+body.sticky-header header .playback-rate {
+}
+body.sticky-header header .playback-rate label,
+body.sticky-header header .playback-rate output {
+    display: none;
+}
+body.sticky-header header .autofocus-current-word {
+}
+body.sticky-header header .autofocus-current-word label {
+    display: none;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 130px;
+    border-radius: 10px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 130px;
+    height: 15px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
+    border-radius: 10px; /*将轨道设为圆角的*/
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-ms-track {
+    width: 130px;
+    cursor: pointer;
+    background: transparent;;
+    border-color: transparent; /*去除原有边框*/
+    color: transparent; /*去除轨道内的竖线*/
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+    margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+    background: #ffffff;
+    border-radius: 50%; /*外观设置为圆形*/
+    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+    box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+}
+input[type=range]::-moz-range-progress {
+    background: linear-gradient(to right, #059CFA, white 100%, white);
+    height: 13px;
+    border-radius: 10px;
+}
+input[type=range]::-ms-track {
+    height: 25px;
+    border-radius: 10px;
+    box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112;
+    border-color: transparent; /*去除原有边框*/
+    color: transparent; /*去除轨道内的竖线*/
+}
+input[type=range]::-ms-thumb {
+    border: solid 0.125em rgba(205, 224, 230, 0.5);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: #ffffff;
+    margin-top: -5px;
+    box-shadow: 0 .125em .125em #3b4547;
+}
+input[type=range]::-ms-fill-lower {
+    /*进度条已填充的部分*/
+    height: 22px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #059CFA, white 100%, white);
+}
+input[type=range]::-ms-fill-upper {
+    /*进度条未填充的部分*/
+    height: 22px;
+    border-radius: 10px;
+    background: #ffffff;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: linear-gradient(to right, #059CFA, white 100%, white);
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ffffff;
+}
+
+.mui-switch {
+    width: 58px;
+    height: 15px;
+    position: relative;
+    border: 1px solid #dfdfdf;
+    background-color: #fdfdfd;
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-clip: content-box;
+    display: inline-block;
+    -webkit-appearance: none;
+    user-select: none;
+    outline: none;
+}
+.mui-switch:before {
+    content: '';
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: -6px;
+    left: 0;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.mui-switch:checked {
+    border-color: #64bd63;
+    box-shadow: #64bd63 0 0 0 16px inset;
+    background-color: #64bd63;
+}
+.mui-switch:checked:before {
+    left: 31px;
+}
+.mui-switch.mui-switch-animbg {
+    transition: background-color ease 0.4s;
+}
+.mui-switch.mui-switch-animbg:before {
+    transition: left 0.3s;
+}
+.mui-switch.mui-switch-animbg:checked {
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    background-color: #64bd63;
+    transition: border-color 0.4s, background-color ease 0.4s;
+}
+.mui-switch.mui-switch-animbg:checked:before {
+    transition: left 0.3s;
+}
+.mui-switch.mui-switch-anim {
+    transition: border cubic-bezier(0, 0, 0, 1) 0.4s, box-shadow cubic-bezier(0, 0, 0, 1) 0.4s;
+}
+.mui-switch.mui-switch-anim:before {
+    transition: left 0.3s;
+}
+.mui-switch.mui-switch-anim:checked {
+    box-shadow: #64bd63 0 0 0 16px inset;
+    background-color: #64bd63;
+    transition: border ease 0.4s, box-shadow ease 0.4s, background-color ease 1.2s;
+}
+.mui-switch.mui-switch-anim:checked:before {
+    transition: left 0.3s;
+}
+</style>
+    </head>
+    <body class="initialized">
+
+        <header>
+            <h1>听语族: Colomba___Chap01</h1>
+
+            <div class="passage-audio">
+                <audio id="passage-audio" controls="">
+                    <!-- @todo WebM? -->
+                    <source src="Colomba___Chap01.mp3" type="audio/mp3">
+                    <em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em>
+                </audio>
+            </div>
+
+            <div class="passage-control">
+                <div class="playback-rate" title="Note that increaseing the reading rate will decrease accuracy of word highlights">
+                    <label for="playback-rate">语速:</label>
+                    <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" onchange="document.querySelector('#playback-rate-curr').innerText = 'x' + String(Math.round(this.valueAsNumber * 10) / 10);">
+                    <label id="playback-rate-curr">x1</label>
+                </div>
+                <div class="autofocus-current-word">
+                    <label for="autofocus-current-word">跟随:</label>
+                    <input id="autofocus-current-word" class="mui-switch mui-switch-animbg" type="checkbox" checked="checked">
+                </div>
+            </div>
+
+        </header>
+
+        <article>
+
+            <div class="notice">
+                <p class="loading" hidden="">
+                    <em> Loading </em>audio
+                </p>
+
+                <p class="passage-audio-unavailable" hidden="">
+                    <em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>
+                </p>
+
+                <p class="playback-rate-unavailable" hidden="">
+                    <em>(It seems your browser does not support <code>HTMLMediaElement.playbackRate</code>, so you will not be able to change the speech rate.)</em>
+                </p>
+
+                <noscript>
+                    &lt;p class="error"&gt;&lt;em&gt;&lt;strong&gt;Notice:&lt;/strong&gt; You must have JavaScript enabled/available to try this HTML5 Audio read along.&lt;/em&gt;&lt;/p&gt;
+                </noscript>
+            </div>
+
+            <div id="passage-text" class="passage">
+<p> <span class="nomatch">Prosper</span>  <span class="nomatch">Mérimée</span>  </p>
+<p> <span class="nomatch">COLOMBA</span>  </p>
+<p>( 1840 )</p>
+<p> <span class="nomatch">I</span>  </p>
+<p> <span class="nomatch">Pè</span>  <span class="nomatch">far</span>  <span class="nomatch">la</span>  <span class="nomatch">to</span>  <span class="nomatch">vandetta</span>  ,</p>
+<p> <span class="nomatch">Sta</span>  <span class="nomatch">sigur</span> ’ ,  <span class="nomatch">vasta</span>  <span class="nomatch">anche</span>  <span class="nomatch">ella</span>  .</p>
+<p> <span class="nomatch">VOCERO</span>  <span class="nomatch">DU</span>  <span class="nomatch">NIOLO</span>  .</p>
+<p> <span data-index="18" data-begin="12.099" data-dur="0.25" tabindex="0">Dans</span>   <span data-index="19" data-begin="12.349" data-dur="0.11" tabindex="0">les</span>   <span data-index="20" data-begin="12.46" data-dur="0.41" tabindex="0">premiers</span>   <span data-index="21" data-begin="12.869" data-dur="0.24" tabindex="0">jours</span>   <span data-index="22" data-begin="13.109" data-dur="0.099" tabindex="0">du</span>   <span data-index="23" data-begin="13.21" data-dur="0.229" tabindex="0">mois</span>   <span data-index="24" data-begin="13.439" data-dur="0.62" tabindex="0">d’octobre</span>  181 .,  <span data-index="25" data-begin="16.129" data-dur="0.19" tabindex="0">le</span>   <span data-index="26" data-begin="16.319" data-dur="0.62" tabindex="0">colonel</span>   <span data-index="27" data-begin="17.01" data-dur="0.71" tabindex="0">Sir</span>   <span data-index="28" data-begin="17.719" data-dur="0.329" tabindex="0">Thomas</span>   <span data-index="29" data-begin="18.19" data-dur="0.31" tabindex="0">Nevil</span>   ,  <span data-index="30" data-begin="19.159" data-dur="0.63" tabindex="0">Irlandais</span>   ,  <span data-index="31" data-begin="20.409" data-dur="0.489" tabindex="0">officier</span>   <span data-index="32" data-begin="20.899" data-dur="0.71" tabindex="0">distingué</span>   <span data-index="33" data-begin="21.609" data-dur="0.11" tabindex="0">de</span>   <span data-index="34" data-begin="21.719" data-dur="0.329" tabindex="0">l’armée</span>   <span data-index="35" data-begin="22.119" data-dur="0.82" tabindex="0">anglaise</span>   ,  <span data-index="36" data-begin="23.559" data-dur="0.489" tabindex="0">descendit</span>   <span data-index="37" data-begin="24.109" data-dur="0.229" tabindex="0">avec</span>   <span data-index="38" data-begin="24.34" data-dur="0.16" tabindex="0">sa</span>   <span data-index="39" data-begin="24.5" data-dur="0.47" tabindex="0">fille</span>   <span data-index="40" data-begin="24.969" data-dur="0.07" tabindex="0">à</span>   <span data-index="41" data-begin="25.039" data-dur="0.39" tabindex="0">l’hôtel</span>   <span data-index="42" data-begin="25.43" data-dur="0.669" tabindex="0">Beauvau</span>   ,  <span data-index="43" data-begin="26.199" data-dur="0.08" tabindex="0">à</span>   <span data-index="44" data-begin="26.279" data-dur="0.71" tabindex="0">Marseille</span>   ,  <span data-index="45" data-begin="27.329" data-dur="0.13" tabindex="0">au</span>   <span data-index="46" data-begin="27.459" data-dur="0.45" tabindex="0">retour</span>   <span data-index="47" data-begin="27.909" data-dur="0.14" tabindex="0">d’un</span>   <span data-index="48" data-begin="28.049" data-dur="0.359" tabindex="0">voyage</span>   <span data-index="49" data-begin="28.409" data-dur="0.149" tabindex="0">en</span>   <span data-index="50" data-begin="28.559" data-dur="0.55" tabindex="0">Italie</span>   .  <span data-index="51" data-begin="30.909" data-dur="0.78" tabindex="0">L’admiration</span>   <span data-index="52" data-begin="31.689" data-dur="0.53" tabindex="0">continue</span>   <span data-index="53" data-begin="32.219" data-dur="0.099" tabindex="0">des</span>   <span data-index="54" data-begin="32.319" data-dur="0.62" tabindex="0">voyageurs</span>   <span data-index="55" data-begin="32.939" data-dur="0.77" tabindex="0">enthousiastes</span>   <span data-index="56" data-begin="34.029" data-dur="0.089" tabindex="0">a</span>   <span data-index="57" data-begin="34.119" data-dur="0.41" tabindex="0">produit</span>   <span data-index="58" data-begin="34.529" data-dur="0.22" tabindex="0">une</span>   <span data-index="59" data-begin="34.75" data-dur="0.74" tabindex="0">réaction</span>   ,  <span data-index="60" data-begin="35.529" data-dur="0.24" tabindex="0">et</span>   ,  <span data-index="61" data-begin="36.11" data-dur="0.22" tabindex="0">pour</span>   <span data-index="62" data-begin="36.329" data-dur="0.19" tabindex="0">se</span>   <span data-index="63" data-begin="36.52" data-dur="0.83" tabindex="0">singulariser</span>   ,  <span data-index="64" data-begin="37.75" data-dur="0.39" tabindex="0">beaucoup</span>   <span data-index="65" data-begin="38.139" data-dur="0.19" tabindex="0">de</span>   <span data-index="66" data-begin="38.329" data-dur="0.58" tabindex="0">touristes</span>   <span data-index="67" data-begin="38.909" data-dur="0.659" tabindex="0">aujourd’hui</span>   <span data-index="68" data-begin="39.739" data-dur="0.48" tabindex="0">prennent</span>   <span data-index="69" data-begin="40.25" data-dur="0.179" tabindex="0">pour</span>   <span data-index="70" data-begin="40.43" data-dur="0.71" tabindex="0">devise</span>   <span data-index="71" data-begin="41.34" data-dur="0.28" tabindex="0">le</span>   <span data-index="72" data-begin="41.619" data-dur="0.34" tabindex="0">nil</span>   <span data-index="73" data-begin="41.989" data-dur="0.719" tabindex="0">admirari</span>   <span data-index="74" data-begin="42.709" data-dur="0.659" tabindex="0">d’Horace</span>   .  <span data-index="75" data-begin="45.069" data-dur="0.28" tabindex="0">C’est</span>   <span data-index="76" data-begin="45.349" data-dur="0.04" tabindex="0">à</span>   <span data-index="77" data-begin="45.389" data-dur="0.329" tabindex="0">cette</span>   <span data-index="78" data-begin="45.719" data-dur="0.24" tabindex="0">classe</span>   <span data-index="79" data-begin="45.959" data-dur="0.14" tabindex="0">de</span>   <span data-index="80" data-begin="46.099" data-dur="0.53" tabindex="0">voyageurs</span>   <span data-index="81" data-begin="46.629" data-dur="0.75" tabindex="0">mécontents</span>   <span data-index="82" data-begin="47.599" data-dur="0.62" tabindex="0">qu’appartenait</span>   <span data-index="83" data-begin="48.219" data-dur="0.34" tabindex="0">miss</span>   <span data-index="84" data-begin="48.559" data-dur="0.62" tabindex="0">Lydia</span>   ,  <span data-index="85" data-begin="49.719" data-dur="0.38" tabindex="0">fille</span>   <span data-index="86" data-begin="50.129" data-dur="0.41" tabindex="0">unique</span>   <span data-index="87" data-begin="50.539" data-dur="0.16" tabindex="0">du</span>   <span data-index="88" data-begin="50.7" data-dur="0.68" tabindex="0">colonel</span>   .  <span data-index="89" data-begin="52.729" data-dur="0.229" tabindex="0">La</span>   <span data-index="90" data-begin="52.959" data-dur="1.29" tabindex="0">Transfiguration</span>   <span data-index="91" data-begin="54.75" data-dur="0.24" tabindex="0">lui</span>   <span data-index="92" data-begin="54.989" data-dur="0.19" tabindex="0">avait</span>   <span data-index="93" data-begin="55.18" data-dur="0.31" tabindex="0">paru</span>   <span data-index="94" data-begin="55.489" data-dur="0.719" tabindex="0">médiocre</span>   ,  <span data-index="95" data-begin="57.11" data-dur="0.299" tabindex="0">le</span>   <span data-index="96" data-begin="57.409" data-dur="0.51" tabindex="0">Vésuve</span>   <span data-index="97" data-begin="57.919" data-dur="0.16" tabindex="0">en</span>   <span data-index="98" data-begin="58.079" data-dur="0.7" tabindex="0">éruption</span>   <span data-index="99" data-begin="59.529" data-dur="0.08" tabindex="0">à</span>   <span data-index="100" data-begin="59.609" data-dur="0.28" tabindex="0">peine</span>   <span data-index="101" data-begin="59.889" data-dur="0.62" tabindex="0">supérieur</span>   <span data-index="102" data-begin="60.509" data-dur="0.12" tabindex="0">aux</span>   <span data-index="103" data-begin="60.629" data-dur="0.51" tabindex="0">cheminées</span>   <span data-index="104" data-begin="61.139" data-dur="0.12" tabindex="0">des</span>   <span data-index="105" data-begin="61.259" data-dur="0.44" tabindex="0">usines</span>   <span data-index="106" data-begin="61.699" data-dur="0.199" tabindex="0">de</span>   <span data-index="107" data-begin="61.899" data-dur="0.64" tabindex="0">Birmingham</span>   .  <span data-index="108" data-begin="63.869" data-dur="0.16" tabindex="0">En</span>   <span data-index="109" data-begin="64.029" data-dur="0.52" tabindex="0">somme</span>   ,  <span data-index="110" data-begin="65.059" data-dur="0.31" tabindex="0">sa</span>   <span data-index="111" data-begin="65.369" data-dur="0.31" tabindex="0">grande</span>   <span data-index="112" data-begin="65.68" data-dur="0.64" tabindex="0">objection</span>   <span data-index="113" data-begin="66.319" data-dur="0.359" tabindex="0">contre</span>   <span data-index="114" data-begin="66.68" data-dur="0.52" tabindex="0">l’Italie</span>   <span data-index="115" data-begin="67.769" data-dur="0.229" tabindex="0">était</span>   <span data-index="116" data-begin="68.0" data-dur="0.14" tabindex="0">que</span>   <span data-index="117" data-begin="68.139" data-dur="0.16" tabindex="0">ce</span>   <span data-index="118" data-begin="68.299" data-dur="0.26" tabindex="0">pays</span>   <span data-index="119" data-begin="68.559" data-dur="0.459" tabindex="0">manquait</span>   <span data-index="120" data-begin="69.019" data-dur="0.14" tabindex="0">de</span>   <span data-index="121" data-begin="69.159" data-dur="0.34" tabindex="0">couleur</span>   <span data-index="122" data-begin="69.5" data-dur="0.59" tabindex="0">locale</span>   ,  <span data-index="123" data-begin="70.519" data-dur="0.199" tabindex="0">de</span>   <span data-index="124" data-begin="70.72" data-dur="0.96" tabindex="0">caractère</span>   .  <span data-index="125" data-begin="72.889" data-dur="0.64" tabindex="0">Explique</span>   <span data-index="126" data-begin="73.529" data-dur="0.16" tabindex="0">qui</span>   <span data-index="127" data-begin="73.689" data-dur="0.68" tabindex="0">pourra</span>   <span data-index="128" data-begin="74.43" data-dur="0.14" tabindex="0">le</span>   <span data-index="129" data-begin="74.569" data-dur="0.37" tabindex="0">sens</span>   <span data-index="130" data-begin="74.939" data-dur="0.16" tabindex="0">de</span>   <span data-index="131" data-begin="75.099" data-dur="0.199" tabindex="0">ces</span>   <span data-index="132" data-begin="75.299" data-dur="0.25" tabindex="0">mots</span>   ,  <span data-index="133" data-begin="75.909" data-dur="0.14" tabindex="0">que</span>   <span data-index="134" data-begin="76.049" data-dur="0.14" tabindex="0">je</span>   <span data-index="135" data-begin="76.189" data-dur="0.459" tabindex="0">comprenais</span>   <span data-index="136" data-begin="76.65" data-dur="0.31" tabindex="0">fort</span>   <span data-index="137" data-begin="76.959" data-dur="0.22" tabindex="0">bien</span>   <span data-index="138" data-begin="77.229" data-dur="0.199" tabindex="0">il</span>   <span data-index="139" data-begin="77.43" data-dur="0.11" tabindex="0">y</span>   <span data-index="140" data-begin="77.54" data-dur="0.06" tabindex="0">a</span>   <span data-index="141" data-begin="77.599" data-dur="0.5" tabindex="0">quelques</span>   <span data-index="142" data-begin="78.099" data-dur="0.359" tabindex="0">années</span>   ,  <span data-index="143" data-begin="78.839" data-dur="0.14" tabindex="0">et</span>   <span data-index="144" data-begin="78.979" data-dur="0.149" tabindex="0">que</span>   <span data-index="145" data-begin="79.129" data-dur="0.14" tabindex="0">je</span>   <span data-index="146" data-begin="79.269" data-dur="0.37" tabindex="0">n’entends</span>   <span data-index="147" data-begin="79.639" data-dur="0.26" tabindex="0">plus</span>   <span data-index="148" data-begin="79.9" data-dur="0.55" tabindex="0">aujourd’hui</span>   .  <span data-index="149" data-begin="81.889" data-dur="0.71" tabindex="0">D’abord</span>   ,  <span data-index="150" data-begin="82.86" data-dur="0.34" tabindex="0">miss</span>   <span data-index="151" data-begin="83.199" data-dur="0.47" tabindex="0">Lydia</span>   <span data-index="152" data-begin="83.699" data-dur="0.24" tabindex="0">s’était</span>   <span data-index="153" data-begin="83.939" data-dur="0.45" tabindex="0">flattée</span>   <span data-index="154" data-begin="84.389" data-dur="0.16" tabindex="0">de</span>   <span data-index="155" data-begin="84.549" data-dur="0.41" tabindex="0">trouver</span>   <span data-index="156" data-begin="84.959" data-dur="0.37" tabindex="0">au</span>  - <span class="nomatch">delà</span>  <span data-index="158" data-begin="85.33" data-dur="0.25" tabindex="0">des</span>   <span data-index="159" data-begin="85.58" data-dur="0.229" tabindex="0">Alpes</span>   <span data-index="160" data-begin="86.279" data-dur="0.17" tabindex="0">des</span>   <span data-index="161" data-begin="86.449" data-dur="0.359" tabindex="0">choses</span>   <span data-index="162" data-begin="86.86" data-dur="0.14" tabindex="0">que</span>   <span data-index="163" data-begin="87.0" data-dur="0.459" tabindex="0">personne</span>   <span data-index="164" data-begin="87.459" data-dur="0.31" tabindex="0">n’aurait</span>   <span data-index="165" data-begin="87.769" data-dur="0.269" tabindex="0">vues</span>   <span data-index="166" data-begin="88.04" data-dur="0.35" tabindex="0">avant</span>   <span data-index="167" data-begin="88.419" data-dur="0.35" tabindex="0">elle</span>   ,  <span data-index="168" data-begin="89.15" data-dur="0.099" tabindex="0">et</span>   <span data-index="169" data-begin="89.25" data-dur="0.24" tabindex="0">dont</span>   <span data-index="170" data-begin="89.489" data-dur="0.13" tabindex="0">elle</span>   <span data-index="171" data-begin="89.619" data-dur="0.35" tabindex="0">pourrait</span>   <span data-index="172" data-begin="89.97" data-dur="0.429" tabindex="0">parler</span>  « <span data-index="173" data-begin="90.759" data-dur="0.37" tabindex="0">avec</span>   <span data-index="174" data-begin="91.129" data-dur="0.19" tabindex="0">les</span>   <span data-index="175" data-begin="91.319" data-dur="0.44" tabindex="0">honnêtes</span>   <span data-index="176" data-begin="91.759" data-dur="0.38" tabindex="0">gens</span>  » ,  <span data-index="177" data-begin="92.319" data-dur="0.229" tabindex="0">comme</span>   <span data-index="178" data-begin="92.549" data-dur="0.099" tabindex="0">dit</span>   <span data-index="179" data-begin="92.65" data-dur="0.16" tabindex="0">M</span>   .  <span data-index="180" data-begin="92.93" data-dur="0.53" tabindex="0">Jourdain</span>   .  <span data-index="181" data-begin="94.909" data-dur="0.19" tabindex="0">Mais</span>   <span data-index="182" data-begin="95.099" data-dur="0.45" tabindex="0">bientôt</span>   ,  <span data-index="183" data-begin="96.059" data-dur="0.48" tabindex="0">partout</span>   <span data-index="184" data-begin="96.54" data-dur="0.52" tabindex="0">devancée</span>   <span data-index="185" data-begin="97.059" data-dur="0.16" tabindex="0">par</span>   <span data-index="186" data-begin="97.22" data-dur="0.149" tabindex="0">ses</span>   <span data-index="187" data-begin="97.369" data-dur="0.909" tabindex="0">compatriotes</span>   <span data-index="188" data-begin="98.629" data-dur="0.21" tabindex="0">et</span>   <span data-index="189" data-begin="98.839" data-dur="0.69" tabindex="0">désespérant</span>   <span data-index="190" data-begin="99.529" data-dur="0.11" tabindex="0">de</span>   <span data-index="191" data-begin="99.639" data-dur="0.58" tabindex="0">rencontrer</span>   <span data-index="192" data-begin="100.22" data-dur="0.31" tabindex="0">rien</span>   <span data-index="193" data-begin="100.529" data-dur="0.599" tabindex="0">d’inconnu</span>   ,  <span data-index="194" data-begin="101.79" data-dur="0.11" tabindex="0">elle</span>   <span data-index="195" data-begin="101.9" data-dur="0.199" tabindex="0">se</span>   <span data-index="196" data-begin="102.099" data-dur="0.35" tabindex="0">jeta</span>   <span data-index="197" data-begin="102.449" data-dur="0.12" tabindex="0">dans</span>   <span data-index="198" data-begin="102.569" data-dur="0.089" tabindex="0">le</span>   <span data-index="199" data-begin="102.659" data-dur="0.31" tabindex="0">parti</span>   <span data-index="200" data-begin="102.97" data-dur="0.099" tabindex="0">de</span>   <span data-index="201" data-begin="103.069" data-dur="0.659" tabindex="0">l’opposition</span>   .  <span data-index="202" data-begin="104.93" data-dur="0.17" tabindex="0">Il</span>   <span data-index="203" data-begin="105.099" data-dur="0.06" tabindex="0">est</span>   <span data-index="204" data-begin="105.159" data-dur="0.179" tabindex="0">bien</span>   <span data-index="205" data-begin="105.339" data-dur="0.659" tabindex="0">désagréable</span>   ,  <span data-index="206" data-begin="106.0" data-dur="0.14" tabindex="0">en</span>   <span data-index="207" data-begin="106.139" data-dur="0.38" tabindex="0">effet</span>   ,  <span data-index="208" data-begin="106.899" data-dur="0.12" tabindex="0">de</span>   <span data-index="209" data-begin="107.019" data-dur="0.08" tabindex="0">ne</span>   <span data-index="210" data-begin="107.099" data-dur="0.38" tabindex="0">pouvoir</span>   <span data-index="211" data-begin="107.479" data-dur="0.28" tabindex="0">parler</span>   <span data-index="212" data-begin="107.759" data-dur="0.14" tabindex="0">des</span>   <span data-index="213" data-begin="107.899" data-dur="0.47" tabindex="0">merveilles</span>   <span data-index="214" data-begin="108.369" data-dur="0.13" tabindex="0">de</span>   <span data-index="215" data-begin="108.5" data-dur="0.55" tabindex="0">l’Italie</span>   <span data-index="216" data-begin="109.22" data-dur="0.24" tabindex="0">sans</span>   <span data-index="217" data-begin="109.459" data-dur="0.14" tabindex="0">que</span>   <span data-index="218" data-begin="109.599" data-dur="0.44" tabindex="0">quelqu’un</span>   <span data-index="219" data-begin="110.04" data-dur="0.13" tabindex="0">ne</span>   <span data-index="220" data-begin="110.169" data-dur="0.17" tabindex="0">vous</span>   <span data-index="221" data-begin="110.339" data-dur="0.599" tabindex="0">dise</span>  : « <span data-index="222" data-begin="111.259" data-dur="0.19" tabindex="0">Vous</span>   <span data-index="223" data-begin="111.449" data-dur="0.41" tabindex="0">connaissez</span>   <span data-index="224" data-begin="111.86" data-dur="0.199" tabindex="0">sans</span>   <span data-index="225" data-begin="112.059" data-dur="0.32" tabindex="0">doute</span>   <span data-index="226" data-begin="112.379" data-dur="0.19" tabindex="0">ce</span>   <span data-index="227" data-begin="112.569" data-dur="0.669" tabindex="0">Raphaël</span>   <span data-index="228" data-begin="113.489" data-dur="0.149" tabindex="0">du</span>   <span data-index="229" data-begin="113.639" data-dur="0.81" tabindex="0">palais</span>  *** ,  <span data-index="230" data-begin="114.509" data-dur="0.28" tabindex="0">à</span>  *** ?  <span data-index="231" data-begin="116.259" data-dur="0.12" tabindex="0">C’est</span>   <span data-index="232" data-begin="116.379" data-dur="0.179" tabindex="0">ce</span>   <span data-index="233" data-begin="116.559" data-dur="0.17" tabindex="0">qu’il</span>   <span data-index="234" data-begin="116.729" data-dur="0.049" tabindex="0">y</span>   <span data-index="235" data-begin="116.779" data-dur="0.049" tabindex="0">a</span>   <span data-index="236" data-begin="116.829" data-dur="0.13" tabindex="0">de</span>   <span data-index="237" data-begin="116.959" data-dur="0.199" tabindex="0">plus</span>   <span data-index="238" data-begin="117.159" data-dur="0.39" tabindex="0">beau</span>   <span data-index="239" data-begin="117.549" data-dur="0.03" tabindex="0">en</span>   <span data-index="240" data-begin="117.579" data-dur="0.48" tabindex="0">Italie</span>   . » – <span data-index="241" data-begin="119.259" data-dur="0.08" tabindex="0">Et</span>   <span data-index="242" data-begin="119.339" data-dur="0.14" tabindex="0">c’est</span>   <span data-index="243" data-begin="119.479" data-dur="0.58" tabindex="0">justement</span>   <span data-index="244" data-begin="120.36" data-dur="0.29" tabindex="0">ce</span>   <span data-index="245" data-begin="120.649" data-dur="0.19" tabindex="0">qu’on</span>   <span data-index="246" data-begin="120.839" data-dur="0.089" tabindex="0">a</span>   <span data-index="247" data-begin="120.93" data-dur="0.44" tabindex="0">négligé</span>   <span data-index="248" data-begin="121.369" data-dur="0.11" tabindex="0">de</span>   <span data-index="249" data-begin="121.479" data-dur="0.58" tabindex="0">voir</span>   .  <span data-index="250" data-begin="123.269" data-dur="0.21" tabindex="0">Comme</span>   <span data-index="251" data-begin="123.479" data-dur="0.11" tabindex="0">il</span>   <span data-index="252" data-begin="123.589" data-dur="0.07" tabindex="0">est</span>   <span data-index="253" data-begin="123.659" data-dur="0.24" tabindex="0">trop</span>   <span data-index="254" data-begin="123.899" data-dur="0.14" tabindex="0">long</span>   <span data-index="255" data-begin="124.04" data-dur="0.16" tabindex="0">de</span>   <span data-index="256" data-begin="124.199" data-dur="0.22" tabindex="0">tout</span>   <span data-index="257" data-begin="124.5" data-dur="0.34" tabindex="0">voir</span>   ,  <span data-index="258" data-begin="124.839" data-dur="0.12" tabindex="0">le</span>   <span data-index="259" data-begin="124.959" data-dur="0.179" tabindex="0">plus</span>   <span data-index="260" data-begin="125.139" data-dur="0.55" tabindex="0">simple</span>   <span data-index="261" data-begin="126.229" data-dur="0.19" tabindex="0">c’est</span>   <span data-index="262" data-begin="126.419" data-dur="0.16" tabindex="0">de</span>   <span data-index="263" data-begin="126.579" data-dur="0.099" tabindex="0">tout</span>   <span data-index="264" data-begin="126.68" data-dur="0.42" tabindex="0">condamner</span>   <span data-index="265" data-begin="127.099" data-dur="0.11" tabindex="0">de</span>   <span data-index="266" data-begin="127.209" data-dur="0.32" tabindex="0">parti</span>   <span data-index="267" data-begin="127.529" data-dur="0.17" tabindex="0">pris</span>   .</p>
+<p> <span data-index="268" data-begin="130.799" data-dur="0.07" tabindex="0">À</span>   <span data-index="269" data-begin="130.869" data-dur="0.31" tabindex="0">l’hôtel</span>   <span data-index="270" data-begin="131.179" data-dur="0.539" tabindex="0">Beauvau</span>   ,  <span data-index="271" data-begin="132.06" data-dur="0.31" tabindex="0">miss</span>   <span data-index="272" data-begin="132.369" data-dur="0.44" tabindex="0">Lydia</span>   <span data-index="273" data-begin="132.889" data-dur="0.26" tabindex="0">eut</span>   <span data-index="274" data-begin="133.15" data-dur="0.16" tabindex="0">un</span>   <span data-index="275" data-begin="133.31" data-dur="0.35" tabindex="0">amer</span>   <span data-index="276" data-begin="133.659" data-dur="0.82" tabindex="0">désappointement</span>   .  <span data-index="277" data-begin="135.6" data-dur="0.11" tabindex="0">Elle</span>   <span data-index="278" data-begin="135.709" data-dur="0.51" tabindex="0">rapportait</span>   <span data-index="279" data-begin="136.289" data-dur="0.099" tabindex="0">un</span>   <span data-index="280" data-begin="136.389" data-dur="0.34" tabindex="0">joli</span>   <span data-index="281" data-begin="136.73" data-dur="0.47" tabindex="0">croquis</span>   <span data-index="282" data-begin="137.199" data-dur="0.12" tabindex="0">de</span>   <span data-index="283" data-begin="137.319" data-dur="0.16" tabindex="0">la</span>   <span data-index="284" data-begin="137.509" data-dur="0.359" tabindex="0">porte</span>   <span data-index="285" data-begin="137.869" data-dur="0.64" tabindex="0">pélasgique</span>   <span data-index="286" data-begin="138.509" data-dur="0.049" tabindex="0">ou</span>   <span data-index="287" data-begin="138.56" data-dur="0.799" tabindex="0">cyclopéenne</span>   <span data-index="288" data-begin="139.399" data-dur="0.17" tabindex="0">de</span>   <span data-index="289" data-begin="139.569" data-dur="0.64" tabindex="0">Segni</span>   ,  <span data-index="290" data-begin="140.87" data-dur="0.199" tabindex="0">qu’elle</span>   <span data-index="291" data-begin="141.069" data-dur="0.39" tabindex="0">croyait</span>   <span data-index="292" data-begin="141.459" data-dur="0.37" tabindex="0">oubliée</span>   <span data-index="293" data-begin="141.829" data-dur="0.19" tabindex="0">par</span>   <span data-index="294" data-begin="142.02" data-dur="0.08" tabindex="0">les</span>   <span data-index="295" data-begin="142.1" data-dur="1.11" tabindex="0">dessinateurs</span>   .  <span data-index="296" data-begin="143.69" data-dur="0.55" tabindex="0">Or</span>   ,  <span data-index="297" data-begin="144.649" data-dur="0.45" tabindex="0">lady</span>   <span data-index="298" data-begin="145.1" data-dur="0.48" tabindex="0">Frances</span>   <span data-index="299" data-begin="145.579" data-dur="0.719" tabindex="0">Fenwich</span>   ,  <span data-index="300" data-begin="146.899" data-dur="0.099" tabindex="0">la</span>   <span data-index="301" data-begin="146.999" data-dur="0.65" tabindex="0">rencontrant</span>   <span data-index="302" data-begin="147.649" data-dur="0.06" tabindex="0">à</span>   <span data-index="303" data-begin="147.709" data-dur="0.65" tabindex="0">Marseille</span>   ,  <span data-index="304" data-begin="148.979" data-dur="0.14" tabindex="0">lui</span>   <span data-index="305" data-begin="149.119" data-dur="0.42" tabindex="0">montra</span>   <span data-index="306" data-begin="149.539" data-dur="0.24" tabindex="0">son</span>   <span data-index="307" data-begin="149.78" data-dur="0.48" tabindex="0">album</span>   ,  <span data-index="308" data-begin="150.339" data-dur="0.269" tabindex="0">où</span>   ,  <span data-index="309" data-begin="150.94" data-dur="0.269" tabindex="0">entre</span>   <span data-index="310" data-begin="151.209" data-dur="0.07" tabindex="0">un</span>   <span data-index="311" data-begin="151.28" data-dur="0.539" tabindex="0">sonnet</span>   <span data-index="312" data-begin="151.819" data-dur="0.089" tabindex="0">et</span>   <span data-index="313" data-begin="151.909" data-dur="0.19" tabindex="0">une</span>   <span data-index="314" data-begin="152.1" data-dur="0.32" tabindex="0">fleur</span>   <span data-index="315" data-begin="152.419" data-dur="0.7" tabindex="0">desséchée</span>   ,  <span data-index="316" data-begin="153.449" data-dur="0.52" tabindex="0">figurait</span>   <span data-index="317" data-begin="153.969" data-dur="0.149" tabindex="0">la</span>   <span data-index="318" data-begin="154.169" data-dur="0.26" tabindex="0">porte</span>   <span data-index="319" data-begin="154.429" data-dur="0.11" tabindex="0">en</span>   <span data-index="320" data-begin="154.539" data-dur="0.52" tabindex="0">question</span>   ,  <span data-index="321" data-begin="155.609" data-dur="0.61" tabindex="0">enluminée</span>   <span data-index="322" data-begin="156.249" data-dur="0.089" tabindex="0">à</span>   <span data-index="323" data-begin="156.339" data-dur="0.26" tabindex="0">grand</span>   <span data-index="324" data-begin="156.6" data-dur="0.42" tabindex="0">renfort</span>   <span data-index="325" data-begin="157.019" data-dur="0.17" tabindex="0">de</span>   <span data-index="326" data-begin="157.19" data-dur="0.16" tabindex="0">terre</span>   <span data-index="327" data-begin="157.35" data-dur="0.14" tabindex="0">de</span>   <span data-index="328" data-begin="157.489" data-dur="0.48" tabindex="0">Sienne</span>   .  <span data-index="329" data-begin="159.819" data-dur="0.38" tabindex="0">Miss</span>   <span data-index="330" data-begin="160.199" data-dur="0.429" tabindex="0">Lydia</span>   <span data-index="331" data-begin="161.079" data-dur="0.31" tabindex="0">donna</span>   <span data-index="332" data-begin="161.39" data-dur="0.099" tabindex="0">la</span>   <span data-index="333" data-begin="161.489" data-dur="0.359" tabindex="0">porte</span>   <span data-index="334" data-begin="161.85" data-dur="0.149" tabindex="0">de</span>   <span data-index="335" data-begin="161.999" data-dur="0.65" tabindex="0">Segni</span>   <span data-index="336" data-begin="162.909" data-dur="0.099" tabindex="0">à</span>   <span data-index="337" data-begin="163.009" data-dur="0.14" tabindex="0">sa</span>   <span data-index="338" data-begin="163.149" data-dur="0.229" tabindex="0">femme</span>   <span data-index="339" data-begin="163.379" data-dur="0.12" tabindex="0">de</span>   <span data-index="340" data-begin="163.499" data-dur="0.55" tabindex="0">chambre</span>   ,  <span data-index="341" data-begin="164.35" data-dur="0.13" tabindex="0">et</span>   <span data-index="342" data-begin="164.479" data-dur="0.399" tabindex="0">perdit</span>   <span data-index="343" data-begin="164.879" data-dur="0.25" tabindex="0">toute</span>   <span data-index="344" data-begin="165.129" data-dur="0.429" tabindex="0">estime</span>   <span data-index="345" data-begin="165.559" data-dur="0.16" tabindex="0">pour</span>   <span data-index="346" data-begin="165.719" data-dur="0.12" tabindex="0">les</span>   <span data-index="347" data-begin="165.839" data-dur="0.69" tabindex="0">constructions</span>   <span data-index="348" data-begin="166.53" data-dur="0.57" tabindex="0">pélasgiques</span>   .</p>
+<p> <span data-index="349" data-begin="169.979" data-dur="0.21" tabindex="0">Ces</span>   <span data-index="350" data-begin="170.19" data-dur="0.37" tabindex="0">tristes</span>   <span data-index="351" data-begin="170.559" data-dur="0.71" tabindex="0">dispositions</span>   <span data-index="352" data-begin="171.269" data-dur="0.179" tabindex="0">étaient</span>   <span data-index="353" data-begin="171.449" data-dur="0.53" tabindex="0">partagées</span>   <span data-index="354" data-begin="171.979" data-dur="0.21" tabindex="0">par</span>   <span data-index="355" data-begin="172.19" data-dur="0.099" tabindex="0">le</span>   <span data-index="356" data-begin="172.289" data-dur="0.539" tabindex="0">colonel</span>   <span data-index="357" data-begin="172.829" data-dur="0.29" tabindex="0">Nevil</span>   ,  <span data-index="358" data-begin="173.749" data-dur="0.24" tabindex="0">qui</span>   ,  <span data-index="359" data-begin="174.159" data-dur="0.37" tabindex="0">depuis</span>   <span data-index="360" data-begin="174.53" data-dur="0.099" tabindex="0">la</span>   <span data-index="361" data-begin="174.629" data-dur="0.199" tabindex="0">mort</span>   <span data-index="362" data-begin="174.829" data-dur="0.11" tabindex="0">de</span>   <span data-index="363" data-begin="174.94" data-dur="0.149" tabindex="0">sa</span>   <span data-index="364" data-begin="175.089" data-dur="0.459" tabindex="0">femme</span>   ,  <span data-index="365" data-begin="176.03" data-dur="0.199" tabindex="0">ne</span>   <span data-index="366" data-begin="176.229" data-dur="0.29" tabindex="0">voyait</span>   <span data-index="367" data-begin="176.519" data-dur="0.16" tabindex="0">les</span>   <span data-index="368" data-begin="176.679" data-dur="0.55" tabindex="0">choses</span>   <span data-index="369" data-begin="177.229" data-dur="0.13" tabindex="0">que</span>   <span data-index="370" data-begin="177.359" data-dur="0.19" tabindex="0">par</span>   <span data-index="371" data-begin="177.549" data-dur="0.229" tabindex="0">les</span>   <span data-index="372" data-begin="177.78" data-dur="0.21" tabindex="0">yeux</span>   <span data-index="373" data-begin="177.989" data-dur="0.13" tabindex="0">de</span>   <span data-index="374" data-begin="178.12" data-dur="0.269" tabindex="0">miss</span>   <span data-index="375" data-begin="178.389" data-dur="0.56" tabindex="0">Lydia</span>   .  <span data-index="376" data-begin="179.809" data-dur="0.29" tabindex="0">Pour</span>   <span data-index="377" data-begin="180.1" data-dur="0.21" tabindex="0">lui</span>   ,  <span data-index="378" data-begin="180.46" data-dur="0.58" tabindex="0">l’Italie</span>   <span data-index="379" data-begin="181.109" data-dur="0.19" tabindex="0">avait</span>   <span data-index="380" data-begin="181.299" data-dur="0.14" tabindex="0">le</span>   <span data-index="381" data-begin="181.44" data-dur="0.269" tabindex="0">tort</span>   <span data-index="382" data-begin="181.709" data-dur="0.799" tabindex="0">immense</span>   <span data-index="383" data-begin="182.509" data-dur="0.29" tabindex="0">d’avoir</span>   <span data-index="384" data-begin="182.799" data-dur="0.34" tabindex="0">ennuyé</span>   <span data-index="385" data-begin="183.139" data-dur="0.149" tabindex="0">sa</span>   <span data-index="386" data-begin="183.289" data-dur="0.61" tabindex="0">fille</span>   ,  <span data-index="387" data-begin="184.139" data-dur="0.12" tabindex="0">et</span>   <span data-index="388" data-begin="184.259" data-dur="0.25" tabindex="0">par</span>   <span data-index="389" data-begin="184.509" data-dur="0.669" tabindex="0">conséquent</span>   <span data-index="390" data-begin="185.489" data-dur="0.37" tabindex="0">c’était</span>   <span data-index="391" data-begin="185.859" data-dur="0.14" tabindex="0">le</span>   <span data-index="392" data-begin="185.999" data-dur="0.399" tabindex="0">plus</span>   <span data-index="393" data-begin="186.399" data-dur="0.48" tabindex="0">ennuyeux</span>   <span data-index="394" data-begin="186.879" data-dur="0.32" tabindex="0">pays</span>   <span data-index="395" data-begin="187.199" data-dur="0.14" tabindex="0">du</span>   <span data-index="396" data-begin="187.339" data-dur="0.48" tabindex="0">monde</span>   .  <span data-index="397" data-begin="189.229" data-dur="0.149" tabindex="0">Il</span>   <span data-index="398" data-begin="189.379" data-dur="0.26" tabindex="0">n’avait</span>   <span data-index="399" data-begin="189.64" data-dur="0.24" tabindex="0">rien</span>   <span data-index="400" data-begin="189.879" data-dur="0.08" tabindex="0">à</span>   <span data-index="401" data-begin="189.96" data-dur="0.34" tabindex="0">dire</span>   ,  <span data-index="402" data-begin="190.329" data-dur="0.17" tabindex="0">il</span>   <span data-index="403" data-begin="190.5" data-dur="0.089" tabindex="0">est</span>   <span data-index="404" data-begin="190.589" data-dur="0.26" tabindex="0">vrai</span>   ,  <span data-index="405" data-begin="191.149" data-dur="0.34" tabindex="0">contre</span>   <span data-index="406" data-begin="191.489" data-dur="0.12" tabindex="0">les</span>   <span data-index="407" data-begin="191.61" data-dur="0.44" tabindex="0">tableaux</span>   <span data-index="408" data-begin="192.049" data-dur="0.04" tabindex="0">et</span>   <span data-index="409" data-begin="192.089" data-dur="0.11" tabindex="0">les</span>   <span data-index="410" data-begin="192.199" data-dur="0.539" tabindex="0">statues</span>   ;  <span data-index="411" data-begin="193.469" data-dur="0.149" tabindex="0">mais</span>   <span data-index="412" data-begin="193.619" data-dur="0.16" tabindex="0">ce</span>   <span data-index="413" data-begin="193.78" data-dur="0.17" tabindex="0">qu’il</span>   <span data-index="414" data-begin="193.949" data-dur="0.359" tabindex="0">pouvait</span>   <span data-index="415" data-begin="194.309" data-dur="0.429" tabindex="0">assurer</span>   ,  <span data-index="416" data-begin="195.079" data-dur="0.19" tabindex="0">c’est</span>   <span data-index="417" data-begin="195.269" data-dur="0.13" tabindex="0">que</span>   <span data-index="418" data-begin="195.399" data-dur="0.12" tabindex="0">la</span>   <span data-index="419" data-begin="195.519" data-dur="0.48" tabindex="0">chasse</span>   <span data-index="420" data-begin="196.0" data-dur="0.229" tabindex="0">était</span>   <span data-index="421" data-begin="196.229" data-dur="0.65" tabindex="0">misérable</span>   <span data-index="422" data-begin="196.879" data-dur="0.12" tabindex="0">dans</span>   <span data-index="423" data-begin="197.0" data-dur="0.179" tabindex="0">ce</span>   <span data-index="424" data-begin="197.18" data-dur="0.599" tabindex="0">pays</span>  - <span class="nomatch">là</span>  ,  <span data-index="426" data-begin="198.089" data-dur="0.13" tabindex="0">et</span>   <span data-index="427" data-begin="198.219" data-dur="0.22" tabindex="0">qu’il</span>   <span data-index="428" data-begin="198.439" data-dur="0.26" tabindex="0">fallait</span>   <span data-index="429" data-begin="198.699" data-dur="0.28" tabindex="0">faire</span>   <span data-index="430" data-begin="199.009" data-dur="0.229" tabindex="0">dix</span>   <span data-index="431" data-begin="199.239" data-dur="0.359" tabindex="0">lieues</span>   <span data-index="432" data-begin="199.6" data-dur="0.13" tabindex="0">au</span>   <span data-index="433" data-begin="199.729" data-dur="0.29" tabindex="0">grand</span>   <span data-index="434" data-begin="200.019" data-dur="0.37" tabindex="0">soleil</span>   <span data-index="435" data-begin="200.39" data-dur="0.13" tabindex="0">dans</span>   <span data-index="436" data-begin="200.519" data-dur="0.11" tabindex="0">la</span>   <span data-index="437" data-begin="200.629" data-dur="0.489" tabindex="0">campagne</span>   <span data-index="438" data-begin="201.119" data-dur="0.099" tabindex="0">de</span>   <span data-index="439" data-begin="201.219" data-dur="0.429" tabindex="0">Rome</span>   <span data-index="440" data-begin="201.859" data-dur="0.37" tabindex="0">pour</span>   <span data-index="441" data-begin="202.229" data-dur="0.31" tabindex="0">tuer</span>   <span data-index="442" data-begin="202.539" data-dur="0.44" tabindex="0">quelques</span>   <span data-index="443" data-begin="202.979" data-dur="0.57" tabindex="0">méchantes</span>   <span data-index="444" data-begin="203.549" data-dur="0.48" tabindex="0">perdrix</span>   <span data-index="445" data-begin="204.03" data-dur="0.58" tabindex="0">rouges</span>   .</p>
+<p> <span data-index="446" data-begin="207.329" data-dur="0.14" tabindex="0">Le</span>   <span data-index="447" data-begin="207.469" data-dur="0.47" tabindex="0">lendemain</span>   <span data-index="448" data-begin="207.939" data-dur="0.11" tabindex="0">de</span>   <span data-index="449" data-begin="208.049" data-dur="0.229" tabindex="0">son</span>   <span data-index="450" data-begin="208.28" data-dur="0.31" tabindex="0">arrivée</span>   <span data-index="451" data-begin="208.589" data-dur="0.08" tabindex="0">à</span>   <span data-index="452" data-begin="208.669" data-dur="0.76" tabindex="0">Marseille</span>   ,  <span data-index="453" data-begin="209.669" data-dur="0.19" tabindex="0">il</span>   <span data-index="454" data-begin="209.859" data-dur="0.39" tabindex="0">invita</span>   <span data-index="455" data-begin="210.28" data-dur="0.099" tabindex="0">à</span>   <span data-index="456" data-begin="210.379" data-dur="0.28" tabindex="0">dîner</span>   <span data-index="457" data-begin="210.659" data-dur="0.089" tabindex="0">le</span>   <span data-index="458" data-begin="210.75" data-dur="0.63" tabindex="0">capitaine</span>   <span data-index="459" data-begin="211.419" data-dur="0.57" tabindex="0">Ellis</span>   ,  <span data-index="460" data-begin="212.439" data-dur="0.25" tabindex="0">son</span>   <span data-index="461" data-begin="212.689" data-dur="0.35" tabindex="0">ancien</span>   <span data-index="462" data-begin="213.039" data-dur="0.5" tabindex="0">adjudant</span>   ,  <span data-index="463" data-begin="214.089" data-dur="0.13" tabindex="0">qui</span>   <span data-index="464" data-begin="214.219" data-dur="0.22" tabindex="0">venait</span>   <span data-index="465" data-begin="214.439" data-dur="0.12" tabindex="0">de</span>   <span data-index="466" data-begin="214.559" data-dur="0.359" tabindex="0">passer</span>   <span data-index="467" data-begin="214.919" data-dur="0.179" tabindex="0">six</span>   <span data-index="468" data-begin="215.1" data-dur="0.37" tabindex="0">semaines</span>   <span data-index="469" data-begin="215.509" data-dur="0.199" tabindex="0">en</span>   <span data-index="470" data-begin="215.739" data-dur="0.489" tabindex="0">Corse</span>   .  <span data-index="471" data-begin="217.679" data-dur="0.19" tabindex="0">Le</span>   <span data-index="472" data-begin="217.869" data-dur="0.77" tabindex="0">capitaine</span>   <span data-index="473" data-begin="218.729" data-dur="0.489" tabindex="0">raconta</span>   <span data-index="474" data-begin="219.25" data-dur="0.299" tabindex="0">fort</span>   <span data-index="475" data-begin="219.549" data-dur="0.269" tabindex="0">bien</span>   <span data-index="476" data-begin="219.85" data-dur="0.07" tabindex="0">à</span>   <span data-index="477" data-begin="219.919" data-dur="0.29" tabindex="0">miss</span>   <span data-index="478" data-begin="220.289" data-dur="0.45" tabindex="0">Lydia</span>   <span data-index="479" data-begin="221.229" data-dur="0.13" tabindex="0">une</span>   <span data-index="480" data-begin="221.359" data-dur="0.359" tabindex="0">histoire</span>   <span data-index="481" data-begin="221.719" data-dur="0.11" tabindex="0">de</span>   <span data-index="482" data-begin="221.829" data-dur="0.539" tabindex="0">bandits</span>   <span data-index="483" data-begin="222.719" data-dur="0.19" tabindex="0">qui</span>   <span data-index="484" data-begin="222.909" data-dur="0.179" tabindex="0">avait</span>   <span data-index="485" data-begin="223.089" data-dur="0.149" tabindex="0">le</span>   <span data-index="486" data-begin="223.239" data-dur="0.459" tabindex="0">mérite</span>   <span data-index="487" data-begin="223.699" data-dur="0.12" tabindex="0">de</span>   <span data-index="488" data-begin="223.82" data-dur="0.099" tabindex="0">ne</span>   <span data-index="489" data-begin="223.919" data-dur="0.62" tabindex="0">ressembler</span>   <span data-index="490" data-begin="224.539" data-dur="0.56" tabindex="0">nullement</span>   <span data-index="491" data-begin="225.1" data-dur="0.12" tabindex="0">aux</span>   <span data-index="492" data-begin="225.219" data-dur="0.45" tabindex="0">histoires</span>   <span data-index="493" data-begin="225.669" data-dur="0.13" tabindex="0">de</span>   <span data-index="494" data-begin="225.799" data-dur="0.429" tabindex="0">voleurs</span>   <span data-index="495" data-begin="226.229" data-dur="0.25" tabindex="0">dont</span>   <span data-index="496" data-begin="226.479" data-dur="0.08" tabindex="0">on</span>   <span data-index="497" data-begin="226.559" data-dur="0.269" tabindex="0">l’avait</span>   <span data-index="498" data-begin="226.949" data-dur="0.179" tabindex="0">si</span>   <span data-index="499" data-begin="227.129" data-dur="0.39" tabindex="0">souvent</span>   <span data-index="500" data-begin="227.519" data-dur="0.669" tabindex="0">entretenue</span>   <span data-index="501" data-begin="228.469" data-dur="0.17" tabindex="0">sur</span>   <span data-index="502" data-begin="228.64" data-dur="0.11" tabindex="0">la</span>   <span data-index="503" data-begin="228.749" data-dur="0.35" tabindex="0">route</span>   <span data-index="504" data-begin="229.1" data-dur="0.14" tabindex="0">de</span>   <span data-index="505" data-begin="229.239" data-dur="0.28" tabindex="0">Rome</span>   <span data-index="506" data-begin="229.559" data-dur="0.089" tabindex="0">à</span>   <span data-index="507" data-begin="229.649" data-dur="0.52" tabindex="0">Naples</span>   .  <span data-index="508" data-begin="231.629" data-dur="0.12" tabindex="0">Au</span>   <span data-index="509" data-begin="231.749" data-dur="0.64" tabindex="0">dessert</span>   ,  <span data-index="510" data-begin="232.429" data-dur="0.16" tabindex="0">les</span>   <span data-index="511" data-begin="232.589" data-dur="0.25" tabindex="0">deux</span>   <span data-index="512" data-begin="232.839" data-dur="0.32" tabindex="0">hommes</span>   ,  <span data-index="513" data-begin="233.419" data-dur="0.359" tabindex="0">restés</span>   <span data-index="514" data-begin="233.78" data-dur="0.269" tabindex="0">seuls</span>   <span data-index="515" data-begin="234.049" data-dur="0.199" tabindex="0">avec</span>   <span data-index="516" data-begin="234.249" data-dur="0.12" tabindex="0">des</span>   <span data-index="517" data-begin="234.369" data-dur="0.39" tabindex="0">bouteilles</span>   <span data-index="518" data-begin="234.759" data-dur="0.149" tabindex="0">de</span>   <span data-index="519" data-begin="234.909" data-dur="0.19" tabindex="0">vin</span>   <span data-index="520" data-begin="235.1" data-dur="0.099" tabindex="0">de</span>   <span data-index="521" data-begin="235.199" data-dur="0.539" tabindex="0">Bordeaux</span>   ,  <span data-index="522" data-begin="236.359" data-dur="0.399" tabindex="0">parlèrent</span>   <span data-index="523" data-begin="236.759" data-dur="0.61" tabindex="0">chasse</span>   ,  <span data-index="524" data-begin="237.869" data-dur="0.089" tabindex="0">et</span>   <span data-index="525" data-begin="237.96" data-dur="0.13" tabindex="0">le</span>   <span data-index="526" data-begin="238.089" data-dur="0.539" tabindex="0">colonel</span>   <span data-index="527" data-begin="238.629" data-dur="0.38" tabindex="0">apprit</span>   <span data-index="528" data-begin="239.249" data-dur="0.16" tabindex="0">qu’il</span>   <span data-index="529" data-begin="239.409" data-dur="0.11" tabindex="0">n’y</span>   <span data-index="530" data-begin="239.519" data-dur="0.089" tabindex="0">a</span>   <span data-index="531" data-begin="239.71" data-dur="0.179" tabindex="0">pas</span>   <span data-index="532" data-begin="239.89" data-dur="0.14" tabindex="0">de</span>   <span data-index="533" data-begin="240.03" data-dur="0.399" tabindex="0">pays</span>   <span data-index="534" data-begin="240.659" data-dur="0.149" tabindex="0">où</span>   <span data-index="535" data-begin="240.809" data-dur="0.14" tabindex="0">elle</span>   <span data-index="536" data-begin="240.949" data-dur="0.19" tabindex="0">soit</span>   <span data-index="537" data-begin="241.14" data-dur="0.199" tabindex="0">plus</span>   <span data-index="538" data-begin="241.339" data-dur="0.24" tabindex="0">belle</span>   <span data-index="539" data-begin="241.579" data-dur="0.25" tabindex="0">qu’en</span>   <span data-index="540" data-begin="241.829" data-dur="0.47" tabindex="0">Corse</span>   ,  <span data-index="541" data-begin="242.429" data-dur="0.14" tabindex="0">plus</span>   <span data-index="542" data-begin="242.569" data-dur="0.58" tabindex="0">variée</span>   ,  <span data-index="543" data-begin="243.299" data-dur="0.31" tabindex="0">plus</span>   <span data-index="544" data-begin="243.609" data-dur="0.909" tabindex="0">abondante</span>   . « <span data-index="545" data-begin="245.46" data-dur="0.12" tabindex="0">On</span>   <span data-index="546" data-begin="245.579" data-dur="0.08" tabindex="0">y</span>   <span data-index="547" data-begin="245.659" data-dur="0.17" tabindex="0">voit</span>   <span data-index="548" data-begin="245.829" data-dur="0.47" tabindex="0">force</span>   <span data-index="549" data-begin="246.299" data-dur="0.719" tabindex="0">sangliers</span>   ,  <span data-index="550" data-begin="247.019" data-dur="0.269" tabindex="0">disait</span>   <span data-index="551" data-begin="247.289" data-dur="0.12" tabindex="0">le</span>   <span data-index="552" data-begin="247.409" data-dur="0.51" tabindex="0">capitaine</span>   <span data-index="553" data-begin="248.009" data-dur="0.429" tabindex="0">Ellis</span>   ,  <span data-index="554" data-begin="249.049" data-dur="0.07" tabindex="0">et</span>   <span data-index="555" data-begin="249.119" data-dur="0.08" tabindex="0">il</span>   <span data-index="556" data-begin="249.199" data-dur="0.26" tabindex="0">faut</span>   <span data-index="557" data-begin="249.46" data-dur="0.45" tabindex="0">apprendre</span>   <span data-index="558" data-begin="249.949" data-dur="0.06" tabindex="0">à</span>   <span data-index="559" data-begin="250.009" data-dur="0.12" tabindex="0">les</span>   <span data-index="560" data-begin="250.129" data-dur="0.53" tabindex="0">distinguer</span>   <span data-index="561" data-begin="250.659" data-dur="0.11" tabindex="0">des</span>   <span data-index="562" data-begin="250.769" data-dur="0.37" tabindex="0">cochons</span>   <span data-index="563" data-begin="251.139" data-dur="0.799" tabindex="0">domestiques</span>   ,  <span data-index="564" data-begin="252.169" data-dur="0.17" tabindex="0">qui</span>   <span data-index="565" data-begin="252.339" data-dur="0.24" tabindex="0">leur</span>   <span data-index="566" data-begin="252.579" data-dur="0.53" tabindex="0">ressemblent</span>   <span data-index="567" data-begin="253.109" data-dur="0.179" tabindex="0">d’une</span>   <span data-index="568" data-begin="253.29" data-dur="0.41" tabindex="0">manière</span>   <span data-index="569" data-begin="253.739" data-dur="0.669" tabindex="0">étonnante</span>   ;  <span data-index="570" data-begin="255.169" data-dur="0.58" tabindex="0">car</span>   ,  <span data-index="571" data-begin="255.979" data-dur="0.12" tabindex="0">en</span>   <span data-index="572" data-begin="256.1" data-dur="0.32" tabindex="0">tuant</span>   <span data-index="573" data-begin="256.419" data-dur="0.12" tabindex="0">des</span>   <span data-index="574" data-begin="256.54" data-dur="0.48" tabindex="0">cochons</span>   ,  <span data-index="575" data-begin="257.439" data-dur="0.19" tabindex="0">l’on</span>   <span data-index="576" data-begin="257.629" data-dur="0.179" tabindex="0">se</span>   <span data-index="577" data-begin="257.809" data-dur="0.229" tabindex="0">fait</span>   <span data-index="578" data-begin="258.04" data-dur="0.16" tabindex="0">une</span>   <span data-index="579" data-begin="258.199" data-dur="0.41" tabindex="0">mauvaise</span>   <span data-index="580" data-begin="258.609" data-dur="0.299" tabindex="0">affaire</span>   <span data-index="581" data-begin="258.909" data-dur="0.22" tabindex="0">avec</span>   <span data-index="582" data-begin="259.129" data-dur="0.16" tabindex="0">leurs</span>   <span data-index="583" data-begin="259.32" data-dur="0.42" tabindex="0">gardiens</span>   .  <span data-index="584" data-begin="260.589" data-dur="0.099" tabindex="0">Ils</span>   <span data-index="585" data-begin="260.689" data-dur="0.329" tabindex="0">sortent</span>   <span data-index="586" data-begin="261.019" data-dur="0.179" tabindex="0">d’un</span>   <span data-index="587" data-begin="261.249" data-dur="0.359" tabindex="0">taillis</span>   <span data-index="588" data-begin="261.769" data-dur="0.19" tabindex="0">qu’ils</span>   <span data-index="589" data-begin="261.96" data-dur="0.31" tabindex="0">nomment</span>   <span data-index="590" data-begin="262.37" data-dur="0.52" tabindex="0">maquis</span>   ,  <span data-index="591" data-begin="263.329" data-dur="0.35" tabindex="0">armés</span>   <span data-index="592" data-begin="263.68" data-dur="0.48" tabindex="0">jusqu’aux</span>   <span data-index="593" data-begin="264.159" data-dur="0.269" tabindex="0">dents</span>   ,  <span data-index="594" data-begin="264.809" data-dur="0.229" tabindex="0">se</span>   <span data-index="595" data-begin="265.04" data-dur="0.199" tabindex="0">font</span>   <span data-index="596" data-begin="265.239" data-dur="0.329" tabindex="0">payer</span>   <span data-index="597" data-begin="265.57" data-dur="0.24" tabindex="0">leurs</span>   <span data-index="598" data-begin="265.809" data-dur="0.37" tabindex="0">bêtes</span>   <span data-index="599" data-begin="266.329" data-dur="0.08" tabindex="0">et</span>   <span data-index="600" data-begin="266.409" data-dur="0.21" tabindex="0">se</span>   <span data-index="601" data-begin="266.62" data-dur="0.22" tabindex="0">moquent</span>   <span data-index="602" data-begin="266.839" data-dur="0.16" tabindex="0">de</span>   <span data-index="603" data-begin="266.999" data-dur="0.21" tabindex="0">vous</span>   .  <span data-index="604" data-begin="268.739" data-dur="0.21" tabindex="0">Vous</span>   <span data-index="605" data-begin="268.949" data-dur="0.22" tabindex="0">avez</span>   <span data-index="606" data-begin="269.17" data-dur="0.25" tabindex="0">encore</span>   <span data-index="607" data-begin="269.419" data-dur="0.14" tabindex="0">le</span>   <span data-index="608" data-begin="269.559" data-dur="0.57" tabindex="0">mouflon</span>   ,  <span data-index="609" data-begin="270.529" data-dur="0.29" tabindex="0">fort</span>   <span data-index="610" data-begin="270.849" data-dur="0.45" tabindex="0">étrange</span>   <span data-index="611" data-begin="271.3" data-dur="0.56" tabindex="0">animal</span>   <span data-index="612" data-begin="272.069" data-dur="0.149" tabindex="0">qu’on</span>   <span data-index="613" data-begin="272.219" data-dur="0.13" tabindex="0">ne</span>   <span data-index="614" data-begin="272.349" data-dur="0.25" tabindex="0">trouve</span>   <span data-index="615" data-begin="272.599" data-dur="0.24" tabindex="0">pas</span>   <span data-index="616" data-begin="272.84" data-dur="0.599" tabindex="0">ailleurs</span>   ,  <span data-index="617" data-begin="273.539" data-dur="0.429" tabindex="0">fameux</span>   <span data-index="618" data-begin="273.969" data-dur="0.51" tabindex="0">gibier</span>   ,  <span data-index="619" data-begin="274.519" data-dur="0.51" tabindex="0">mais</span>   <span data-index="620" data-begin="275.069" data-dur="0.51" tabindex="0">difficile</span>   .  <span data-index="621" data-begin="276.63" data-dur="0.659" tabindex="0">Cerfs</span>   ,  <span data-index="622" data-begin="277.329" data-dur="0.44" tabindex="0">daims</span>   ,  <span data-index="623" data-begin="278.029" data-dur="0.55" tabindex="0">faisans</span>   ,  <span data-index="624" data-begin="278.69" data-dur="0.659" tabindex="0">perdreaux</span>   ,  <span data-index="625" data-begin="279.77" data-dur="0.59" tabindex="0">jamais</span>   <span data-index="626" data-begin="280.359" data-dur="0.08" tabindex="0">on</span>   <span data-index="627" data-begin="280.44" data-dur="0.12" tabindex="0">ne</span>   <span data-index="628" data-begin="280.559" data-dur="0.269" tabindex="0">pourrait</span>   <span data-index="629" data-begin="280.829" data-dur="0.44" tabindex="0">nombrer</span>   <span data-index="630" data-begin="281.299" data-dur="0.229" tabindex="0">toutes</span>   <span data-index="631" data-begin="281.529" data-dur="0.16" tabindex="0">les</span>   <span data-index="632" data-begin="281.689" data-dur="0.399" tabindex="0">espèces</span>   <span data-index="633" data-begin="282.09" data-dur="0.17" tabindex="0">de</span>   <span data-index="634" data-begin="282.26" data-dur="0.34" tabindex="0">gibier</span>   <span data-index="635" data-begin="282.6" data-dur="0.16" tabindex="0">qui</span>   <span data-index="636" data-begin="282.76" data-dur="0.399" tabindex="0">fourmillent</span>   <span data-index="637" data-begin="283.219" data-dur="0.14" tabindex="0">en</span>   <span data-index="638" data-begin="283.359" data-dur="0.48" tabindex="0">Corse</span>   .  <span data-index="639" data-begin="284.549" data-dur="0.16" tabindex="0">Si</span>   <span data-index="640" data-begin="284.709" data-dur="0.22" tabindex="0">vous</span>   <span data-index="641" data-begin="284.93" data-dur="0.19" tabindex="0">aimez</span>   <span data-index="642" data-begin="285.189" data-dur="0.07" tabindex="0">à</span>   <span data-index="643" data-begin="285.26" data-dur="0.459" tabindex="0">tirer</span>   ,  <span data-index="644" data-begin="285.859" data-dur="0.329" tabindex="0">allez</span>   <span data-index="645" data-begin="286.189" data-dur="0.089" tabindex="0">en</span>   <span data-index="646" data-begin="286.279" data-dur="0.32" tabindex="0">Corse</span>   ,  <span data-index="647" data-begin="286.6" data-dur="0.63" tabindex="0">colonel</span>   ;  <span data-index="648" data-begin="287.739" data-dur="0.35" tabindex="0">là</span>   ,  <span data-index="649" data-begin="288.369" data-dur="0.32" tabindex="0">comme</span>   <span data-index="650" data-begin="288.689" data-dur="0.35" tabindex="0">disait</span>   <span data-index="651" data-begin="289.119" data-dur="0.22" tabindex="0">un</span>   <span data-index="652" data-begin="289.34" data-dur="0.12" tabindex="0">de</span>   <span data-index="653" data-begin="289.459" data-dur="0.19" tabindex="0">mes</span>   <span data-index="654" data-begin="289.649" data-dur="0.48" tabindex="0">hôtes</span>   ,  <span data-index="655" data-begin="290.359" data-dur="0.199" tabindex="0">vous</span>   <span data-index="656" data-begin="290.559" data-dur="0.32" tabindex="0">pourrez</span>   <span data-index="657" data-begin="290.879" data-dur="0.299" tabindex="0">tirer</span>   <span data-index="658" data-begin="291.279" data-dur="0.399" tabindex="0">sur</span>   <span data-index="659" data-begin="291.679" data-dur="0.13" tabindex="0">tous</span>   <span data-index="660" data-begin="291.809" data-dur="0.089" tabindex="0">les</span>   <span data-index="661" data-begin="291.899" data-dur="0.29" tabindex="0">gibiers</span>   <span data-index="662" data-begin="292.189" data-dur="0.59" tabindex="0">possibles</span>   ,  <span data-index="663" data-begin="292.849" data-dur="0.29" tabindex="0">depuis</span>   <span data-index="664" data-begin="293.139" data-dur="0.099" tabindex="0">la</span>   <span data-index="665" data-begin="293.239" data-dur="0.489" tabindex="0">grive</span>   <span data-index="666" data-begin="294.159" data-dur="0.48" tabindex="0">jusqu’à</span>   <span data-index="667" data-begin="294.639" data-dur="0.41" tabindex="0">l’homme</span>   . » </p>
+<p> <span data-index="668" data-begin="296.52" data-dur="0.21" tabindex="0">Au</span>   <span data-index="669" data-begin="296.729" data-dur="0.32" tabindex="0">thé</span>   ,  <span data-index="670" data-begin="297.409" data-dur="0.13" tabindex="0">le</span>   <span data-index="671" data-begin="297.54" data-dur="0.51" tabindex="0">capitaine</span>   <span data-index="672" data-begin="298.049" data-dur="0.39" tabindex="0">charma</span>   <span data-index="673" data-begin="298.439" data-dur="0.13" tabindex="0">de</span>   <span data-index="674" data-begin="298.569" data-dur="0.29" tabindex="0">nouveau</span>   <span data-index="675" data-begin="298.86" data-dur="0.299" tabindex="0">miss</span>   <span data-index="676" data-begin="299.159" data-dur="0.429" tabindex="0">Lydia</span>   <span data-index="677" data-begin="300.02" data-dur="0.21" tabindex="0">par</span>   <span data-index="678" data-begin="300.229" data-dur="0.08" tabindex="0">une</span>   <span data-index="679" data-begin="300.309" data-dur="0.38" tabindex="0">histoire</span>   <span data-index="680" data-begin="300.689" data-dur="0.08" tabindex="0">de</span>   <span data-index="681" data-begin="300.77" data-dur="0.64" tabindex="0">vendetta</span>   <span class="nomatch">transversale</span> 1 ,  <span data-index="683" data-begin="302.869" data-dur="0.31" tabindex="0">encore</span>   <span data-index="684" data-begin="303.18" data-dur="0.199" tabindex="0">plus</span>   <span data-index="685" data-begin="303.379" data-dur="0.41" tabindex="0">bizarre</span>   <span data-index="686" data-begin="303.79" data-dur="0.11" tabindex="0">que</span>   <span data-index="687" data-begin="303.899" data-dur="0.07" tabindex="0">la</span>   <span data-index="688" data-begin="303.969" data-dur="0.74" tabindex="0">première</span>   ,  <span data-index="689" data-begin="305.43" data-dur="0.13" tabindex="0">et</span>   <span data-index="690" data-begin="305.559" data-dur="0.11" tabindex="0">il</span>   <span data-index="691" data-begin="305.669" data-dur="0.41" tabindex="0">acheva</span>   <span data-index="692" data-begin="306.079" data-dur="0.099" tabindex="0">de</span>   <span data-index="693" data-begin="306.18" data-dur="0.81" tabindex="0">l’enthousiasmer</span>   <span data-index="694" data-begin="306.989" data-dur="0.199" tabindex="0">pour</span>   <span data-index="695" data-begin="307.189" data-dur="0.11" tabindex="0">la</span>   <span data-index="696" data-begin="307.299" data-dur="0.5" tabindex="0">Corse</span>   <span data-index="697" data-begin="308.11" data-dur="0.13" tabindex="0">en</span>   <span data-index="698" data-begin="308.239" data-dur="0.14" tabindex="0">lui</span>   <span data-index="699" data-begin="308.379" data-dur="0.63" tabindex="0">décrivant</span>   <span data-index="700" data-begin="309.229" data-dur="0.44" tabindex="0">l’aspect</span>   <span data-index="701" data-begin="309.669" data-dur="0.74" tabindex="0">étrange</span>   ,  <span data-index="702" data-begin="310.409" data-dur="0.659" tabindex="0">sauvage</span>   <span data-index="703" data-begin="311.069" data-dur="0.089" tabindex="0">du</span>   <span data-index="704" data-begin="311.159" data-dur="0.38" tabindex="0">pays</span>   ,  <span data-index="705" data-begin="312.149" data-dur="0.13" tabindex="0">le</span>   <span data-index="706" data-begin="312.279" data-dur="0.789" tabindex="0">caractère</span>   <span data-index="707" data-begin="313.149" data-dur="0.59" tabindex="0">original</span>   <span data-index="708" data-begin="313.739" data-dur="0.16" tabindex="0">de</span>   <span data-index="709" data-begin="313.899" data-dur="0.21" tabindex="0">ses</span>   <span data-index="710" data-begin="314.11" data-dur="0.56" tabindex="0">habitants</span>   ,  <span data-index="711" data-begin="314.879" data-dur="0.179" tabindex="0">leur</span>   <span data-index="712" data-begin="315.059" data-dur="0.88" tabindex="0">hospitalité</span>   <span data-index="713" data-begin="316.229" data-dur="0.11" tabindex="0">et</span>   <span data-index="714" data-begin="316.34" data-dur="0.64" tabindex="0">leurs</span>   <span class="nomatch">m</span> œ <span class="nomatch">urs</span>  <span data-index="717" data-begin="317.029" data-dur="0.47" tabindex="0">primitives</span>   .  <span data-index="718" data-begin="319.5" data-dur="0.39" tabindex="0">Enfin</span>   ,  <span data-index="719" data-begin="320.34" data-dur="0.14" tabindex="0">il</span>   <span data-index="720" data-begin="320.479" data-dur="0.13" tabindex="0">mit</span>   <span data-index="721" data-begin="320.659" data-dur="0.049" tabindex="0">à</span>   <span data-index="722" data-begin="320.709" data-dur="0.19" tabindex="0">ses</span>   <span data-index="723" data-begin="320.899" data-dur="0.299" tabindex="0">pieds</span>   <span data-index="724" data-begin="321.229" data-dur="0.179" tabindex="0">un</span>   <span data-index="725" data-begin="321.409" data-dur="0.41" tabindex="0">joli</span>   <span data-index="726" data-begin="321.819" data-dur="0.269" tabindex="0">petit</span>   <span data-index="727" data-begin="322.09" data-dur="0.599" tabindex="0">stylet</span>   ,  <span data-index="728" data-begin="323.0" data-dur="0.24" tabindex="0">moins</span>   <span data-index="729" data-begin="323.239" data-dur="0.69" tabindex="0">remarquable</span>   <span data-index="730" data-begin="323.93" data-dur="0.199" tabindex="0">par</span>   <span data-index="731" data-begin="324.129" data-dur="0.12" tabindex="0">sa</span>   <span data-index="732" data-begin="324.25" data-dur="0.489" tabindex="0">forme</span>   <span data-index="733" data-begin="324.739" data-dur="0.08" tabindex="0">et</span>   <span data-index="734" data-begin="324.819" data-dur="0.179" tabindex="0">sa</span>   <span data-index="735" data-begin="325.0" data-dur="0.429" tabindex="0">monture</span>   <span data-index="736" data-begin="325.43" data-dur="0.13" tabindex="0">en</span>   <span data-index="737" data-begin="325.559" data-dur="0.51" tabindex="0">cuivre</span>   <span data-index="738" data-begin="326.349" data-dur="0.12" tabindex="0">que</span>   <span data-index="739" data-begin="326.47" data-dur="0.179" tabindex="0">par</span>   <span data-index="740" data-begin="326.65" data-dur="0.229" tabindex="0">son</span>   <span data-index="741" data-begin="326.879" data-dur="0.57" tabindex="0">origine</span>   .  <span data-index="742" data-begin="328.43" data-dur="0.179" tabindex="0">Un</span>   <span data-index="743" data-begin="328.61" data-dur="0.39" tabindex="0">fameux</span>   <span data-index="744" data-begin="329.0" data-dur="0.53" tabindex="0">bandit</span>   <span data-index="745" data-begin="329.76" data-dur="0.26" tabindex="0">l’avait</span>   <span data-index="746" data-begin="330.019" data-dur="0.28" tabindex="0">cédé</span>   <span data-index="747" data-begin="330.299" data-dur="0.12" tabindex="0">au</span>   <span data-index="748" data-begin="330.419" data-dur="0.61" tabindex="0">capitaine</span>   <span data-index="749" data-begin="331.069" data-dur="0.52" tabindex="0">Ellis</span>   ,  <span data-index="750" data-begin="332.229" data-dur="0.52" tabindex="0">garanti</span>   <span data-index="751" data-begin="332.75" data-dur="0.149" tabindex="0">pour</span>   <span data-index="752" data-begin="332.9" data-dur="0.32" tabindex="0">s’être</span>   <span data-index="753" data-begin="333.22" data-dur="0.5" tabindex="0">enfoncé</span>   <span data-index="754" data-begin="333.72" data-dur="0.179" tabindex="0">dans</span>   <span data-index="755" data-begin="333.9" data-dur="0.41" tabindex="0">quatre</span>   <span data-index="756" data-begin="334.309" data-dur="0.269" tabindex="0">corps</span>   <span data-index="757" data-begin="334.58" data-dur="0.37" tabindex="0">humains</span>   .  <span data-index="758" data-begin="336.229" data-dur="0.28" tabindex="0">Miss</span>   <span data-index="759" data-begin="336.51" data-dur="0.58" tabindex="0">Lydia</span>   <span data-index="760" data-begin="337.4" data-dur="0.16" tabindex="0">le</span>   <span data-index="761" data-begin="337.559" data-dur="0.35" tabindex="0">passa</span>   <span data-index="762" data-begin="337.909" data-dur="0.13" tabindex="0">dans</span>   <span data-index="763" data-begin="338.04" data-dur="0.179" tabindex="0">sa</span>   <span data-index="764" data-begin="338.22" data-dur="0.789" tabindex="0">ceinture</span>   ,  <span data-index="765" data-begin="339.379" data-dur="0.28" tabindex="0">le</span>   <span data-index="766" data-begin="339.659" data-dur="0.149" tabindex="0">mit</span>   <span data-index="767" data-begin="339.809" data-dur="0.179" tabindex="0">sur</span>   <span data-index="768" data-begin="339.989" data-dur="0.149" tabindex="0">sa</span>   <span data-index="769" data-begin="340.139" data-dur="0.299" tabindex="0">table</span>   <span data-index="770" data-begin="340.439" data-dur="0.149" tabindex="0">de</span>   <span data-index="771" data-begin="340.589" data-dur="0.299" tabindex="0">nuit</span>   ,  <span data-index="772" data-begin="341.269" data-dur="0.099" tabindex="0">et</span>   <span data-index="773" data-begin="341.369" data-dur="0.17" tabindex="0">le</span>   <span data-index="774" data-begin="341.54" data-dur="0.29" tabindex="0">tira</span>   <span data-index="775" data-begin="341.83" data-dur="0.179" tabindex="0">deux</span>   <span data-index="776" data-begin="342.009" data-dur="0.199" tabindex="0">fois</span>   <span data-index="777" data-begin="342.209" data-dur="0.11" tabindex="0">de</span>   <span data-index="778" data-begin="342.319" data-dur="0.199" tabindex="0">son</span>   <span data-index="779" data-begin="342.519" data-dur="0.47" tabindex="0">fourreau</span>   <span data-index="780" data-begin="342.989" data-dur="0.24" tabindex="0">avant</span>   <span data-index="781" data-begin="343.229" data-dur="0.12" tabindex="0">de</span>   <span data-index="782" data-begin="343.349" data-dur="0.599" tabindex="0">s’endormir</span>   .  <span data-index="783" data-begin="345.9" data-dur="0.089" tabindex="0">De</span>   <span data-index="784" data-begin="345.989" data-dur="0.179" tabindex="0">son</span>   <span data-index="785" data-begin="346.169" data-dur="0.35" tabindex="0">côté</span>   ,  <span data-index="786" data-begin="346.979" data-dur="0.16" tabindex="0">le</span>   <span data-index="787" data-begin="347.139" data-dur="0.44" tabindex="0">colonel</span>   <span data-index="788" data-begin="347.58" data-dur="0.659" tabindex="0">rêva</span>   <span data-index="789" data-begin="348.339" data-dur="0.22" tabindex="0">qu’il</span>   <span data-index="790" data-begin="348.559" data-dur="0.229" tabindex="0">tuait</span>   <span data-index="791" data-begin="348.9" data-dur="0.089" tabindex="0">un</span>   <span data-index="792" data-begin="348.989" data-dur="0.599" tabindex="0">mouflon</span>   <span data-index="793" data-begin="349.83" data-dur="0.12" tabindex="0">et</span>   <span data-index="794" data-begin="349.949" data-dur="0.12" tabindex="0">que</span>   <span data-index="795" data-begin="350.069" data-dur="0.11" tabindex="0">le</span>   <span data-index="796" data-begin="350.18" data-dur="0.88" tabindex="0">propriétaire</span>   <span data-index="797" data-begin="351.059" data-dur="0.13" tabindex="0">lui</span>   <span data-index="798" data-begin="351.189" data-dur="0.099" tabindex="0">en</span>   <span data-index="799" data-begin="351.29" data-dur="0.32" tabindex="0">faisait</span>   <span data-index="800" data-begin="351.61" data-dur="0.34" tabindex="0">payer</span>   <span data-index="801" data-begin="351.949" data-dur="0.17" tabindex="0">le</span>   <span data-index="802" data-begin="352.119" data-dur="0.29" tabindex="0">prix</span>   ,  <span data-index="803" data-begin="352.739" data-dur="0.17" tabindex="0">à</span>   <span data-index="804" data-begin="352.909" data-dur="0.329" tabindex="0">quoi</span>   <span data-index="805" data-begin="353.269" data-dur="0.19" tabindex="0">il</span>   <span data-index="806" data-begin="353.459" data-dur="0.56" tabindex="0">consentait</span>   <span data-index="807" data-begin="354.019" data-dur="0.63" tabindex="0">volontiers</span>   ,  <span data-index="808" data-begin="354.809" data-dur="0.179" tabindex="0">car</span>   <span data-index="809" data-begin="354.989" data-dur="0.359" tabindex="0">c’était</span>   <span data-index="810" data-begin="355.349" data-dur="0.12" tabindex="0">un</span>   <span data-index="811" data-begin="355.47" data-dur="0.41" tabindex="0">animal</span>   <span data-index="812" data-begin="356.099" data-dur="0.19" tabindex="0">très</span>   <span data-index="813" data-begin="356.29" data-dur="0.44" tabindex="0">curieux</span>   ,  <span data-index="814" data-begin="357.22" data-dur="0.099" tabindex="0">qui</span>   <span data-index="815" data-begin="357.319" data-dur="0.57" tabindex="0">ressemblait</span>   <span data-index="816" data-begin="357.959" data-dur="0.03" tabindex="0">à</span>   <span data-index="817" data-begin="357.989" data-dur="0.19" tabindex="0">un</span>   <span data-index="818" data-begin="358.18" data-dur="0.78" tabindex="0">sanglier</span>   ,  <span data-index="819" data-begin="359.0" data-dur="0.38" tabindex="0">avec</span>   <span data-index="820" data-begin="359.65" data-dur="0.099" tabindex="0">des</span>   <span data-index="821" data-begin="359.75" data-dur="0.38" tabindex="0">cornes</span>   <span data-index="822" data-begin="360.129" data-dur="0.149" tabindex="0">de</span>   <span data-index="823" data-begin="360.279" data-dur="0.25" tabindex="0">cerf</span>   <span data-index="824" data-begin="360.529" data-dur="0.299" tabindex="0">et</span>   <span data-index="825" data-begin="360.829" data-dur="0.329" tabindex="0">une</span>   <span data-index="826" data-begin="361.159" data-dur="0.21" tabindex="0">queue</span>   <span data-index="827" data-begin="361.369" data-dur="0.12" tabindex="0">de</span>   <span data-index="828" data-begin="361.489" data-dur="0.45" tabindex="0">faisan</span>   .</p>
+<p>« <span data-index="829" data-begin="364.579" data-dur="0.5" tabindex="0">Ellis</span>   <span data-index="830" data-begin="365.18" data-dur="0.28" tabindex="0">conte</span>   <span data-index="831" data-begin="365.459" data-dur="0.19" tabindex="0">qu’il</span>   <span data-index="832" data-begin="365.649" data-dur="0.049" tabindex="0">y</span>   <span data-index="833" data-begin="365.699" data-dur="0.08" tabindex="0">a</span>   <span data-index="834" data-begin="365.779" data-dur="0.17" tabindex="0">une</span>   <span data-index="835" data-begin="365.949" data-dur="0.42" tabindex="0">chasse</span>   <span data-index="836" data-begin="366.369" data-dur="0.489" tabindex="0">admirable</span>   <span data-index="837" data-begin="366.86" data-dur="0.089" tabindex="0">en</span>   <span data-index="838" data-begin="366.949" data-dur="0.32" tabindex="0">Corse</span>   ,  <span data-index="839" data-begin="367.269" data-dur="0.11" tabindex="0">dit</span>   <span data-index="840" data-begin="367.379" data-dur="0.12" tabindex="0">le</span>   <span data-index="841" data-begin="367.5" data-dur="0.62" tabindex="0">colonel</span>   ,  <span data-index="842" data-begin="368.479" data-dur="0.55" tabindex="0">déjeunant</span>   <span data-index="843" data-begin="369.029" data-dur="0.22" tabindex="0">tête</span>   <span data-index="844" data-begin="369.25" data-dur="0.089" tabindex="0">à</span>   <span data-index="845" data-begin="369.339" data-dur="0.199" tabindex="0">tête</span>   <span data-index="846" data-begin="369.54" data-dur="0.22" tabindex="0">avec</span>   <span data-index="847" data-begin="369.759" data-dur="0.149" tabindex="0">sa</span>   <span data-index="848" data-begin="369.909" data-dur="0.55" tabindex="0">fille</span>   ;  <span data-index="849" data-begin="371.519" data-dur="0.14" tabindex="0">si</span>   <span data-index="850" data-begin="371.659" data-dur="0.149" tabindex="0">ce</span>   <span data-index="851" data-begin="371.809" data-dur="0.229" tabindex="0">n’était</span>   <span data-index="852" data-begin="372.04" data-dur="0.149" tabindex="0">pas</span>   <span data-index="853" data-begin="372.189" data-dur="0.16" tabindex="0">si</span>   <span data-index="854" data-begin="372.349" data-dur="0.269" tabindex="0">loin</span>   ,  <span data-index="855" data-begin="373.089" data-dur="0.39" tabindex="0">j’aimerais</span>   <span data-index="856" data-begin="373.479" data-dur="0.03" tabindex="0">à</span>   <span data-index="857" data-begin="373.509" data-dur="0.049" tabindex="0">y</span>   <span data-index="858" data-begin="373.559" data-dur="0.25" tabindex="0">passer</span>   <span data-index="859" data-begin="373.809" data-dur="0.13" tabindex="0">une</span>   <span data-index="860" data-begin="373.939" data-dur="0.729" tabindex="0">quinzaine</span>   .</p>
+<p>– <span data-index="861" data-begin="376.279" data-dur="0.11" tabindex="0">Eh</span>   <span data-index="862" data-begin="376.389" data-dur="0.25" tabindex="0">bien</span>   ,  <span data-index="863" data-begin="376.669" data-dur="0.399" tabindex="0">répondit</span>   <span data-index="864" data-begin="377.069" data-dur="0.26" tabindex="0">miss</span>   <span data-index="865" data-begin="377.329" data-dur="0.329" tabindex="0">Lydia</span>   ,  <span data-index="866" data-begin="378.5" data-dur="0.399" tabindex="0">pourquoi</span>   <span data-index="867" data-begin="378.899" data-dur="0.359" tabindex="0">n’irions</span>  - <span class="nomatch">nous</span>  <span data-index="869" data-begin="379.399" data-dur="0.12" tabindex="0">pas</span>   <span data-index="870" data-begin="379.519" data-dur="0.149" tabindex="0">en</span>   <span data-index="871" data-begin="379.669" data-dur="0.55" tabindex="0">Corse</span>   ?  <span data-index="872" data-begin="381.009" data-dur="0.299" tabindex="0">Pendant</span>   <span data-index="873" data-begin="381.309" data-dur="0.149" tabindex="0">que</span>   <span data-index="874" data-begin="381.459" data-dur="0.11" tabindex="0">vous</span>   <span data-index="875" data-begin="381.569" data-dur="0.75" tabindex="0">chasseriez</span>   ,  <span data-index="876" data-begin="382.569" data-dur="0.17" tabindex="0">je</span>   <span data-index="877" data-begin="382.739" data-dur="0.52" tabindex="0">dessinerais</span>   ;  <span data-index="878" data-begin="384.149" data-dur="0.199" tabindex="0">je</span>   <span data-index="879" data-begin="384.349" data-dur="0.29" tabindex="0">serais</span>   <span data-index="880" data-begin="384.639" data-dur="0.45" tabindex="0">charmée</span>   <span data-index="881" data-begin="385.089" data-dur="0.299" tabindex="0">d’avoir</span>   <span data-index="882" data-begin="385.389" data-dur="0.089" tabindex="0">dans</span>   <span data-index="883" data-begin="385.479" data-dur="0.199" tabindex="0">mon</span>   <span data-index="884" data-begin="385.68" data-dur="0.45" tabindex="0">album</span>   <span data-index="885" data-begin="386.369" data-dur="0.16" tabindex="0">la</span>   <span data-index="886" data-begin="386.529" data-dur="0.399" tabindex="0">grotte</span>   <span data-index="887" data-begin="386.93" data-dur="0.17" tabindex="0">dont</span>   <span data-index="888" data-begin="387.099" data-dur="0.29" tabindex="0">parlait</span>   <span data-index="889" data-begin="387.389" data-dur="0.08" tabindex="0">le</span>   <span data-index="890" data-begin="387.469" data-dur="0.56" tabindex="0">capitaine</span>   <span data-index="891" data-begin="388.069" data-dur="0.52" tabindex="0">Ellis</span>   ,  <span data-index="892" data-begin="388.949" data-dur="0.08" tabindex="0">où</span>   <span data-index="893" data-begin="389.029" data-dur="0.599" tabindex="0">Bonaparte</span>   <span data-index="894" data-begin="389.629" data-dur="0.24" tabindex="0">allait</span>   <span data-index="895" data-begin="389.869" data-dur="0.44" tabindex="0">étudier</span>   <span data-index="896" data-begin="390.309" data-dur="0.179" tabindex="0">quand</span>   <span data-index="897" data-begin="390.489" data-dur="0.099" tabindex="0">il</span>   <span data-index="898" data-begin="390.589" data-dur="0.269" tabindex="0">était</span>   <span data-index="899" data-begin="390.86" data-dur="0.459" tabindex="0">enfant</span>   . » </p>
+<p> <span data-index="900" data-begin="393.809" data-dur="0.299" tabindex="0">C’était</span>   <span data-index="901" data-begin="394.109" data-dur="0.5" tabindex="0">peut</span>  - <span class="nomatch">être</span>  <span data-index="903" data-begin="394.609" data-dur="0.089" tabindex="0">la</span>   <span data-index="904" data-begin="394.699" data-dur="0.539" tabindex="0">première</span>   <span data-index="905" data-begin="395.239" data-dur="0.48" tabindex="0">fois</span>   <span data-index="906" data-begin="395.899" data-dur="0.17" tabindex="0">qu’un</span>   <span data-index="907" data-begin="396.069" data-dur="0.35" tabindex="0">désir</span>   <span data-index="908" data-begin="396.419" data-dur="0.62" tabindex="0">manifesté</span>   <span data-index="909" data-begin="397.039" data-dur="0.179" tabindex="0">par</span>   <span data-index="910" data-begin="397.22" data-dur="0.12" tabindex="0">le</span>   <span data-index="911" data-begin="397.339" data-dur="0.74" tabindex="0">colonel</span>   <span data-index="912" data-begin="398.329" data-dur="0.149" tabindex="0">eût</span>   <span data-index="913" data-begin="398.559" data-dur="0.47" tabindex="0">obtenu</span>   <span data-index="914" data-begin="399.029" data-dur="0.63" tabindex="0">l’approbation</span>   <span data-index="915" data-begin="399.659" data-dur="0.12" tabindex="0">de</span>   <span data-index="916" data-begin="399.779" data-dur="0.16" tabindex="0">sa</span>   <span data-index="917" data-begin="399.939" data-dur="0.57" tabindex="0">fille</span>   .  <span data-index="918" data-begin="401.629" data-dur="0.63" tabindex="0">Enchanté</span>   <span data-index="919" data-begin="402.26" data-dur="0.099" tabindex="0">de</span>   <span data-index="920" data-begin="402.359" data-dur="0.28" tabindex="0">cette</span>   <span data-index="921" data-begin="402.64" data-dur="0.48" tabindex="0">rencontre</span>   <span data-index="922" data-begin="403.119" data-dur="0.77" tabindex="0">inattendue</span>   ,  <span data-index="923" data-begin="404.55" data-dur="0.149" tabindex="0">il</span>   <span data-index="924" data-begin="404.699" data-dur="0.08" tabindex="0">eut</span>   <span data-index="925" data-begin="404.779" data-dur="0.55" tabindex="0">pourtant</span>   <span data-index="926" data-begin="405.359" data-dur="0.179" tabindex="0">le</span>   <span data-index="927" data-begin="405.539" data-dur="0.26" tabindex="0">bon</span>   <span data-index="928" data-begin="405.8" data-dur="0.459" tabindex="0">sens</span>   <span data-index="929" data-begin="406.259" data-dur="0.149" tabindex="0">de</span>   <span data-index="930" data-begin="406.409" data-dur="0.25" tabindex="0">faire</span>   <span data-index="931" data-begin="406.699" data-dur="0.399" tabindex="0">quelques</span>   <span data-index="932" data-begin="407.099" data-dur="0.75" tabindex="0">objections</span>   <span data-index="933" data-begin="408.14" data-dur="0.21" tabindex="0">pour</span>   <span data-index="934" data-begin="408.349" data-dur="0.399" tabindex="0">irriter</span>   <span data-index="935" data-begin="408.749" data-dur="0.32" tabindex="0">l’heureux</span>   <span data-index="936" data-begin="409.069" data-dur="0.63" tabindex="0">caprice</span>   <span data-index="937" data-begin="409.73" data-dur="0.16" tabindex="0">de</span>   <span data-index="938" data-begin="409.89" data-dur="0.25" tabindex="0">miss</span>   <span data-index="939" data-begin="410.14" data-dur="0.32" tabindex="0">Lydia</span>   .  <span data-index="940" data-begin="411.739" data-dur="0.179" tabindex="0">En</span>   <span data-index="941" data-begin="411.919" data-dur="0.359" tabindex="0">vain</span>   <span data-index="942" data-begin="412.609" data-dur="0.16" tabindex="0">il</span>   <span data-index="943" data-begin="412.769" data-dur="0.599" tabindex="0">parla</span>   <span data-index="944" data-begin="413.689" data-dur="0.17" tabindex="0">de</span>   <span data-index="945" data-begin="413.859" data-dur="0.099" tabindex="0">la</span>   <span data-index="946" data-begin="413.959" data-dur="0.61" tabindex="0">sauvagerie</span>   <span data-index="947" data-begin="414.569" data-dur="0.11" tabindex="0">du</span>   <span data-index="948" data-begin="414.679" data-dur="0.489" tabindex="0">pays</span>   <span data-index="949" data-begin="415.209" data-dur="0.06" tabindex="0">et</span>   <span data-index="950" data-begin="415.269" data-dur="0.099" tabindex="0">de</span>   <span data-index="951" data-begin="415.369" data-dur="0.13" tabindex="0">la</span>   <span data-index="952" data-begin="415.499" data-dur="0.77" tabindex="0">difficulté</span>   <span data-index="953" data-begin="416.269" data-dur="0.199" tabindex="0">pour</span>   <span data-index="954" data-begin="416.47" data-dur="0.14" tabindex="0">une</span>   <span data-index="955" data-begin="416.609" data-dur="0.37" tabindex="0">femme</span>   <span data-index="956" data-begin="416.979" data-dur="0.12" tabindex="0">d’y</span>   <span data-index="957" data-begin="417.099" data-dur="0.52" tabindex="0">voyager</span>  : <span data-index="958" data-begin="418.559" data-dur="0.13" tabindex="0">elle</span>   <span data-index="959" data-begin="418.689" data-dur="0.14" tabindex="0">ne</span>   <span data-index="960" data-begin="418.829" data-dur="0.359" tabindex="0">craignait</span>   <span data-index="961" data-begin="419.189" data-dur="0.21" tabindex="0">rien</span>   ;  <span data-index="962" data-begin="420.18" data-dur="0.13" tabindex="0">elle</span>   <span data-index="963" data-begin="420.309" data-dur="0.199" tabindex="0">aimait</span>   <span data-index="964" data-begin="420.509" data-dur="0.57" tabindex="0">par</span>  - <span class="nomatch">dessus</span>  <span data-index="966" data-begin="421.079" data-dur="0.179" tabindex="0">tout</span>   <span data-index="967" data-begin="421.259" data-dur="0.03" tabindex="0">à</span>   <span data-index="968" data-begin="421.289" data-dur="0.41" tabindex="0">voyager</span>   <span data-index="969" data-begin="421.699" data-dur="0.06" tabindex="0">à</span>   <span data-index="970" data-begin="421.759" data-dur="0.59" tabindex="0">cheval</span>   ;  <span data-index="971" data-begin="423.269" data-dur="0.089" tabindex="0">elle</span>   <span data-index="972" data-begin="423.359" data-dur="0.14" tabindex="0">se</span>   <span data-index="973" data-begin="423.5" data-dur="0.26" tabindex="0">faisait</span>   <span data-index="974" data-begin="423.759" data-dur="0.269" tabindex="0">une</span>   <span data-index="975" data-begin="424.029" data-dur="0.489" tabindex="0">fête</span>   <span data-index="976" data-begin="424.519" data-dur="0.14" tabindex="0">de</span>   <span data-index="977" data-begin="424.66" data-dur="0.41" tabindex="0">coucher</span>   <span data-index="978" data-begin="425.07" data-dur="0.07" tabindex="0">au</span>   <span data-index="979" data-begin="425.14" data-dur="0.61" tabindex="0">bivouac</span>   ;  <span data-index="980" data-begin="426.599" data-dur="0.12" tabindex="0">elle</span>   <span data-index="981" data-begin="426.719" data-dur="0.429" tabindex="0">menaçait</span>   <span data-index="982" data-begin="427.149" data-dur="0.31" tabindex="0">d’aller</span>   <span data-index="983" data-begin="427.459" data-dur="0.199" tabindex="0">en</span>   <span data-index="984" data-begin="427.66" data-dur="0.24" tabindex="0">Asie</span>   <span data-index="985" data-begin="427.899" data-dur="0.47" tabindex="0">Mineure</span>   .  <span data-index="986" data-begin="429.219" data-dur="0.38" tabindex="0">Bref</span>   ,  <span data-index="987" data-begin="430.07" data-dur="0.149" tabindex="0">elle</span>   <span data-index="988" data-begin="430.219" data-dur="0.24" tabindex="0">avait</span>   <span data-index="989" data-begin="430.459" data-dur="0.489" tabindex="0">réponse</span>   <span data-index="990" data-begin="430.949" data-dur="0.08" tabindex="0">à</span>   <span data-index="991" data-begin="431.029" data-dur="0.29" tabindex="0">tout</span>   ,  <span data-index="992" data-begin="431.759" data-dur="0.229" tabindex="0">car</span>   <span data-index="993" data-begin="431.989" data-dur="0.42" tabindex="0">jamais</span>   <span data-index="994" data-begin="432.41" data-dur="0.56" tabindex="0">Anglaise</span>   <span data-index="995" data-begin="432.969" data-dur="0.229" tabindex="0">n’avait</span>   <span data-index="996" data-begin="433.199" data-dur="0.21" tabindex="0">été</span>   <span data-index="997" data-begin="433.41" data-dur="0.16" tabindex="0">en</span>   <span data-index="998" data-begin="433.57" data-dur="0.459" tabindex="0">Corse</span>   ;  <span data-index="999" data-begin="434.289" data-dur="0.5" tabindex="0">donc</span>   <span data-index="1000" data-begin="435.16" data-dur="0.149" tabindex="0">elle</span>   <span data-index="1001" data-begin="435.309" data-dur="0.56" tabindex="0">devait</span>   <span data-index="1002" data-begin="435.869" data-dur="0.07" tabindex="0">y</span>   <span data-index="1003" data-begin="435.939" data-dur="0.26" tabindex="0">aller</span>   .  <span data-index="1004" data-begin="437.149" data-dur="0.329" tabindex="0">Et</span>   <span data-index="1005" data-begin="437.509" data-dur="0.17" tabindex="0">quel</span>   <span data-index="1006" data-begin="437.679" data-dur="0.719" tabindex="0">bonheur</span>   ,  <span data-index="1007" data-begin="438.64" data-dur="0.14" tabindex="0">de</span>   <span data-index="1008" data-begin="438.779" data-dur="0.539" tabindex="0">retour</span>   <span data-index="1009" data-begin="439.32" data-dur="0.31" tabindex="0">dans</span>   <span data-index="1010" data-begin="439.789" data-dur="0.229" tabindex="0">Saint</span>  - <span data-index="1011" data-begin="440.149" data-dur="0.45" tabindex="0">Jame’s</span>   <span data-index="1012" data-begin="440.599" data-dur="0.659" tabindex="0">Place</span>   ,  <span data-index="1013" data-begin="441.589" data-dur="0.12" tabindex="0">de</span>   <span data-index="1014" data-begin="441.709" data-dur="0.359" tabindex="0">montrer</span>   <span data-index="1015" data-begin="442.07" data-dur="0.22" tabindex="0">son</span>   <span data-index="1016" data-begin="442.289" data-dur="0.57" tabindex="0">album</span>  ! « <span data-index="1017" data-begin="444.769" data-dur="0.299" tabindex="0">Pourquoi</span>   <span data-index="1018" data-begin="445.07" data-dur="0.17" tabindex="0">donc</span>   ,  <span data-index="1019" data-begin="445.239" data-dur="0.089" tabindex="0">ma</span>   <span data-index="1020" data-begin="445.329" data-dur="0.55" tabindex="0">chère</span>   ,  <span data-index="1021" data-begin="445.959" data-dur="0.32" tabindex="0">passez</span>  - <span class="nomatch">vous</span>  <span data-index="1023" data-begin="446.409" data-dur="0.14" tabindex="0">ce</span>   <span data-index="1024" data-begin="446.55" data-dur="0.41" tabindex="0">charmant</span>   <span data-index="1025" data-begin="446.959" data-dur="0.429" tabindex="0">dessin</span>   ? – <span data-index="1026" data-begin="448.109" data-dur="0.45" tabindex="0">Oh</span>  ! <span data-index="1027" data-begin="448.809" data-dur="0.13" tabindex="0">ce</span>   <span data-index="1028" data-begin="448.939" data-dur="0.099" tabindex="0">n’est</span>   <span data-index="1029" data-begin="449.039" data-dur="0.429" tabindex="0">rien</span>   .  <span data-index="1030" data-begin="449.73" data-dur="0.22" tabindex="0">C’est</span>   <span data-index="1031" data-begin="449.949" data-dur="0.089" tabindex="0">un</span>   <span data-index="1032" data-begin="450.039" data-dur="0.599" tabindex="0">croquis</span>   <span data-index="1033" data-begin="450.639" data-dur="0.11" tabindex="0">que</span>   <span data-index="1034" data-begin="450.749" data-dur="0.13" tabindex="0">j’ai</span>   <span data-index="1035" data-begin="450.88" data-dur="0.22" tabindex="0">fait</span>   <span data-index="1036" data-begin="451.099" data-dur="0.299" tabindex="0">d’après</span>   <span data-index="1037" data-begin="451.399" data-dur="0.099" tabindex="0">un</span>   <span data-index="1038" data-begin="451.499" data-dur="0.399" tabindex="0">fameux</span>   <span data-index="1039" data-begin="451.899" data-dur="0.42" tabindex="0">bandit</span>   <span data-index="1040" data-begin="452.319" data-dur="0.5" tabindex="0">corse</span>   <span data-index="1041" data-begin="452.819" data-dur="0.149" tabindex="0">qui</span>   <span data-index="1042" data-begin="452.969" data-dur="0.14" tabindex="0">nous</span>   <span data-index="1043" data-begin="453.109" data-dur="0.089" tabindex="0">a</span>   <span data-index="1044" data-begin="453.2" data-dur="0.37" tabindex="0">servi</span>   <span data-index="1045" data-begin="453.569" data-dur="0.13" tabindex="0">de</span>   <span data-index="1046" data-begin="453.7" data-dur="0.52" tabindex="0">guide</span>   . – <span data-index="1047" data-begin="454.789" data-dur="0.789" tabindex="0">Comment</span>  ! <span data-index="1048" data-begin="456.009" data-dur="0.14" tabindex="0">vous</span>   <span data-index="1049" data-begin="456.149" data-dur="0.13" tabindex="0">avez</span>   <span data-index="1050" data-begin="456.34" data-dur="0.19" tabindex="0">été</span>   <span data-index="1051" data-begin="456.529" data-dur="0.16" tabindex="0">en</span>   <span data-index="1052" data-begin="456.719" data-dur="0.62" tabindex="0">Corse</span>   ? … » </p>
+<p> <span data-index="1053" data-begin="460.109" data-dur="0.149" tabindex="0">Les</span>   <span data-index="1054" data-begin="460.259" data-dur="0.359" tabindex="0">bateaux</span>   <span data-index="1055" data-begin="460.619" data-dur="0.06" tabindex="0">à</span>   <span data-index="1056" data-begin="460.679" data-dur="0.61" tabindex="0">vapeur</span>   <span data-index="1057" data-begin="461.319" data-dur="0.56" tabindex="0">n’existant</span>   <span data-index="1058" data-begin="461.88" data-dur="0.29" tabindex="0">point</span>   <span data-index="1059" data-begin="462.169" data-dur="0.42" tabindex="0">encore</span>   <span data-index="1060" data-begin="462.59" data-dur="0.229" tabindex="0">entre</span>   <span data-index="1061" data-begin="462.819" data-dur="0.11" tabindex="0">la</span>   <span data-index="1062" data-begin="462.929" data-dur="0.45" tabindex="0">France</span>   <span data-index="1063" data-begin="463.38" data-dur="0.049" tabindex="0">et</span>   <span data-index="1064" data-begin="463.429" data-dur="0.099" tabindex="0">la</span>   <span data-index="1065" data-begin="463.529" data-dur="0.539" tabindex="0">Corse</span>   ,  <span data-index="1066" data-begin="464.55" data-dur="0.16" tabindex="0">on</span>   <span data-index="1067" data-begin="464.709" data-dur="0.45" tabindex="0">s’enquit</span>   <span data-index="1068" data-begin="465.16" data-dur="0.14" tabindex="0">d’un</span>   <span data-index="1069" data-begin="465.3" data-dur="0.37" tabindex="0">navire</span>   <span data-index="1070" data-begin="465.669" data-dur="0.06" tabindex="0">en</span>   <span data-index="1071" data-begin="465.73" data-dur="0.55" tabindex="0">partance</span>   <span data-index="1072" data-begin="466.279" data-dur="0.22" tabindex="0">pour</span>   <span data-index="1073" data-begin="466.499" data-dur="0.44" tabindex="0">l’île</span>   <span data-index="1074" data-begin="467.23" data-dur="0.13" tabindex="0">que</span>   <span data-index="1075" data-begin="467.359" data-dur="0.28" tabindex="0">miss</span>   <span data-index="1076" data-begin="467.639" data-dur="0.399" tabindex="0">Lydia</span>   <span data-index="1077" data-begin="468.039" data-dur="0.16" tabindex="0">se</span>   <span data-index="1078" data-begin="468.2" data-dur="0.48" tabindex="0">proposait</span>   <span data-index="1079" data-begin="468.679" data-dur="0.14" tabindex="0">de</span>   <span data-index="1080" data-begin="468.819" data-dur="0.94" tabindex="0">découvrir</span>   .  <span data-index="1081" data-begin="471.41" data-dur="0.199" tabindex="0">Dès</span>   <span data-index="1082" data-begin="471.609" data-dur="0.16" tabindex="0">le</span>   <span data-index="1083" data-begin="471.77" data-dur="0.199" tabindex="0">jour</span>   <span data-index="1084" data-begin="471.969" data-dur="0.42" tabindex="0">même</span>   ,  <span data-index="1085" data-begin="472.749" data-dur="0.16" tabindex="0">le</span>   <span data-index="1086" data-begin="472.91" data-dur="0.47" tabindex="0">colonel</span>   <span data-index="1087" data-begin="473.38" data-dur="0.39" tabindex="0">écrivait</span>   <span data-index="1088" data-begin="473.849" data-dur="0.04" tabindex="0">à</span>   <span data-index="1089" data-begin="473.889" data-dur="0.45" tabindex="0">Paris</span>   <span data-index="1090" data-begin="474.48" data-dur="0.28" tabindex="0">pour</span>   <span data-index="1091" data-begin="474.759" data-dur="0.55" tabindex="0">décommander</span>   <span data-index="1092" data-begin="475.309" data-dur="0.659" tabindex="0">l’appartement</span>   <span data-index="1093" data-begin="475.969" data-dur="0.19" tabindex="0">qui</span>   <span data-index="1094" data-begin="476.16" data-dur="0.28" tabindex="0">devait</span>   <span data-index="1095" data-begin="476.439" data-dur="0.08" tabindex="0">le</span>   <span data-index="1096" data-begin="476.52" data-dur="0.95" tabindex="0">recevoir</span>   ,  <span data-index="1097" data-begin="477.759" data-dur="0.14" tabindex="0">et</span>   <span data-index="1098" data-begin="477.899" data-dur="0.21" tabindex="0">fit</span>   <span data-index="1099" data-begin="478.109" data-dur="0.459" tabindex="0">marché</span>   <span data-index="1100" data-begin="478.599" data-dur="0.269" tabindex="0">avec</span>   <span data-index="1101" data-begin="478.869" data-dur="0.089" tabindex="0">le</span>   <span data-index="1102" data-begin="478.959" data-dur="0.459" tabindex="0">patron</span>   <span data-index="1103" data-begin="479.419" data-dur="0.29" tabindex="0">d’une</span>   <span data-index="1104" data-begin="479.709" data-dur="0.58" tabindex="0">goélette</span>   <span data-index="1105" data-begin="480.289" data-dur="0.57" tabindex="0">corse</span>   <span data-index="1106" data-begin="481.149" data-dur="0.16" tabindex="0">qui</span>   <span data-index="1107" data-begin="481.309" data-dur="0.17" tabindex="0">allait</span>   <span data-index="1108" data-begin="481.48" data-dur="0.24" tabindex="0">faire</span>   <span data-index="1109" data-begin="481.719" data-dur="0.39" tabindex="0">voile</span>   <span data-index="1110" data-begin="482.109" data-dur="0.29" tabindex="0">pour</span>   <span data-index="1111" data-begin="482.429" data-dur="0.56" tabindex="0">Ajaccio</span>   .  <span data-index="1112" data-begin="484.09" data-dur="0.16" tabindex="0">Il</span>   <span data-index="1113" data-begin="484.249" data-dur="0.08" tabindex="0">y</span>   <span data-index="1114" data-begin="484.329" data-dur="0.21" tabindex="0">avait</span>   <span data-index="1115" data-begin="484.539" data-dur="0.229" tabindex="0">deux</span>   <span data-index="1116" data-begin="484.77" data-dur="0.44" tabindex="0">chambres</span>   <span data-index="1117" data-begin="485.239" data-dur="0.28" tabindex="0">telles</span>   <span data-index="1118" data-begin="485.55" data-dur="0.41" tabindex="0">quelles</span>   .  <span data-index="1119" data-begin="487.329" data-dur="0.17" tabindex="0">On</span>   <span data-index="1120" data-begin="487.499" data-dur="0.45" tabindex="0">embarqua</span>   <span data-index="1121" data-begin="487.95" data-dur="0.11" tabindex="0">des</span>   <span data-index="1122" data-begin="488.059" data-dur="0.599" tabindex="0">provisions</span>   ;  <span data-index="1123" data-begin="489.449" data-dur="0.179" tabindex="0">le</span>   <span data-index="1124" data-begin="489.629" data-dur="0.44" tabindex="0">patron</span>   <span data-index="1125" data-begin="490.069" data-dur="0.47" tabindex="0">jura</span>   <span data-index="1126" data-begin="490.84" data-dur="0.19" tabindex="0">qu’un</span>   <span data-index="1127" data-begin="491.029" data-dur="0.32" tabindex="0">vieux</span>   <span data-index="1128" data-begin="491.349" data-dur="0.34" tabindex="0">sien</span>   <span data-index="1129" data-begin="491.689" data-dur="0.52" tabindex="0">matelot</span>   <span data-index="1130" data-begin="492.209" data-dur="0.229" tabindex="0">était</span>   <span data-index="1131" data-begin="492.439" data-dur="0.12" tabindex="0">un</span>   <span data-index="1132" data-begin="492.559" data-dur="0.58" tabindex="0">cuisinier</span>   <span data-index="1133" data-begin="493.169" data-dur="0.919" tabindex="0">estimable</span>   <span data-index="1134" data-begin="494.55" data-dur="0.11" tabindex="0">et</span>   <span data-index="1135" data-begin="494.66" data-dur="0.199" tabindex="0">n’avait</span>   <span data-index="1136" data-begin="494.859" data-dur="0.16" tabindex="0">pas</span>   <span data-index="1137" data-begin="495.02" data-dur="0.14" tabindex="0">son</span>   <span data-index="1138" data-begin="495.16" data-dur="0.31" tabindex="0">pareil</span>   <span data-index="1139" data-begin="495.469" data-dur="0.14" tabindex="0">pour</span>   <span data-index="1140" data-begin="495.609" data-dur="0.099" tabindex="0">la</span>   <span data-index="1141" data-begin="495.709" data-dur="0.64" tabindex="0">bouillabaisse</span>   ;  <span data-index="1142" data-begin="497.289" data-dur="0.149" tabindex="0">il</span>   <span data-index="1143" data-begin="497.439" data-dur="0.359" tabindex="0">promit</span>   <span data-index="1144" data-begin="497.8" data-dur="0.12" tabindex="0">que</span>   <span data-index="1145" data-begin="497.919" data-dur="0.68" tabindex="0">mademoiselle</span>   <span data-index="1146" data-begin="498.599" data-dur="0.38" tabindex="0">serait</span>   <span data-index="1147" data-begin="498.98" data-dur="0.93" tabindex="0">convenablement</span>   ,  <span data-index="1148" data-begin="500.16" data-dur="0.16" tabindex="0">qu’elle</span>   <span data-index="1149" data-begin="500.319" data-dur="0.22" tabindex="0">aurait</span>   <span data-index="1150" data-begin="500.539" data-dur="0.31" tabindex="0">bon</span>   <span data-index="1151" data-begin="500.849" data-dur="0.38" tabindex="0">vent</span>   ,  <span data-index="1152" data-begin="501.259" data-dur="0.269" tabindex="0">belle</span>   <span data-index="1153" data-begin="501.529" data-dur="0.53" tabindex="0">mer</span>   .</p>
+<p> <span data-index="1154" data-begin="503.66" data-dur="0.179" tabindex="0">En</span>   <span data-index="1155" data-begin="503.84" data-dur="0.38" tabindex="0">outre</span>   ,  <span data-index="1156" data-begin="504.649" data-dur="0.359" tabindex="0">d’après</span>   <span data-index="1157" data-begin="505.009" data-dur="0.089" tabindex="0">les</span>   <span data-index="1158" data-begin="505.099" data-dur="0.399" tabindex="0">volontés</span>   <span data-index="1159" data-begin="505.499" data-dur="0.11" tabindex="0">de</span>   <span data-index="1160" data-begin="505.609" data-dur="0.149" tabindex="0">sa</span>   <span data-index="1161" data-begin="505.759" data-dur="0.45" tabindex="0">fille</span>   ,  <span data-index="1162" data-begin="506.599" data-dur="0.22" tabindex="0">le</span>   <span data-index="1163" data-begin="506.819" data-dur="0.52" tabindex="0">colonel</span>   <span data-index="1164" data-begin="507.34" data-dur="0.71" tabindex="0">stipula</span>   <span data-index="1165" data-begin="508.3" data-dur="0.099" tabindex="0">que</span>   <span data-index="1166" data-begin="508.399" data-dur="0.099" tabindex="0">le</span>   <span data-index="1167" data-begin="508.499" data-dur="0.489" tabindex="0">capitaine</span>   <span data-index="1168" data-begin="508.989" data-dur="0.13" tabindex="0">ne</span>   <span data-index="1169" data-begin="509.119" data-dur="0.53" tabindex="0">prendrait</span>   <span data-index="1170" data-begin="509.789" data-dur="0.38" tabindex="0">aucun</span>   <span data-index="1171" data-begin="510.169" data-dur="0.55" tabindex="0">passager</span>   ,  <span data-index="1172" data-begin="511.109" data-dur="0.14" tabindex="0">et</span>   <span data-index="1173" data-begin="511.249" data-dur="0.19" tabindex="0">qu’il</span>   <span data-index="1174" data-begin="511.439" data-dur="0.65" tabindex="0">s’arrangerait</span>   <span data-index="1175" data-begin="512.09" data-dur="0.149" tabindex="0">pour</span>   <span data-index="1176" data-begin="512.239" data-dur="0.37" tabindex="0">raser</span>   <span data-index="1177" data-begin="512.609" data-dur="0.13" tabindex="0">les</span>   <span data-index="1178" data-begin="512.769" data-dur="0.32" tabindex="0">côtes</span>   <span data-index="1179" data-begin="513.09" data-dur="0.12" tabindex="0">de</span>   <span data-index="1180" data-begin="513.209" data-dur="0.399" tabindex="0">l’île</span>   <span data-index="1181" data-begin="513.84" data-dur="0.13" tabindex="0">de</span>   <span data-index="1182" data-begin="513.969" data-dur="0.429" tabindex="0">façon</span>   <span data-index="1183" data-begin="514.399" data-dur="0.14" tabindex="0">qu’on</span>   <span data-index="1184" data-begin="514.539" data-dur="0.179" tabindex="0">pût</span>   <span data-index="1185" data-begin="514.719" data-dur="0.35" tabindex="0">jouir</span>   <span data-index="1186" data-begin="515.07" data-dur="0.12" tabindex="0">de</span>   <span data-index="1187" data-begin="515.189" data-dur="0.11" tabindex="0">la</span>   <span data-index="1188" data-begin="515.3" data-dur="0.16" tabindex="0">vue</span>   <span data-index="1189" data-begin="515.46" data-dur="0.089" tabindex="0">des</span>   <span data-index="1190" data-begin="515.55" data-dur="0.55" tabindex="0">montagnes</span>   .</p>
+<p>1 <span class="nomatch">C’est</span>  <span class="nomatch">la</span>  <span class="nomatch">vengeance</span>  <span class="nomatch">que</span>  <span class="nomatch">l’on</span>  <span class="nomatch">fait</span>  <span class="nomatch">tomber</span>  <span class="nomatch">sur</span>  <span class="nomatch">un</span>  <span class="nomatch">parent</span>  <span class="nomatch">plus</span>  <span class="nomatch">ou</span>  <span class="nomatch">moins</span>  <span class="nomatch">éloigné</span>  <span class="nomatch">de</span>  <span class="nomatch">l’auteur</span>  <span class="nomatch">de</span>  <span class="nomatch">l’offense</span>  .</p>
+<p>??</p>
+<p>??</p>
+<p>??</p>
+<p>??</p>
+            </div>
+
+            <footer class="credits">
+                <div>阅读外语经典，了解世界文化，复兴中华文明</div>
+                <div>听语族外语软件工作室出品 湖南长沙</div>
+            </footer>
+        </article>
+
+        <footer class="credits">
+            Support by
+            <a rel="author" href="mailto:knightmade@qq.com">meng gang</a>,
+            Code licensed <a href="http://www.opensource.org/licenses/MIT" rel="license">MIT</a>/<a href="http://www.gnu.org/licenses/gpl.html" rel="license">GPL</a>.
+        </footer>
+
+<script type="text/javascript">
+
+    /**
+     * HTML5 Audio Read-Along
+     * @author Weston Ruter, X-Team
+     * @license MIT/GPL
+     * https://github.com/westonruter/html5-audio-read-along
+     */
+    var ReadAlong = {
+        text_element: null,
+        audio_element: null,
+        autofocus_current_word: true,
+
+        words: [],
+
+        init: function (args) {
+            var name;
+            for (name in args) {
+                this[name] = args[name];
+            }
+            this.generateWordList();
+            this.addEventListeners();
+            this.selectCurrentWord();
+        },
+
+        /**
+         * Build an index of all of the words that can be read along with their begin,
+         * and end times, and the DOM element representing the word.
+         */
+        generateWordList: function () {
+            var word_els = this.text_element.querySelectorAll('[data-begin]');
+            this.words = Array.prototype.map.call(word_els, function (word_el, index) {
+                var word = {
+                    'begin': parseFloat(word_el.dataset.begin),
+                    'dur': parseFloat(word_el.dataset.dur),
+                    'element': word_el
+                };
+                word_el.tabIndex = 0; // to make it focusable/interactive
+                word.index = index;
+                word.end = word.begin + word.dur;
+                word_el.dataset.index = word.index;
+                return word;
+            });
+        },
+
+        /**
+         * From the audio's currentTime, find the word that is currently being played
+         * @todo this would better be implemented as a binary search
+         */
+        getCurrentWord: function () {
+            var i;
+            var len;
+            var is_current_word;
+            var word = null;
+            for (i = 0, len = this.words.length; i < len; i += 1) {
+                is_current_word = (
+                    (
+                        this.audio_element.currentTime >= this.words[i].begin
+                        &&
+                        this.audio_element.currentTime < this.words[i].end
+                    )
+                    ||
+                    (this.audio_element.currentTime < this.words[i].begin)
+                );
+                if (is_current_word) {
+                    word = this.words[i];
+                    break;
+                }
+            }
+
+            if (!word) {
+                throw Error('Unable to find current word and we should always be able to.');
+            }
+            return word;
+        },
+
+        _current_end_select_timeout_id: null,
+        _current_next_select_timeout_id: null,
+
+        /**
+         * Select the current word and set timeout to select the next one if playing
+         */
+        selectCurrentWord: function() {
+            var that = this;
+            var current_word = this.getCurrentWord();
+            var is_playing = !this.audio_element.paused;
+
+            if (!current_word.element.classList.contains('speaking')) {
+                this.removeWordSelection();
+                current_word.element.classList.add('speaking');
+                if (this.autofocus_current_word) {
+                    current_word.element.focus();
+                }
+            }
+
+            /**
+             * The timeupdate Media event does not fire repeatedly enough to be
+             * able to rely on for updating the selected word (it hovers around
+             * 250ms resolution), so we add a setTimeout with the exact duration
+             * of the word.
+             */
+            if (is_playing) {
+                // Remove word selection when the word ceases to be spoken
+                var seconds_until_this_word_ends = current_word.end - this.audio_element.currentTime; // Note: 'word' not 'world'! ;-)
+                if (typeof this.audio_element === 'number' && !isNaN(this.audio_element)) {
+                    seconds_until_this_word_ends *= 1.0/this.audio_element.playbackRate;
+                }
+                clearTimeout(this._current_end_select_timeout_id);
+                this._current_end_select_timeout_id = setTimeout(
+                    function () {
+                        if (!that.audio_element.paused) { // we always want to have a word selected while paused
+                            current_word.element.classList.remove('speaking');
+                        }
+                    },
+                    Math.max(seconds_until_this_word_ends * 1000, 0)
+                );
+
+                // Automatically trigger selectCurrentWord when the next word begins
+                var next_word = this.words[current_word.index + 1];
+                if (next_word) {
+                    var seconds_until_next_word_begins = next_word.begin - this.audio_element.currentTime;
+
+                    var orig_seconds_until_next_word_begins = seconds_until_next_word_begins; // temp
+                    if (typeof this.audio_element === 'number' && !isNaN(this.audio_element)) {
+                        seconds_until_next_word_begins *= 1.0/this.audio_element.playbackRate;
+                    }
+                    clearTimeout(this._current_next_select_timeout_id);
+                    this._current_next_select_timeout_id = setTimeout(
+                        function () {
+                            that.selectCurrentWord();
+                        },
+                        Math.max(seconds_until_next_word_begins * 1000, 0)
+                    );
+                }
+            }
+
+        },
+
+        removeWordSelection: function() {
+            // There should only be one element with .speaking, but selecting all for good measure
+            var spoken_word_els = this.text_element.querySelectorAll('span[data-begin].speaking');
+            Array.prototype.forEach.call(spoken_word_els, function (spoken_word_el) {
+                spoken_word_el.classList.remove('speaking');
+            });
+        },
+
+
+        addEventListeners: function () {
+            var that = this;
+
+            /**
+             * Select next word (at that.audio_element.currentTime) when playing begins
+             */
+            that.audio_element.addEventListener('play', function (e) {
+                that.selectCurrentWord();
+                that.text_element.classList.add('speaking');
+            }, false);
+
+            /**
+             * Abandon seeking the next word because we're paused
+             */
+            that.audio_element.addEventListener('pause', function (e) {
+                that.selectCurrentWord(); // We always want a word to be selected
+                that.text_element.classList.remove('speaking');
+            }, false);
+
+            /**
+             * Seek by selecting a word (event delegation)
+             */
+            function on_select_word_el(e) {
+                if (!e.target.dataset.begin) {
+                    return;
+                }
+                e.preventDefault();
+
+                var i = e.target.dataset.index;
+                that.audio_element.currentTime = that.words[i].begin + 0.01; //Note: times apparently cannot be exactly set and sometimes select too early
+                that.selectCurrentWord();
+            }
+            that.text_element.addEventListener('click', on_select_word_el, false);
+            that.text_element.addEventListener('keypress', function (e) {
+                if ( (e.charCode || e.keyCode) === 13 /*Enter*/) {
+                    on_select_word_el.call(this, e);
+                }
+            }, false);
+
+            /**
+             * Spacebar toggles playback
+             */
+            document.addEventListener('keypress', function (e) {
+                if ( (e.charCode || e.keyCode) === 32 /*Space*/) {
+                    e.preventDefault();
+                    if (that.audio_element.paused) {
+                        that.audio_element.play();
+                    }
+                    else {
+                        that.audio_element.pause();
+                    }
+                }
+            }, false);
+
+            /**
+             * First click handler sets currentTime to the word, and second click
+             * here then causes it to play.
+             * @todo Should it stop playing once the duration is over?
+             */
+            that.text_element.addEventListener('dblclick', function (e) {
+                e.preventDefault();
+                that.audio_element.play();
+            }, false);
+
+            /**
+             * Select a word when seeking
+             */
+            that.audio_element.addEventListener('seeked', function (e) {
+                that.selectCurrentWord();
+
+                /**
+                 * Address probem with Chrome where sometimes it seems to get stuck upon seeked:
+                 * http://code.google.com/p/chromium/issues/detail?id=99749
+                 */
+                var audio_element = this;
+                if (!audio_element.paused) {
+                    var previousTime = audio_element.currentTime;
+                    setTimeout(function () {
+                        if (!audio_element.paused && previousTime === audio_element.currentTime) {
+                            audio_element.currentTime += 0.01; // Attempt to unstick
+                        }
+                    }, 500);
+                }
+            }, false);
+
+            /**
+             * Select a word when seeking
+             */
+            that.audio_element.addEventListener('ratechange', function (e) {
+                that.selectCurrentWord();
+            }, false);
+        }
+    };
+
+    /*global ReadAlong */
+    window.addEventListener('load', function (e) {
+        try {
+            var args = {
+                text_element: document.getElementById('passage-text'),
+                audio_element: document.getElementById('passage-audio'),
+                autofocus_current_word: document.getElementById('autofocus-current-word').checked
+            };
+
+            if (!args.audio_element.canPlayType) {
+                // No error messaging is needed because error message appears in <audio> fallback
+                throw new Error('HTML5 Audio not supported');
+            }
+            if (args.audio_element.networkState === args.audio_element.NETWORK_NO_SOURCE) {
+                document.querySelector('.passage-audio-unavailable').hidden = false;
+                throw new Error('Cannot play any of the available sources');
+            }
+
+            var supports_playback_rate = (function (audio) {
+                if (typeof audio.playbackRate !== 'number' || isNaN(audio.playbackRate)) {
+                    return false;
+                }
+
+                // For Opera, since it doesn't currently support playbackRate and yet
+                // has it defined as 1.0, we can detect Opera support by changing
+                // the playbackRate and see if the change sticks.
+                var original_playback_rate = audio.playbackRate;
+                audio.playbackRate += 1.0;
+                var is_playback_rate_changed = (original_playback_rate !== audio.playbackRate);
+                audio.playbackRate = original_playback_rate;
+                return is_playback_rate_changed;
+            }(args.audio_element));
+
+            if (supports_playback_rate) {
+                var rate_range_element = document.getElementById('playback-rate');
+                rate_range_element.disabled = false;
+                rate_range_element.addEventListener('change', function (e) {
+                    args.audio_element.playbackRate = this.valueAsNumber;
+                }, false);
+            }
+            else {
+                document.querySelector('.playback-rate-unavailable').hidden = false;
+            }
+
+            ReadAlong.init(args);
+
+            document.getElementById('autofocus-current-word').addEventListener('change', function (e) {
+                ReadAlong.autofocus_current_word = this.checked;
+            }, false);
+
+            document.querySelector('.passage-audio').hidden = false;
+            if (supports_playback_rate) {
+                document.querySelector('.playback-rate').hidden = false;
+            }
+            document.querySelector('.autofocus-current-word').hidden = false;
+        } catch (err) {
+            console.error(err);
+        }
+        document.body.classList.add('initialized');
+        document.querySelector('.loading').hidden = true;
+
+        var ElementClass = {
+            dict: {},
+
+            create: function(class_name) {
+                var tmp = class_name.split(/[\s\t\r\n]+/);
+                var dict = {};
+                for (var i in tmp) {
+                    var x = tmp[i];
+                    if (x && !(x in dict)) {
+                        dict[x] = true;
+                    }
+                }
+                this.dict = dict;
+                return this;
+            },
+
+            hasClass: function(class_name) {
+                return class_name in this.dict;
+            },
+
+            addClass: function(class_name) {
+                this.dict[class_name] = true;
+            },
+
+            removeClass: function(class_name) {
+                delete this.dict[class_name];
+            },
+
+            toString: function() {
+                var tmp = [];
+                for (var x in this.dict) {
+                    tmp.push(x);
+                }
+                return tmp.join(' ');
+            },
+        };
+
+        window.addEventListener('scroll', function(e) {
+            var bodyClass = ElementClass.create(document.querySelector('body').className);
+            if (window.scrollY >= 100) {
+                bodyClass.addClass('sticky-header');
+            } else {
+                bodyClass.removeClass('sticky-header');
+            }
+            document.querySelector('body').className = bodyClass.toString();
+        }, false);
+
+    }, false);
+
+
+</script>
+
+
+    </body>
+</html>
