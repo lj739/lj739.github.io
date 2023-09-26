@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://westonruter.github.io/html5-audio-read-along/ -->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>turnsofthought_1_1_santayana_64kb - 听语族</title>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<style>
+html {
+    background: #333;
+    font-family: Verdana, sans-serif;
+}
+body {
+    padding: 0;
+    margin: 5px;
+}
+article {
+    background: white;
+    border-radius: 1em;
+    margin-top: 130px;
+    padding: 1em;
+}
+a {
+    color: #0E2560;
+}
+h1 {
+    font-size: 14pt;
+    white-space: nowrap;
+    word-wrap: keep-all;
+}
+h2 {
+    margin-bottom: 1em;
+}
+#passage-text.speaking {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+q {
+    quotes: "“" "”" "‘" "’";
+}
+.section-heading {
+    display: none;
+}
+.passage p {
+    line-height: 1.4em;
+}
+.verse-start {
+    line-height: 0;
+}
+.initialized span[data-begin]:focus,
+.initialized span[data-begin]:hover {
+    background-color: #FFFFCA;
+    box-shadow: 0px 0px 4px #FFFFCA;
+}
+.initialized span[data-begin].speaking {
+    background-color: yellow;
+    box-shadow: 0px 0px 4px yellow;
+}
+.initialized span[data-begin] {
+    cursor: pointer;
+}
+.initialized span.nomatch {
+    background-color: lightgray;
+    color: purple;
+}
+.error {
+    color: red;
+}
+
+article > footer {
+    border-top: solid 1px gray;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+
+footer {
+    margin-bottom: 0.5em;
+    line-height: 1.4em;
+    font-size: small;
+}
+footer img {
+    vertical-align: text-bottom;
+}
+
+header {
+    width: 100%;
+    color: #cce;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    text-align: center;
+}
+header h1 {
+    color: #cce;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+header .passage-audio {
+    width: 100%;
+    text-align: center;
+}
+header .passage-audio #passage-audio {
+    width: 100%;
+}
+header .passage-control {
+    display: block;
+    width: 520px;
+    height: 40px;
+    margin: 5px auto 0 auto;
+}
+header .playback-rate {
+    height: 40px;
+    padding: 0px 0px 0px 6px;
+    display: block;
+    float: left;
+}
+header .autofocus-current-word {
+    height: 40px;
+    padding: 0px 0px 0px 6px;
+    display: block;
+    float: left;
+}
+header .playback-rate label,
+header .playback-rate output,
+header .autofocus-current-word label,
+header .autofocus-current-word input {
+    vertical-align: middle;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+body.sticky-header {
+    padding-top: 10px;
+}
+body.sticky-header header {
+    background-color: rgba(127, 127, 127, 0.9);
+}
+body.sticky-header header h1 {
+    display: none;
+}
+body.sticky-header header .passage-audio {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+body.sticky-header header .passage-control {
+    width: 240px;
+}
+body.sticky-header header .playback-rate {
+}
+body.sticky-header header .playback-rate label,
+body.sticky-header header .playback-rate output {
+    display: none;
+}
+body.sticky-header header .autofocus-current-word {
+}
+body.sticky-header header .autofocus-current-word label {
+    display: none;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 130px;
+    border-radius: 10px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 130px;
+    height: 15px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
+    border-radius: 10px; /*将轨道设为圆角的*/
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-ms-track {
+    width: 130px;
+    cursor: pointer;
+    background: transparent;;
+    border-color: transparent; /*去除原有边框*/
+    color: transparent; /*去除轨道内的竖线*/
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+    margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+    background: #ffffff;
+    border-radius: 50%; /*外观设置为圆形*/
+    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+    box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+}
+input[type=range]::-moz-range-progress {
+    background: linear-gradient(to right, #059CFA, white 100%, white);
+    height: 13px;
+    border-radius: 10px;
+}
+input[type=range]::-ms-track {
+    height: 25px;
+    border-radius: 10px;
+    box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112;
+    border-color: transparent; /*去除原有边框*/
+    color: transparent; /*去除轨道内的竖线*/
+}
+input[type=range]::-ms-thumb {
+    border: solid 0.125em rgba(205, 224, 230, 0.5);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: #ffffff;
+    margin-top: -5px;
+    box-shadow: 0 .125em .125em #3b4547;
+}
+input[type=range]::-ms-fill-lower {
+    /*进度条已填充的部分*/
+    height: 22px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #059CFA, white 100%, white);
+}
+input[type=range]::-ms-fill-upper {
+    /*进度条未填充的部分*/
+    height: 22px;
+    border-radius: 10px;
+    background: #ffffff;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: linear-gradient(to right, #059CFA, white 100%, white);
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ffffff;
+}
+
+.mui-switch {
+    width: 58px;
+    height: 15px;
+    position: relative;
+    border: 1px solid #dfdfdf;
+    background-color: #fdfdfd;
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-clip: content-box;
+    display: inline-block;
+    -webkit-appearance: none;
+    user-select: none;
+    outline: none;
+}
+.mui-switch:before {
+    content: '';
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: -6px;
+    left: 0;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.mui-switch:checked {
+    border-color: #64bd63;
+    box-shadow: #64bd63 0 0 0 16px inset;
+    background-color: #64bd63;
+}
+.mui-switch:checked:before {
+    left: 31px;
+}
+.mui-switch.mui-switch-animbg {
+    transition: background-color ease 0.4s;
+}
+.mui-switch.mui-switch-animbg:before {
+    transition: left 0.3s;
+}
+.mui-switch.mui-switch-animbg:checked {
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    background-color: #64bd63;
+    transition: border-color 0.4s, background-color ease 0.4s;
+}
+.mui-switch.mui-switch-animbg:checked:before {
+    transition: left 0.3s;
+}
+.mui-switch.mui-switch-anim {
+    transition: border cubic-bezier(0, 0, 0, 1) 0.4s, box-shadow cubic-bezier(0, 0, 0, 1) 0.4s;
+}
+.mui-switch.mui-switch-anim:before {
+    transition: left 0.3s;
+}
+.mui-switch.mui-switch-anim:checked {
+    box-shadow: #64bd63 0 0 0 16px inset;
+    background-color: #64bd63;
+    transition: border ease 0.4s, box-shadow ease 0.4s, background-color ease 1.2s;
+}
+.mui-switch.mui-switch-anim:checked:before {
+    transition: left 0.3s;
+}
+</style>
+    </head>
+    <body class="initialized">
+
+        <header>
+            <h1>听语族: turnsofthought_1_1_santayana_64kb</h1>
+
+            <div class="passage-audio">
+                <audio id="passage-audio" controls="">
+                    <!-- @todo WebM? -->
+                    <source src="turnsofthought_1_1_santayana_64kb.mp3" type="audio/mp3">
+                    <em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em>
+                </audio>
+            </div>
+
+            <div class="passage-control">
+                <div class="playback-rate" title="Note that increaseing the reading rate will decrease accuracy of word highlights">
+                    <label for="playback-rate">语速:</label>
+                    <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" onchange="document.querySelector('#playback-rate-curr').innerText = 'x' + String(Math.round(this.valueAsNumber * 10) / 10);">
+                    <label id="playback-rate-curr">x1</label>
+                </div>
+                <div class="autofocus-current-word">
+                    <label for="autofocus-current-word">跟随:</label>
+                    <input id="autofocus-current-word" class="mui-switch mui-switch-animbg" type="checkbox" checked="checked">
+                </div>
+            </div>
+
+        </header>
+
+        <article>
+
+            <div class="notice">
+                <p class="loading" hidden="">
+                    <em> Loading </em>audio
+                </p>
+
+                <p class="passage-audio-unavailable" hidden="">
+                    <em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>
+                </p>
+
+                <p class="playback-rate-unavailable" hidden="">
+                    <em>(It seems your browser does not support <code>HTMLMediaElement.playbackRate</code>, so you will not be able to change the speech rate.)</em>
+                </p>
+
+                <noscript>
+                    &lt;p class="error"&gt;&lt;em&gt;&lt;strong&gt;Notice:&lt;/strong&gt; You must have JavaScript enabled/available to try this HTML5 Audio read along.&lt;/em&gt;&lt;/p&gt;
+                </noscript>
+            </div>
+
+            <div id="passage-text" class="passage">
+<p> <span class="nomatch">I</span>  </p>
+<p> <span class="nomatch">LOCKE</span>  <span class="nomatch">AND</span>  <span class="nomatch">THE</span>  <span class="nomatch">FRONTIERS</span>  <span class="nomatch">OF</span>  <span class="nomatch">COMMON</span>  <span class="nomatch">SENSE</span> [1] </p>
+<p> <span class="nomatch">A</span>  <span class="nomatch">good</span>  <span class="nomatch">portrait</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke</span>  <span class="nomatch">would</span>  <span class="nomatch">require</span>  <span class="nomatch">an</span>  <span class="nomatch">elaborate</span>  <span class="nomatch">background</span>  .  <span class="nomatch">His</span>  <span class="nomatch">is</span>  <span class="nomatch">not</span>  <span class="nomatch">a</span>  <span class="nomatch">figure</span>  <span class="nomatch">to</span>  <span class="nomatch">stand</span>  <span class="nomatch">statuesquely</span>  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">void</span> : <span class="nomatch">the</span>  <span class="nomatch">pose</span>  <span class="nomatch">might</span>  <span class="nomatch">not</span>  <span class="nomatch">seem</span>  <span class="nomatch">grand</span>  <span class="nomatch">enough</span>  <span class="nomatch">for</span>  <span class="nomatch">bronze</span>  <span class="nomatch">or</span>  <span class="nomatch">marble</span>  .  <span class="nomatch">Rather</span>  <span class="nomatch">he</span>  <span class="nomatch">should</span>  <span class="nomatch">be</span>  <span class="nomatch">painted</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">manner</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">Dutch</span>  <span class="nomatch">masters</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">sunny</span>  <span class="nomatch">interior</span>  ,  <span class="nomatch">scrupulously</span>  <span class="nomatch">furnished</span>  <span class="nomatch">with</span>  <span class="nomatch">all</span>  <span class="nomatch">the</span>  <span class="nomatch">implements</span>  <span class="nomatch">of</span>  <span class="nomatch">domestic</span>  <span class="nomatch">comfort</span>  <span class="nomatch">and</span>  <span class="nomatch">philosophic</span>  <span class="nomatch">enquiry</span> : <span class="nomatch">the</span>  <span class="nomatch">Holy</span>  <span class="nomatch">Bible</span>  <span class="nomatch">open</span>  <span class="nomatch">majestically</span>  <span class="nomatch">before</span>  <span class="nomatch">him</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">beside</span>  <span class="nomatch">it</span>  <span class="nomatch">that</span>  <span class="nomatch">other</span>  <span class="nomatch">revelation</span> — <span class="nomatch">the</span>  <span class="nomatch">terrestrial</span>  <span class="nomatch">globe</span>  .  <span class="nomatch">His</span>  <span class="nomatch">hand</span>  <span class="nomatch">might</span>  <span class="nomatch">be</span>  <span class="nomatch">pointing</span>  <span class="nomatch">to</span>  <span class="nomatch">a</span>  <span class="nomatch">microscope</span>  <span class="nomatch">set</span>  <span class="nomatch">for</span>  <span class="nomatch">examining</span>  <span class="nomatch">the</span>  <span class="nomatch">internal</span>  <span class="nomatch">constitution</span>  <span class="nomatch">of</span>  <span class="nomatch">a</span>  <span class="nomatch">beetle</span> : <span class="nomatch">but</span>  <span class="nomatch">for</span>  <span class="nomatch">the</span>  <span class="nomatch">moment</span>  <span class="nomatch">his</span>  <span class="nomatch">eye</span>  <span class="nomatch">should</span>  <span class="nomatch">be</span>  <span class="nomatch">seen</span>  <span class="nomatch">wandering</span>  <span class="nomatch">through</span>  <span class="nomatch">the</span>  <span class="nomatch">open</span>  <span class="nomatch">window</span>  ,  <span class="nomatch">to</span>  <span class="nomatch">admire</span>  <span class="nomatch">the</span>  <span class="nomatch">blessings</span>  <span class="nomatch">of</span>  <span class="nomatch">thrift</span>  <span class="nomatch">and</span>  <span class="nomatch">liberty</span>  <span class="nomatch">manifest</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">people</span>  <span class="nomatch">so</span>  <span class="nomatch">worthily</span>  <span class="nomatch">busy</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">market</span> - <span class="nomatch">place</span>  ,  <span class="nomatch">wrong</span>  <span class="nomatch">as</span>  <span class="nomatch">many</span>  <span class="nomatch">a</span>  <span class="nomatch">monkish</span>  <span class="nomatch">notion</span>  <span class="nomatch">might</span>  <span class="nomatch">be</span>  <span class="nomatch">that</span>  <span class="nomatch">still</span>  <span class="nomatch">troubled</span>  <span class="nomatch">their</span>  <span class="nomatch">poor</span>  <span class="nomatch">heads</span>  .  <span class="nomatch">From</span>  <span class="nomatch">them</span>  <span class="nomatch">his</span>  <span class="nomatch">enlarged</span>  <span class="nomatch">thoughts</span>  <span class="nomatch">would</span>  <span class="nomatch">easily</span>  <span class="nomatch">pass</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">stout</span>  <span class="nomatch">carved</span>  <span class="nomatch">ships</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">river</span>  <span class="nomatch">beyond</span>  ,  <span class="nomatch">intrepidly</span>  <span class="nomatch">setting</span>  <span class="nomatch">sail</span>  <span class="nomatch">for</span>  <span class="nomatch">the</span>  <span class="nomatch">Indies</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">for</span>  <span class="nomatch">savage</span>  <span class="nomatch">America</span>  .  <span class="nomatch">Yes</span>  ,  <span class="nomatch">he</span>  <span class="nomatch">too</span>  <span class="nomatch">had</span>  <span class="nomatch">travelled</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">not</span>  <span class="nomatch">only</span>  <span class="nomatch">in</span>  <span class="nomatch">thought</span>  .  <span class="nomatch">He</span>  <span class="nomatch">knew</span>  <span class="nomatch">how</span>  <span class="nomatch">many</span>  <span class="nomatch">strange</span>  <span class="nomatch">nations</span>  <span class="nomatch">and</span>  <span class="nomatch">false</span>  <span class="nomatch">religions</span>  <span class="nomatch">lodged</span>  <span class="nomatch">in</span>  <span class="nomatch">this</span>  <span class="nomatch">round</span>  <span class="nomatch">earth</span>  ,  <span class="nomatch">itself</span>  <span class="nomatch">but</span>  <span class="nomatch">a</span>  <span class="nomatch">speck</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">universe</span>  .  <span class="nomatch">There</span>  <span class="nomatch">were</span>  <span class="nomatch">few</span>  <span class="nomatch">ingenious</span>  <span class="nomatch">authors</span>  <span class="nomatch">that</span>  <span class="nomatch">he</span>  <span class="nomatch">had</span>  <span class="nomatch">not</span>  <span class="nomatch">perused</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">philosophical</span>  <span class="nomatch">instruments</span>  <span class="nomatch">that</span>  <span class="nomatch">he</span>  <span class="nomatch">had</span>  <span class="nomatch">not</span>  ,  <span class="nomatch">as</span>  <span class="nomatch">far</span>  <span class="nomatch">as</span>  <span class="nomatch">possible</span>  ,  <span class="nomatch">examined</span>  <span class="nomatch">and</span>  <span class="nomatch">tested</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">no</span>  <span class="nomatch">man</span>  <span class="nomatch">better</span>  <span class="nomatch">than</span>  <span class="nomatch">he</span>  <span class="nomatch">could</span>  <span class="nomatch">understand</span>  <span class="nomatch">and</span>  <span class="nomatch">prize</span>  <span class="nomatch">the</span>  <span class="nomatch">recent</span>  <span class="nomatch">discoveries</span>  <span class="nomatch">of</span>  "  <span class="nomatch">the</span>  <span class="nomatch">incomparable</span>  <span class="nomatch">Mr</span>  <span class="nomatch">Newton</span>  ".  <span class="nomatch">Nevertheless</span>  ,  <span class="nomatch">a</span>  <span class="nomatch">certain</span>  <span class="nomatch">uneasiness</span>  <span class="nomatch">in</span>  <span class="nomatch">that</span>  <span class="nomatch">spare</span>  <span class="nomatch">frame</span>  ,  <span class="nomatch">a</span>  <span class="nomatch">certain</span>  <span class="nomatch">knitting</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">brows</span>  <span class="nomatch">in</span>  <span class="nomatch">that</span>  <span class="nomatch">aquiline</span>  <span class="nomatch">countenance</span>  ,  <span class="nomatch">would</span>  <span class="nomatch">suggest</span>  <span class="nomatch">that</span>  <span data-index="270" data-begin="403.079" data-dur="0.149" tabindex="0">in</span>   <span data-index="271" data-begin="403.229" data-dur="0.099" tabindex="0">the</span>   <span data-index="272" data-begin="403.329" data-dur="0.38" tabindex="0">midst</span>   <span data-index="273" data-begin="403.709" data-dur="0.25" tabindex="0">of</span>   <span class="nomatch">their</span>  <span class="nomatch">earnest</span>  <span class="nomatch">eloquence</span>  <span class="nomatch">the</span>  <span class="nomatch">philosopher's</span>  <span class="nomatch">thoughts</span>  <span class="nomatch">might</span>  <span class="nomatch">sometimes</span>  <span class="nomatch">come</span>  <span class="nomatch">to</span>  <span class="nomatch">a</span>  <span class="nomatch">stand</span>  .  <span class="nomatch">Indeed</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">visible</span>  <span class="nomatch">scene</span>  <span class="nomatch">did</span>  <span class="nomatch">not</span>  <span class="nomatch">exhaust</span>  <span class="nomatch">the</span>  <span class="nomatch">complexity</span>  <span class="nomatch">of</span>  <span class="nomatch">his</span>  <span class="nomatch">problem</span>  ;  <span class="nomatch">for</span>  <span class="nomatch">there</span>  <span class="nomatch">was</span>  <span class="nomatch">also</span>  <span class="nomatch">what</span>  <span class="nomatch">he</span>  <span class="nomatch">called</span>  "  <span class="nomatch">the</span>  <span class="nomatch">scene</span>  <span class="nomatch">of</span>  <span class="nomatch">ideas</span>  ",  <span class="nomatch">immaterial</span>  <span class="nomatch">and</span>  <span class="nomatch">private</span>  ,  <span class="nomatch">but</span>  <span class="nomatch">often</span>  <span class="nomatch">more</span>  <span class="nomatch">crowded</span>  <span class="nomatch">and</span>  <span class="nomatch">pressing</span>  <span class="nomatch">than</span>  <span class="nomatch">the</span>  <span class="nomatch">public</span>  <span class="nomatch">scene</span>  .  <span class="nomatch">Locke</span>  <span class="nomatch">was</span>  <span class="nomatch">the</span>  <span class="nomatch">father</span>  <span class="nomatch">of</span>  <span class="nomatch">modern</span>  <span class="nomatch">psychology</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">birth</span>  <span class="nomatch">of</span>  <span class="nomatch">this</span>  <span class="nomatch">airy</span>  <span class="nomatch">monster</span>  ,  <span class="nomatch">this</span>  <span class="nomatch">half</span> - <span class="nomatch">natural</span>  <span class="nomatch">changeling</span>  ,  <span class="nomatch">was</span>  <span class="nomatch">not</span>  <span class="nomatch">altogether</span>  <span class="nomatch">easy</span>  <span class="nomatch">or</span>  <span class="nomatch">fortunate</span>  . [2] </p>
+<p> <span class="nomatch">I</span>  <span class="nomatch">wish</span>  <span class="nomatch">my</span>  <span class="nomatch">erudition</span>  <span class="nomatch">allowed</span>  <span class="nomatch">me</span>  <span class="nomatch">to</span>  <span class="nomatch">fill</span>  <span class="nomatch">in</span>  <span class="nomatch">this</span>  <span class="nomatch">picture</span>  <span class="nomatch">as</span>  <span class="nomatch">the</span>  <span class="nomatch">subject</span>  <span class="nomatch">deserves</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">to</span>  <span class="nomatch">trace</span>  <span class="nomatch">home</span>  <span class="nomatch">the</span>  <span class="nomatch">sources</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">opinions</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">their</span>  <span class="nomatch">immense</span>  <span class="nomatch">influence</span>  .  <span class="nomatch">Unfortunately</span>  ,  <span class="nomatch">I</span>  <span class="nomatch">can</span>  <span class="nomatch">consider</span>  <span class="nomatch">him</span> — <span class="nomatch">what</span>  <span class="nomatch">is</span>  <span class="nomatch">hardly</span>  <span class="nomatch">fair</span> — <span class="nomatch">only</span>  <span class="nomatch">as</span>  <span class="nomatch">a</span>  <span class="nomatch">pure</span>  <span class="nomatch">philosopher</span> : <span class="nomatch">for</span>  <span class="nomatch">had</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">mind</span>  <span class="nomatch">been</span>  <span class="nomatch">more</span>  <span class="nomatch">profound</span>  ,  <span class="nomatch">it</span>  <span class="nomatch">might</span>  <span class="nomatch">have</span>  <span class="nomatch">been</span>  <span class="nomatch">less</span>  <span class="nomatch">influential</span>  .  <span class="nomatch">He</span>  <span class="nomatch">was</span>  <span class="nomatch">in</span>  <span class="nomatch">sympathy</span>  <span class="nomatch">with</span>  <span class="nomatch">the</span>  <span class="nomatch">coming</span>  <span class="nomatch">age</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">was</span>  <span class="nomatch">able</span>  <span class="nomatch">to</span>  <span class="nomatch">guide</span>  <span class="nomatch">it</span> : <span class="nomatch">an</span>  <span class="nomatch">age</span>  <span class="nomatch">that</span>  <span class="nomatch">confided</span>  <span class="nomatch">in</span>  <span class="nomatch">easy</span>  ,  <span class="nomatch">eloquent</span>  <span class="nomatch">reasoning</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">proposed</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">saved</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">this</span>  <span class="nomatch">world</span>  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">next</span>  ,  <span class="nomatch">with</span>  <span class="nomatch">as</span>  <span class="nomatch">little</span>  <span class="nomatch">philosophy</span>  <span class="nomatch">and</span>  <span class="nomatch">as</span>  <span class="nomatch">little</span>  <span class="nomatch">religion</span>  <span class="nomatch">as</span>  <span class="nomatch">possible</span>  .  <span class="nomatch">Locke</span>  <span class="nomatch">played</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">eighteenth</span>  <span class="nomatch">century</span>  <span class="nomatch">very</span>  <span class="nomatch">much</span>  <span class="nomatch">the</span>  <span class="nomatch">part</span>  <span class="nomatch">that</span>  <span class="nomatch">fell</span>  <span class="nomatch">to</span>  <span class="nomatch">Kant</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">nineteenth</span>  .  <span class="nomatch">When</span>  <span class="nomatch">quarrelled</span>  <span class="nomatch">with</span>  ,  <span class="nomatch">no</span>  <span class="nomatch">less</span>  <span class="nomatch">than</span>  <span class="nomatch">when</span>  <span class="nomatch">embraced</span>  ,  <span class="nomatch">his</span>  <span class="nomatch">opinions</span>  <span class="nomatch">became</span>  <span class="nomatch">a</span>  <span class="nomatch">point</span>  <span class="nomatch">of</span>  <span class="nomatch">departure</span>  <span class="nomatch">for</span>  <span class="nomatch">universal</span>  <span class="nomatch">developments</span>  .  <span class="nomatch">The</span>  <span class="nomatch">more</span>  <span class="nomatch">we</span>  <span class="nomatch">look</span>  <span class="nomatch">into</span>  <span class="nomatch">the</span>  <span class="nomatch">matter</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">more</span>  <span class="nomatch">we</span>  <span class="nomatch">are</span>  <span class="nomatch">impressed</span>  <span class="nomatch">by</span>  <span class="nomatch">the</span>  <span class="nomatch">patriarchal</span>  <span class="nomatch">dignity</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">mind</span>  .  <span class="nomatch">Father</span>  <span class="nomatch">of</span>  <span class="nomatch">psychology</span>  ,  <span class="nomatch">father</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">criticism</span>  <span class="nomatch">of</span>  <span class="nomatch">knowledge</span>  ,  <span class="nomatch">father</span>  <span class="nomatch">of</span>  <span class="nomatch">theoretical</span>  <span class="nomatch">liberalism</span>  ,  <span class="nomatch">god</span> - <span class="nomatch">father</span>  <span class="nomatch">at</span>  <span class="nomatch">least</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">American</span>  <span class="nomatch">political</span>  <span class="nomatch">system</span>  ,  <span class="nomatch">of</span>  <span class="nomatch">Voltaire</span>  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">Encyclopaedia</span>  ,  <span class="nomatch">at</span>  <span class="nomatch">home</span>  <span class="nomatch">he</span>  <span class="nomatch">was</span>  <span class="nomatch">the</span>  <span class="nomatch">ancestor</span>  <span class="nomatch">of</span>  <span class="nomatch">that</span>  <span class="nomatch">whole</span>  <span class="nomatch">school</span>  <span class="nomatch">of</span>  <span class="nomatch">polite</span>  <span class="nomatch">moderate</span>  <span class="nomatch">opinion</span>  <span class="nomatch">which</span>  <span class="nomatch">can</span>  <span class="nomatch">unite</span>  <span class="nomatch">liberal</span>  <span class="nomatch">Christianity</span>  <span class="nomatch">with</span>  <span class="nomatch">mechanical</span>  <span class="nomatch">science</span>  <span class="nomatch">and</span>  <span class="nomatch">with</span>  <span class="nomatch">psychological</span>  <span class="nomatch">idealism</span>  .  <span class="nomatch">He</span>  <span class="nomatch">was</span>  <span class="nomatch">invincibly</span>  <span class="nomatch">rooted</span>  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">prudential</span>  <span class="nomatch">morality</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">rationalised</span>  <span class="nomatch">Protestantism</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">respect</span>  <span class="nomatch">for</span>  <span class="nomatch">liberty</span>  <span class="nomatch">and</span>  <span class="nomatch">law</span> : <span class="nomatch">above</span>  <span class="nomatch">all</span>  <span class="nomatch">he</span>  <span class="nomatch">was</span>  <span class="nomatch">deeply</span>  <span class="nomatch">convinced</span>  ,  <span class="nomatch">as</span>  <span class="nomatch">he</span>  <span class="nomatch">puts</span>  <span class="nomatch">it</span>  , "  <span class="nomatch">that</span>  <span class="nomatch">the</span>  <span class="nomatch">handsome</span>  <span class="nomatch">conveniences</span>  <span class="nomatch">of</span>  <span class="nomatch">life</span>  <span class="nomatch">are</span>  <span class="nomatch">better</span>  <span class="nomatch">than</span>  <span class="nomatch">nasty</span>  <span class="nomatch">penury</span>  ".  <span class="nomatch">Locke</span>  <span class="nomatch">still</span>  <span class="nomatch">speaks</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">spoke</span>  <span class="nomatch">until</span>  <span class="nomatch">lately</span>  ,  <span class="nomatch">through</span>  <span class="nomatch">many</span>  <span class="nomatch">a</span>  <span class="nomatch">modern</span>  <span class="nomatch">mind</span>  ,  <span class="nomatch">when</span>  <span class="nomatch">this</span>  <span class="nomatch">mind</span>  <span class="nomatch">was</span>  <span class="nomatch">most</span>  <span class="nomatch">sincere</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">two</span>  <span class="nomatch">hundred</span>  <span class="nomatch">years</span>  <span class="nomatch">before</span>  <span class="nomatch">Queen</span>  <span class="nomatch">Victoria</span>  <span class="nomatch">he</span>  <span class="nomatch">was</span>  <span class="nomatch">a</span>  <span class="nomatch">Victorian</span>  <span class="nomatch">in</span>  <span class="nomatch">essence</span>  .</p>
+<p> <span class="nomatch">A</span>  <span class="nomatch">chief</span>  <span class="nomatch">element</span>  <span class="nomatch">in</span>  <span class="nomatch">this</span>  <span class="nomatch">modernness</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke</span>  <span class="nomatch">was</span>  <span class="nomatch">something</span>  <span class="nomatch">that</span>  <span class="nomatch">had</span>  <span class="nomatch">hardly</span>  <span class="nomatch">appeared</span>  <span class="nomatch">before</span>  <span class="nomatch">in</span>  <span class="nomatch">pure</span>  <span class="nomatch">philosophy</span>  ,  <span class="nomatch">although</span>  <span class="nomatch">common</span>  <span class="nomatch">in</span>  <span class="nomatch">religion</span> : <span class="nomatch">I</span>  <span class="nomatch">mean</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">tendency</span>  <span class="nomatch">to</span>  <span class="nomatch">deny</span>  <span class="nomatch">one's</span>  <span class="nomatch">own</span>  <span class="nomatch">presuppositions</span> — <span class="nomatch">not</span>  <span class="nomatch">by</span>  <span class="nomatch">accident</span>  <span class="nomatch">or</span>  <span class="nomatch">inadvertently</span>  ,  <span class="nomatch">but</span>  <span class="nomatch">proudly</span>  <span class="nomatch">and</span>  <span class="nomatch">with</span>  <span class="nomatch">an</span>  <span class="nomatch">air</span>  <span class="nomatch">of</span>  <span class="nomatch">triumph</span>  .  <span class="nomatch">Presuppositions</span>  <span class="nomatch">are</span>  <span class="nomatch">imposed</span>  <span class="nomatch">on</span>  <span class="nomatch">all</span>  <span class="nomatch">of</span>  <span class="nomatch">us</span>  <span class="nomatch">by</span>  <span class="nomatch">life</span>  <span class="nomatch">itself</span> : <span class="nomatch">for</span>  <span class="nomatch">instance</span>  <span class="nomatch">the</span>  <span class="nomatch">presupposition</span>  <span class="nomatch">that</span>  <span class="nomatch">life</span>  <span class="nomatch">is</span>  <span class="nomatch">to</span>  <span class="nomatch">continue</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">that</span>  <span class="nomatch">it</span>  <span class="nomatch">is</span>  <span class="nomatch">worth</span>  <span class="nomatch">living</span>  .  <span class="nomatch">Belief</span>  <span class="nomatch">is</span>  <span class="nomatch">born</span>  <span class="nomatch">on</span>  <span class="nomatch">the</span>  <span class="nomatch">wing</span>  <span class="nomatch">and</span>  <span class="nomatch">awakes</span>  <span class="nomatch">to</span>  <span class="nomatch">many</span>  <span class="nomatch">tacit</span>  <span class="nomatch">commitments</span>  .  <span class="nomatch">Afterwards</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">reflection</span>  ,  <span class="nomatch">we</span>  <span class="nomatch">may</span>  <span class="nomatch">wonder</span>  <span class="nomatch">at</span>  <span class="nomatch">finding</span>  <span class="nomatch">these</span>  <span class="nomatch">presuppositions</span>  <span class="nomatch">on</span>  <span class="nomatch">our</span>  <span class="nomatch">hands</span>  <span class="nomatch">and</span>  ,  <span class="nomatch">being</span>  <span class="nomatch">ignorant</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">natural</span>  <span class="nomatch">causes</span>  <span class="nomatch">which</span>  <span class="nomatch">have</span>  <span class="nomatch">imposed</span>  <span class="nomatch">them</span>  <span class="nomatch">on</span>  <span class="nomatch">the</span>  <span class="nomatch">animal</span>  <span class="nomatch">mind</span>  ,  <span class="nomatch">we</span>  <span class="nomatch">may</span>  <span class="nomatch">be</span>  <span class="nomatch">offended</span>  <span class="nomatch">at</span>  <span class="nomatch">them</span>  .  <span class="nomatch">Their</span>  <span class="nomatch">arbitrary</span>  <span class="nomatch">and</span>  <span class="nomatch">dogmatic</span>  <span class="nomatch">character</span>  <span class="nomatch">will</span>  <span class="nomatch">tempt</span>  <span class="nomatch">us</span>  <span class="nomatch">to</span>  <span class="nomatch">condemn</span>  <span class="nomatch">them</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">to</span>  <span class="nomatch">take</span>  <span class="nomatch">for</span>  <span class="nomatch">granted</span>  <span class="nomatch">that</span>  <span class="nomatch">the</span>  <span class="nomatch">analysis</span>  <span class="nomatch">which</span>  <span class="nomatch">undermines</span>  <span class="nomatch">them</span>  <span class="nomatch">is</span>  <span class="nomatch">justified</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">will</span>  <span class="nomatch">prove</span>  <span class="nomatch">fruitful</span>  .  <span class="nomatch">But</span>  <span class="nomatch">this</span>  <span class="nomatch">critical</span>  <span class="nomatch">assurance</span>  <span class="nomatch">in</span>  <span class="nomatch">its</span>  <span class="nomatch">turn</span>  <span class="nomatch">seems</span>  <span class="nomatch">to</span>  <span class="nomatch">rely</span>  <span class="nomatch">on</span>  <span class="nomatch">a</span>  <span class="nomatch">dubious</span>  <span class="nomatch">presupposition</span>  ,  <span class="nomatch">namely</span>  ,  <span class="nomatch">that</span>  <span class="nomatch">human</span>  <span class="nomatch">opinion</span>  <span class="nomatch">must</span>  <span class="nomatch">always</span>  <span class="nomatch">evolve</span>  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">single</span>  <span class="nomatch">line</span>  ,  <span class="nomatch">dialectically</span>  ,  <span class="nomatch">providentially</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">irresistibly</span>  .  <span class="nomatch">It</span>  <span class="nomatch">is</span>  <span class="nomatch">at</span>  <span class="nomatch">least</span>  <span class="nomatch">conceivable</span>  <span class="nomatch">that</span>  <span class="nomatch">the</span>  <span class="nomatch">opposite</span>  <span class="nomatch">should</span>  <span class="nomatch">sometimes</span>  <span class="nomatch">be</span>  <span class="nomatch">the</span>  <span class="nomatch">case</span>  .  <span class="nomatch">Some</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">primitive</span>  <span class="nomatch">presuppositions</span>  <span class="nomatch">of</span>  <span class="nomatch">human</span>  <span class="nomatch">reason</span>  <span class="nomatch">might</span>  <span class="nomatch">have</span>  <span class="nomatch">been</span>  <span class="nomatch">correct</span>  <span class="nomatch">and</span>  <span class="nomatch">inevitable</span>  ,  <span class="nomatch">whilst</span>  <span class="nomatch">the</span>  <span class="nomatch">tendency</span>  <span class="nomatch">to</span>  <span class="nomatch">deny</span>  <span class="nomatch">them</span>  <span class="nomatch">might</span>  <span class="nomatch">have</span>  <span class="nomatch">sprung</span>  <span class="nomatch">from</span>  <span class="nomatch">a</span>  <span class="nomatch">plausible</span>  <span class="nomatch">misunderstanding</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">the</span>  <span class="nomatch">exaggeration</span>  <span class="nomatch">of</span>  <span class="nomatch">a</span>  <span class="nomatch">half</span> - <span class="nomatch">truth</span> : <span class="nomatch">so</span>  <span class="nomatch">that</span>  <span class="nomatch">the</span>  <span class="nomatch">critical</span>  <span class="nomatch">opinion</span>  <span class="nomatch">itself</span>  ,  <span class="nomatch">after</span>  <span class="nomatch">destroying</span>  <span class="nomatch">the</span>  <span class="nomatch">spontaneous</span>  <span class="nomatch">assumptions</span>  <span class="nomatch">on</span>  <span class="nomatch">which</span>  <span class="nomatch">it</span>  <span class="nomatch">rested</span>  ,  <span class="nomatch">might</span>  <span class="nomatch">be</span>  <span class="nomatch">incapable</span>  <span class="nomatch">of</span>  <span class="nomatch">subsisting</span>  .</p>
+<p> <span class="nomatch">In</span>  <span class="nomatch">Locke</span>  <span class="nomatch">the</span>  <span class="nomatch">central</span>  <span class="nomatch">presuppositions</span>  ,  <span class="nomatch">which</span>  <span class="nomatch">he</span>  <span class="nomatch">embraced</span>  <span class="nomatch">heartily</span>  <span class="nomatch">and</span>  <span class="nomatch">without</span>  <span class="nomatch">question</span>  ,  <span class="nomatch">were</span>  <span class="nomatch">those</span>  <span class="nomatch">of</span>  <span class="nomatch">common</span>  <span class="nomatch">sense</span>  .  <span class="nomatch">He</span>  <span class="nomatch">adopted</span>  <span class="nomatch">what</span>  <span class="nomatch">he</span>  <span class="nomatch">calls</span>  <span class="nomatch">a</span>  "  <span class="nomatch">plain</span>  ,  <span class="nomatch">historical</span>  <span class="nomatch">method</span>  ",  <span class="nomatch">fit</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">his</span>  <span class="nomatch">own</span>  <span class="nomatch">words</span>  , "  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">brought</span>  <span class="nomatch">into</span>  <span class="nomatch">well</span> - <span class="nomatch">bred</span>  <span class="nomatch">company</span>  <span class="nomatch">and</span>  <span class="nomatch">polite</span>  <span class="nomatch">conversation</span>  ".  <span class="nomatch">Men</span>  , "  <span class="nomatch">barely</span>  <span class="nomatch">by</span>  <span class="nomatch">the</span>  <span class="nomatch">use</span>  <span class="nomatch">of</span>  <span class="nomatch">their</span>  <span class="nomatch">natural</span>  <span class="nomatch">faculties</span>  ",  <span class="nomatch">might</span>  <span class="nomatch">attain</span>  <span class="nomatch">to</span>  <span class="nomatch">all</span>  <span class="nomatch">the</span>  <span class="nomatch">knowledge</span>  <span class="nomatch">possible</span>  <span class="nomatch">or</span>  <span class="nomatch">worth</span>  <span class="nomatch">having</span>  .  <span class="nomatch">All</span>  <span class="nomatch">children</span>  ,  <span class="nomatch">he</span>  <span class="nomatch">writes</span>  , "  <span class="nomatch">that</span>  <span class="nomatch">are</span>  <span class="nomatch">born</span>  <span class="nomatch">into</span>  <span class="nomatch">this</span>  <span class="nomatch">world</span>  ,  <span class="nomatch">being</span>  <span class="nomatch">surrounded</span>  <span class="nomatch">with</span>  <span class="nomatch">bodies</span>  <span class="nomatch">that</span>  <span class="nomatch">perpetually</span>  <span class="nomatch">and</span>  <span class="nomatch">diversely</span>  <span class="nomatch">affect</span>  <span class="nomatch">them</span>  "  <span class="nomatch">have</span>  "  <span class="nomatch">a</span>  <span class="nomatch">variety</span>  <span class="nomatch">of</span>  <span class="nomatch">ideas</span>  <span class="nomatch">imprinted</span>  "  <span class="nomatch">on</span>  <span class="nomatch">their</span>  <span class="nomatch">minds</span>  . "  <span class="nomatch">External</span>  <span class="nomatch">material</span>  <span class="nomatch">things</span>  <span class="nomatch">as</span>  <span class="nomatch">objects</span>  <span class="nomatch">of</span>  <span class="nomatch">Sensation</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">operations</span>  <span class="nomatch">of</span>  <span class="nomatch">our</span>  <span class="nomatch">own</span>  <span class="nomatch">minds</span>  <span class="nomatch">as</span>  <span class="nomatch">objects</span>  <span class="nomatch">of</span>  <span class="nomatch">Reflection</span>  ,  <span class="nomatch">are</span>  <span class="nomatch">to</span>  <span class="nomatch">me</span>  ",  <span class="nomatch">he</span>  <span class="nomatch">continues</span>  , "  <span class="nomatch">the</span>  <span class="nomatch">only</span>  <span class="nomatch">originals</span>  <span class="nomatch">from</span>  <span class="nomatch">which</span>  <span class="nomatch">all</span>  <span class="nomatch">our</span>  <span class="nomatch">ideas</span>  <span class="nomatch">take</span>  <span class="nomatch">their</span>  <span class="nomatch">beginnings</span>  ." "  <span class="nomatch">Every</span>  <span class="nomatch">act</span>  <span class="nomatch">of</span>  <span class="nomatch">sensation</span>  ",  <span class="nomatch">he</span>  <span class="nomatch">writes</span>  <span class="nomatch">elsewhere</span>  , "  <span class="nomatch">when</span>  <span class="nomatch">duly</span>  <span class="nomatch">considered</span>  ,  <span class="nomatch">gives</span>  <span class="nomatch">us</span>  <span class="nomatch">an</span>  <span class="nomatch">equal</span>  <span class="nomatch">view</span>  <span class="nomatch">of</span>  <span class="nomatch">both</span>  <span class="nomatch">parts</span>  <span class="nomatch">of</span>  <span class="nomatch">nature</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">corporeal</span>  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">spiritual</span>  .  <span class="nomatch">For</span>  <span class="nomatch">whilst</span>  <span class="nomatch">I</span>  <span class="nomatch">know</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">seeing</span>  <span class="nomatch">or</span>  <span class="nomatch">hearing</span>  ,...  <span class="nomatch">that</span>  <span class="nomatch">there</span>  <span class="nomatch">is</span>  <span class="nomatch">some</span>  <span class="nomatch">corporeal</span>  <span class="nomatch">being</span>  <span class="nomatch">without</span>  <span class="nomatch">me</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">object</span>  <span class="nomatch">of</span>  <span class="nomatch">that</span>  <span class="nomatch">sensation</span>  ,  <span class="nomatch">I</span>  <span class="nomatch">do</span>  <span class="nomatch">more</span>  <span class="nomatch">certainly</span>  <span class="nomatch">know</span>  <span class="nomatch">that</span>  <span class="nomatch">there</span>  <span class="nomatch">is</span>  <span class="nomatch">some</span>  <span class="nomatch">spiritual</span>  <span class="nomatch">being</span>  <span class="nomatch">within</span>  <span class="nomatch">me</span>  <span class="nomatch">that</span>  <span class="nomatch">sees</span>  <span class="nomatch">and</span>  <span class="nomatch">hears</span>  ."</p>
+<p> <span class="nomatch">Resting</span>  <span class="nomatch">on</span>  <span class="nomatch">these</span>  <span class="nomatch">clear</span>  <span class="nomatch">perceptions</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">natural</span>  <span class="nomatch">philosophy</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke</span>  <span class="nomatch">falls</span>  <span class="nomatch">into</span>  <span class="nomatch">two</span>  <span class="nomatch">parts</span>  ,  <span class="nomatch">one</span>  <span class="nomatch">strictly</span>  <span class="nomatch">physical</span>  <span class="nomatch">and</span>  <span class="nomatch">scientific</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">other</span>  <span class="nomatch">critical</span>  <span class="nomatch">and</span>  <span class="nomatch">psychological</span>  .  <span class="nomatch">In</span>  <span class="nomatch">respect</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">composition</span>  <span class="nomatch">of</span>  <span class="nomatch">matter</span>  ,  <span class="nomatch">Locke</span>  <span class="nomatch">accepted</span>  <span class="nomatch">the</span>  <span class="nomatch">most</span>  <span class="nomatch">advanced</span>  <span class="nomatch">theory</span>  <span class="nomatch">of</span>  <span class="nomatch">his</span>  <span class="nomatch">day</span>  ,  <span class="nomatch">which</span>  <span class="nomatch">happened</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">a</span>  <span class="nomatch">very</span>  <span class="nomatch">old</span>  <span class="nomatch">one</span> : <span class="nomatch">the</span>  <span class="nomatch">theory</span>  <span class="nomatch">of</span>  <span class="nomatch">Democritus</span>  <span class="nomatch">that</span>  <span class="nomatch">the</span>  <span class="nomatch">material</span>  <span class="nomatch">universe</span>  <span class="nomatch">contains</span>  <span class="nomatch">nothing</span>  <span class="nomatch">but</span>  <span class="nomatch">a</span>  <span class="nomatch">multitude</span>  <span class="nomatch">of</span>  <span class="nomatch">solid</span>  <span class="nomatch">atoms</span>  <span class="nomatch">coursing</span>  <span class="nomatch">through</span>  <span class="nomatch">infinite</span>  <span class="nomatch">space</span> : <span class="nomatch">but</span>  <span class="nomatch">Locke</span>  <span class="nomatch">added</span>  <span class="nomatch">a</span>  <span class="nomatch">religious</span>  <span class="nomatch">note</span>  <span class="nomatch">to</span>  <span class="nomatch">this</span>  <span class="nomatch">materialism</span>  <span class="nomatch">by</span>  <span class="nomatch">suggesting</span>  <span class="nomatch">that</span>  <span class="nomatch">infinite</span>  <span class="nomatch">space</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">its</span>  <span class="nomatch">sublimity</span>  ,  <span class="nomatch">must</span>  <span class="nomatch">be</span>  <span class="nomatch">an</span>  <span class="nomatch">attribute</span>  <span class="nomatch">of</span>  <span class="nomatch">God</span>  .  <span class="nomatch">He</span>  <span class="nomatch">also</span>  <span class="nomatch">believed</span>  <span class="nomatch">what</span>  <span class="nomatch">few</span>  <span class="nomatch">materialists</span>  <span class="nomatch">would</span>  <span class="nomatch">venture</span>  <span class="nomatch">to</span>  <span class="nomatch">assert</span>  ,  <span class="nomatch">that</span>  <span class="nomatch">if</span>  <span class="nomatch">we</span>  <span class="nomatch">could</span>  <span class="nomatch">thoroughly</span>  <span class="nomatch">examine</span>  <span class="nomatch">the</span>  <span class="nomatch">cosmic</span>  <span class="nomatch">mechanism</span>  <span class="nomatch">we</span>  <span class="nomatch">should</span>  <span class="nomatch">see</span>  <span class="nomatch">the</span>  <span class="nomatch">demonstrable</span>  <span class="nomatch">necessity</span>  <span class="nomatch">of</span>  <span class="nomatch">every</span>  <span class="nomatch">complication</span>  <span class="nomatch">that</span>  <span class="nomatch">ensues</span>  ,  <span class="nomatch">even</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">existence</span>  <span class="nomatch">and</span>  <span class="nomatch">character</span>  <span class="nomatch">of</span>  <span class="nomatch">mind</span> : <span class="nomatch">for</span>  <span class="nomatch">it</span>  <span class="nomatch">was</span>  <span class="nomatch">no</span>  <span class="nomatch">harder</span>  <span class="nomatch">for</span>  <span class="nomatch">God</span>  <span class="nomatch">to</span>  <span class="nomatch">endow</span>  <span class="nomatch">matter</span>  <span class="nomatch">with</span>  <span class="nomatch">the</span>  <span class="nomatch">power</span>  <span class="nomatch">of</span>  <span class="nomatch">thinking</span>  <span class="nomatch">than</span>  <span class="nomatch">to</span>  <span class="nomatch">endow</span>  <span class="nomatch">it</span>  <span class="nomatch">with</span>  <span class="nomatch">the</span>  <span class="nomatch">power</span>  <span class="nomatch">of</span>  <span class="nomatch">moving</span>  .</p>
+<p> <span class="nomatch">In</span>  <span class="nomatch">the</span>  <span class="nomatch">atomic</span>  <span class="nomatch">theory</span>  <span class="nomatch">we</span>  <span class="nomatch">have</span>  <span class="nomatch">a</span>  <span class="nomatch">graphic</span>  <span class="nomatch">image</span>  <span class="nomatch">asserted</span>  <span class="nomatch">to</span>  <span class="nomatch">describe</span>  <span class="nomatch">accurately</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">even</span>  <span class="nomatch">exhaustively</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">intrinsic</span>  <span class="nomatch">constitution</span>  <span class="nomatch">of</span>  <span class="nomatch">things</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">their</span>  <span class="nomatch">primary</span>  <span class="nomatch">qualities</span>  .  <span class="nomatch">Perhaps</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">so</span>  <span class="nomatch">far</span>  <span class="nomatch">as</span>  <span class="nomatch">physical</span>  <span class="nomatch">hypotheses</span>  <span class="nomatch">must</span>  <span class="nomatch">remain</span>  <span class="nomatch">graphic</span>  <span class="nomatch">at</span>  <span class="nomatch">all</span>  ,  <span class="nomatch">it</span>  <span class="nomatch">is</span>  <span class="nomatch">an</span>  <span class="nomatch">inevitable</span>  <span class="nomatch">theory</span>  .  <span class="nomatch">It</span>  <span class="nomatch">was</span>  <span class="nomatch">first</span>  <span class="nomatch">suggested</span>  <span class="nomatch">by</span>  <span class="nomatch">the</span>  <span class="nomatch">wearing</span>  <span class="nomatch">out</span>  <span class="nomatch">and</span>  <span class="nomatch">dissolution</span>  <span class="nomatch">of</span>  <span class="nomatch">all</span>  <span class="nomatch">material</span>  <span class="nomatch">objects</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">by</span>  <span class="nomatch">the</span>  <span class="nomatch">specks</span>  <span class="nomatch">of</span>  <span class="nomatch">dust</span>  <span class="nomatch">floating</span>  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">sunbeam</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">it</span>  <span class="nomatch">is</span>  <span class="nomatch">confirmed</span>  ,  <span class="nomatch">on</span>  <span class="nomatch">an</span>  <span class="nomatch">enlarged</span>  <span class="nomatch">scale</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">the</span>  <span class="nomatch">stellar</span>  <span class="nomatch">universe</span>  <span class="nomatch">as</span>  <span class="nomatch">conceived</span>  <span class="nomatch">by</span>  <span class="nomatch">modern</span>  <span class="nomatch">astronomy</span>  .  <span class="nomatch">When</span>  <span class="nomatch">today</span>  <span class="nomatch">we</span>  <span class="nomatch">talk</span>  <span class="nomatch">of</span>  <span class="nomatch">nuclei</span>  <span class="nomatch">and</span>  <span class="nomatch">electrons</span>  ,  <span class="nomatch">if</span>  <span class="nomatch">we</span>  <span class="nomatch">imagine</span>  <span class="nomatch">them</span>  <span class="nomatch">at</span>  <span class="nomatch">all</span>  ,  <span class="nomatch">we</span>  <span class="nomatch">imagine</span>  <span class="nomatch">them</span>  <span class="nomatch">as</span>  <span class="nomatch">atoms</span>  .  <span class="nomatch">But</span>  <span class="nomatch">it</span>  <span class="nomatch">is</span>  <span class="nomatch">all</span>  <span class="nomatch">a</span>  <span class="nomatch">picture</span>  ,  <span class="nomatch">prophesying</span>  <span class="nomatch">what</span>  <span class="nomatch">we</span>  <span class="nomatch">might</span>  <span class="nomatch">see</span>  <span class="nomatch">through</span>  <span class="nomatch">a</span>  <span class="nomatch">sufficiently</span>  <span class="nomatch">powerful</span>  <span class="nomatch">microscope</span>  ;  <span class="nomatch">the</span>  <span class="nomatch">important</span>  <span class="nomatch">philosophical</span>  <span class="nomatch">question</span>  <span class="nomatch">is</span>  <span class="nomatch">the</span>  <span class="nomatch">one</span>  <span class="nomatch">raised</span>  <span class="nomatch">by</span>  <span class="nomatch">the</span>  <span class="nomatch">other</span>  <span class="nomatch">half</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">natural</span>  <span class="nomatch">philosophy</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">optics</span>  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">general</span>  <span class="nomatch">criticism</span>  <span class="nomatch">of</span>  <span class="nomatch">perception</span>  .  <span class="nomatch">How</span>  <span class="nomatch">far</span>  ,  <span class="nomatch">if</span>  <span class="nomatch">at</span>  <span class="nomatch">all</span>  ,  <span class="nomatch">may</span>  <span class="nomatch">we</span>  <span class="nomatch">trust</span>  <span class="nomatch">the</span>  <span class="nomatch">images</span>  <span class="nomatch">in</span>  <span class="nomatch">our</span>  <span class="nomatch">minds</span>  <span class="nomatch">to</span>  <span class="nomatch">reveal</span>  <span class="nomatch">the</span>  <span class="nomatch">nature</span>  <span class="nomatch">of</span>  <span class="nomatch">external</span>  <span class="nomatch">things</span>  ?</p>
+<p> <span class="nomatch">On</span>  <span class="nomatch">this</span>  <span class="nomatch">point</span>  <span class="nomatch">the</span>  <span class="nomatch">doctrine</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke</span>  ,  <span class="nomatch">through</span>  <span class="nomatch">Descartes</span>  , [3] <span class="nomatch">was</span>  <span class="nomatch">also</span>  <span class="nomatch">derived</span>  <span class="nomatch">from</span>  <span class="nomatch">Democritus</span>  .  <span class="nomatch">It</span>  <span class="nomatch">was</span>  <span class="nomatch">that</span>  <span class="nomatch">all</span>  <span class="nomatch">the</span>  <span class="nomatch">sensible</span>  <span class="nomatch">qualities</span>  <span class="nomatch">of</span>  <span class="nomatch">things</span>  ,  <span class="nomatch">except</span>  <span class="nomatch">position</span>  ,  <span class="nomatch">shape</span>  ,  <span class="nomatch">solidity</span>  ,  <span class="nomatch">number</span>  <span class="nomatch">and</span>  <span class="nomatch">motion</span>  ,  <span class="nomatch">were</span>  <span class="nomatch">only</span>  <span class="nomatch">ideas</span>  <span class="nomatch">in</span>  <span class="nomatch">us</span>  ,  <span class="nomatch">projected</span>  <span class="nomatch">and</span>  <span class="nomatch">falsely</span>  <span class="nomatch">regarded</span>  <span class="nomatch">as</span>  <span class="nomatch">lodged</span>  <span class="nomatch">in</span>  <span class="nomatch">things</span>  .  <span class="nomatch">In</span>  <span class="nomatch">the</span>  <span class="nomatch">things</span>  ,  <span class="nomatch">these</span>  <span class="nomatch">imputed</span>  <span class="nomatch">or</span>  <span class="nomatch">secondary</span>  <span class="nomatch">qualities</span>  <span class="nomatch">were</span>  <span class="nomatch">simply</span>  <span class="nomatch">powers</span>  ,  <span class="nomatch">inherent</span>  <span class="nomatch">in</span>  <span class="nomatch">their</span>  <span class="nomatch">atomic</span>  <span class="nomatch">constitution</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">calculated</span>  <span class="nomatch">to</span>  <span class="nomatch">excite</span>  <span class="nomatch">sensations</span>  <span class="nomatch">of</span>  <span class="nomatch">that</span>  <span class="nomatch">character</span>  <span class="nomatch">in</span>  <span class="nomatch">our</span>  <span class="nomatch">bodies</span>  .  <span class="nomatch">This</span>  <span class="nomatch">doctrine</span>  <span class="nomatch">is</span>  <span class="nomatch">readily</span>  <span class="nomatch">established</span>  <span class="nomatch">by</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">plain</span>  <span class="nomatch">historical</span>  <span class="nomatch">method</span>  ,  <span class="nomatch">when</span>  <span class="nomatch">applied</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">study</span>  <span class="nomatch">of</span>  <span class="nomatch">rainbows</span>  ,  <span class="nomatch">mirrors</span>  ,  <span class="nomatch">effects</span>  <span class="nomatch">of</span>  <span class="nomatch">perspective</span>  ,  <span class="nomatch">dreams</span>  ,  <span class="nomatch">jaundice</span>  ,  <span class="nomatch">madness</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">will</span>  <span class="nomatch">to</span>  <span class="nomatch">believe</span> : <span class="nomatch">all</span>  <span class="nomatch">of</span>  <span class="nomatch">which</span>  <span class="nomatch">go</span>  <span class="nomatch">to</span>  <span class="nomatch">convince</span>  <span class="nomatch">us</span>  <span class="nomatch">that</span>  <span class="nomatch">the</span>  <span class="nomatch">ideas</span>  <span class="nomatch">which</span>  <span class="nomatch">we</span>  <span class="nomatch">impulsively</span>  <span class="nomatch">assume</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">qualities</span>  <span class="nomatch">of</span>  <span class="nomatch">objects</span>  <span class="nomatch">are</span>  <span class="nomatch">always</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">their</span>  <span class="nomatch">seat</span>  <span class="nomatch">and</span>  <span class="nomatch">origin</span>  ,  <span class="nomatch">evolved</span>  <span class="nomatch">in</span>  <span class="nomatch">our</span>  <span class="nomatch">own</span>  <span class="nomatch">heads</span>  .</p>
+<p> <span class="nomatch">These</span>  <span class="nomatch">two</span>  <span class="nomatch">parts</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">natural</span>  <span class="nomatch">philosophy</span>  ,  <span class="nomatch">however</span>  ,  <span class="nomatch">are</span>  <span class="nomatch">not</span>  <span class="nomatch">in</span>  <span class="nomatch">perfect</span>  <span class="nomatch">equilibrium</span>  .  <span class="nomatch">All</span>  <span class="nomatch">the</span>  <span class="nomatch">feelings</span>  <span class="nomatch">and</span>  <span class="nomatch">ideas</span>  <span class="nomatch">of</span>  <span class="nomatch">an</span>  <span class="nomatch">animal</span>  <span class="nomatch">must</span>  <span class="nomatch">be</span>  <span class="nomatch">equally</span>  <span class="nomatch">conditioned</span>  <span class="nomatch">by</span>  <span class="nomatch">his</span>  <span class="nomatch">organs</span>  <span class="nomatch">and</span>  <span class="nomatch">passions</span>  , [4] <span class="nomatch">and</span>  <span class="nomatch">he</span>  <span class="nomatch">cannot</span>  <span class="nomatch">be</span>  <span class="nomatch">aware</span>  <span class="nomatch">of</span>  <span class="nomatch">what</span>  <span class="nomatch">goes</span>  <span class="nomatch">on</span>  <span class="nomatch">beyond</span>  <span class="nomatch">him</span>  ,  <span class="nomatch">except</span>  <span class="nomatch">as</span>  <span class="nomatch">it</span>  <span class="nomatch">affects</span>  <span class="nomatch">his</span>  <span class="nomatch">own</span>  <span class="nomatch">life</span>  . [5] <span class="nomatch">How</span>  <span class="nomatch">then</span>  <span class="nomatch">could</span>  <span class="nomatch">Locke</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">could</span>  <span class="nomatch">Democritus</span>  ,  <span class="nomatch">suppose</span>  <span class="nomatch">that</span>  <span class="nomatch">his</span>  <span class="nomatch">ideas</span>  <span class="nomatch">of</span>  <span class="nomatch">space</span>  <span class="nomatch">and</span>  <span class="nomatch">atoms</span>  <span class="nomatch">were</span>  <span class="nomatch">less</span>  <span class="nomatch">human</span>  ,  <span class="nomatch">less</span>  <span class="nomatch">graphic</span>  ,  <span class="nomatch">summary</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">symbolic</span>  ,  <span class="nomatch">than</span>  <span class="nomatch">his</span>  <span class="nomatch">sensations</span>  <span class="nomatch">of</span>  <span class="nomatch">sound</span>  <span class="nomatch">or</span>  <span class="nomatch">colour</span>  ?  <span class="nomatch">The</span>  <span class="nomatch">language</span>  <span class="nomatch">of</span>  <span class="nomatch">science</span>  ,  <span class="nomatch">no</span>  <span class="nomatch">less</span>  <span class="nomatch">than</span>  <span class="nomatch">that</span>  <span class="nomatch">of</span>  <span class="nomatch">sense</span>  ,  <span class="nomatch">should</span>  <span class="nomatch">have</span>  <span class="nomatch">been</span>  <span class="nomatch">recognised</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">a</span>  <span class="nomatch">human</span>  <span class="nomatch">language</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">nature</span>  <span class="nomatch">of</span>  <span class="nomatch">anything</span>  <span class="nomatch">existent</span>  <span class="nomatch">collateral</span>  <span class="nomatch">with</span>  <span class="nomatch">ourselves</span>  ,  <span class="nomatch">be</span>  <span class="nomatch">that</span>  <span class="nomatch">collateral</span>  <span class="nomatch">existence</span>  <span class="nomatch">material</span>  <span class="nomatch">or</span>  <span class="nomatch">mental</span>  ,  <span class="nomatch">should</span>  <span class="nomatch">have</span>  <span class="nomatch">been</span>  <span class="nomatch">confessed</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">a</span>  <span class="nomatch">subject</span>  <span class="nomatch">for</span>  <span class="nomatch">faith</span>  <span class="nomatch">and</span>  <span class="nomatch">for</span>  <span class="nomatch">hypothesis</span>  ,  <span class="nomatch">never</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">any</span>  <span class="nomatch">possibility</span>  ,  <span class="nomatch">for</span>  <span class="nomatch">absolute</span>  <span class="nomatch">or</span>  <span class="nomatch">direct</span>  <span class="nomatch">intuition</span>  .</p>
+<p> <span class="nomatch">There</span>  <span class="nomatch">is</span>  <span class="nomatch">no</span>  <span class="nomatch">occasion</span>  <span class="nomatch">to</span>  <span class="nomatch">take</span>  <span class="nomatch">alarm</span>  <span class="nomatch">at</span>  <span class="nomatch">this</span>  <span class="nomatch">doctrine</span>  <span class="nomatch">as</span>  <span class="nomatch">if</span>  <span class="nomatch">it</span>  <span class="nomatch">condemned</span>  <span class="nomatch">us</span>  <span class="nomatch">to</span>  <span class="nomatch">solitary</span>  <span class="nomatch">confinement</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">to</span>  <span class="nomatch">ignorance</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">world</span>  <span class="nomatch">in</span>  <span class="nomatch">which</span>  <span class="nomatch">we</span>  <span class="nomatch">live</span>  .  <span class="nomatch">We</span>  <span class="nomatch">see</span>  <span class="nomatch">and</span>  <span class="nomatch">know</span>  <span class="nomatch">the</span>  <span class="nomatch">world</span>  <span class="nomatch">through</span>  <span class="nomatch">our</span>  <span class="nomatch">eyes</span>  <span class="nomatch">and</span>  <span class="nomatch">our</span>  <span class="nomatch">intelligence</span>  ,  <span class="nomatch">in</span>  <span class="nomatch">visual</span>  <span class="nomatch">and</span>  <span class="nomatch">in</span>  <span class="nomatch">intellectual</span>  <span class="nomatch">terms</span> : <span class="nomatch">how</span>  <span class="nomatch">else</span>  <span class="nomatch">should</span>  <span class="nomatch">a</span>  <span class="nomatch">world</span>  <span class="nomatch">be</span>  <span class="nomatch">seen</span>  <span class="nomatch">or</span>  <span class="nomatch">known</span>  <span class="nomatch">which</span>  <span class="nomatch">is</span>  <span class="nomatch">not</span>  <span class="nomatch">the</span>  <span class="nomatch">figment</span>  <span class="nomatch">of</span>  <span class="nomatch">a</span>  <span class="nomatch">dream</span>  ,  <span class="nomatch">but</span>  <span class="nomatch">a</span>  <span class="nomatch">collateral</span>  <span class="nomatch">power</span>  ,  <span class="nomatch">pressing</span>  <span class="nomatch">and</span>  <span class="nomatch">alien</span>  ?  <span class="nomatch">In</span>  <span class="nomatch">the</span>  <span class="nomatch">cognisance</span>  <span class="nomatch">which</span>  <span class="nomatch">an</span>  <span class="nomatch">animal</span>  <span class="nomatch">may</span>  <span class="nomatch">take</span>  <span class="nomatch">of</span>  <span class="nomatch">his</span>  <span class="nomatch">surroundings</span> — <span class="nomatch">and</span>  <span class="nomatch">surely</span>  <span class="nomatch">all</span>  <span class="nomatch">animals</span>  <span class="nomatch">take</span>  <span class="nomatch">such</span>  <span class="nomatch">cognisance</span> — <span class="nomatch">the</span>  <span class="nomatch">subjective</span>  <span class="nomatch">and</span>  <span class="nomatch">moral</span>  <span class="nomatch">character</span>  <span class="nomatch">of</span>  <span class="nomatch">his</span>  <span class="nomatch">feelings</span>  ,  <span class="nomatch">on</span>  <span class="nomatch">finding</span>  <span class="nomatch">himself</span>  <span class="nomatch">so</span>  <span class="nomatch">surrounded</span>  ,  <span class="nomatch">does</span>  <span class="nomatch">not</span>  <span class="nomatch">destroy</span>  <span class="nomatch">their</span>  <span class="nomatch">cognitive</span>  <span class="nomatch">value</span>  .  <span class="nomatch">These</span>  <span class="nomatch">feelings</span>  ,  <span class="nomatch">as</span>  <span class="nomatch">Locke</span>  <span class="nomatch">says</span>  ,  <span class="nomatch">are</span>  <span class="nomatch">signs</span> : <span class="nomatch">to</span>  <span class="nomatch">take</span>  <span class="nomatch">them</span>  <span class="nomatch">for</span>  <span class="nomatch">signs</span>  <span class="nomatch">is</span>  <span class="nomatch">the</span>  <span class="nomatch">essence</span>  <span class="nomatch">of</span>  <span class="nomatch">intelligence</span>  .  <span class="nomatch">Animals</span>  <span class="nomatch">that</span>  <span class="nomatch">are</span>  <span class="nomatch">sensitive</span>  <span class="nomatch">physically</span>  <span class="nomatch">are</span>  <span class="nomatch">also</span>  <span class="nomatch">sensitive</span>  <span class="nomatch">morally</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">feel</span>  <span class="nomatch">the</span>  <span class="nomatch">friendliness</span>  <span class="nomatch">or</span>  <span class="nomatch">hostility</span>  <span class="nomatch">which</span>  <span class="nomatch">surrounds</span>  <span class="nomatch">them</span>  .  <span class="nomatch">Even</span>  <span class="nomatch">pain</span>  <span class="nomatch">and</span>  <span class="nomatch">pleasure</span>  <span class="nomatch">are</span>  <span class="nomatch">no</span>  <span class="nomatch">idle</span>  <span class="nomatch">sensations</span>  ,  <span class="nomatch">satisfied</span>  <span class="nomatch">with</span>  <span class="nomatch">their</span>  <span class="nomatch">own</span>  <span class="nomatch">presence</span> : <span class="nomatch">they</span>  <span class="nomatch">violently</span>  <span class="nomatch">summon</span>  <span class="nomatch">attention</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">objects</span>  <span class="nomatch">that</span>  <span class="nomatch">are</span>  <span class="nomatch">their</span>  <span class="nomatch">source</span>  .  <span class="nomatch">Can</span>  <span class="nomatch">love</span>  <span class="nomatch">or</span>  <span class="nomatch">hate</span>  <span class="nomatch">be</span>  <span class="nomatch">felt</span>  <span class="nomatch">without</span>  <span class="nomatch">being</span>  <span class="nomatch">felt</span>  <span class="nomatch">towards</span>  <span class="nomatch">something</span> — <span class="nomatch">something</span>  <span class="nomatch">near</span>  <span class="nomatch">and</span>  <span class="nomatch">potent</span>  ,  <span class="nomatch">yet</span>  <span class="nomatch">external</span>  ,  <span class="nomatch">uncontrolled</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">mysterious</span>  ?  <span class="nomatch">When</span>  <span class="nomatch">I</span>  <span class="nomatch">dodge</span>  <span class="nomatch">a</span>  <span class="nomatch">missile</span>  <span class="nomatch">or</span>  <span class="nomatch">pick</span>  <span class="nomatch">a</span>  <span class="nomatch">berry</span>  ,  <span class="nomatch">is</span>  <span class="nomatch">it</span>  <span class="nomatch">likely</span>  <span class="nomatch">that</span>  <span class="nomatch">my</span>  <span class="nomatch">mind</span>  <span class="nomatch">should</span>  <span class="nomatch">stop</span>  <span class="nomatch">to</span>  <span class="nomatch">dwell</span>  <span class="nomatch">on</span>  <span class="nomatch">its</span>  <span class="nomatch">pure</span>  <span class="nomatch">sensations</span>  <span class="nomatch">or</span>  <span class="nomatch">ideas</span>  <span class="nomatch">without</span>  <span class="nomatch">recognising</span>  <span class="nomatch">or</span>  <span class="nomatch">pursuing</span>  <span class="nomatch">something</span>  <span class="nomatch">material</span>  ?  <span class="nomatch">Analytic</span>  <span class="nomatch">reflection</span>  <span class="nomatch">often</span>  <span class="nomatch">ignores</span>  <span class="nomatch">the</span>  <span class="nomatch">essential</span>  <span class="nomatch">energy</span>  <span class="nomatch">of</span>  <span class="nomatch">mind</span>  ,  <span class="nomatch">which</span>  <span class="nomatch">is</span>  <span class="nomatch">originally</span>  <span class="nomatch">more</span>  <span class="nomatch">intelligent</span>  <span class="nomatch">than</span>  <span class="nomatch">sensuous</span>  ,  <span class="nomatch">more</span>  <span class="nomatch">appetitive</span>  <span class="nomatch">and</span>  <span class="nomatch">dogmatic</span>  <span class="nomatch">than</span>  <span class="nomatch">aesthetic</span>  .  <span class="nomatch">But</span>  <span class="nomatch">the</span>  <span class="nomatch">feelings</span>  <span class="nomatch">and</span>  <span class="nomatch">ideas</span>  <span class="nomatch">of</span>  <span class="nomatch">an</span>  <span class="nomatch">active</span>  <span class="nomatch">animal</span>  <span class="nomatch">cannot</span>  <span class="nomatch">help</span>  <span class="nomatch">uniting</span>  <span class="nomatch">internal</span>  <span class="nomatch">moral</span>  <span class="nomatch">intensity</span>  <span class="nomatch">with</span>  <span class="nomatch">external</span>  <span class="nomatch">physical</span>  <span class="nomatch">reference</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">natural</span>  <span class="nomatch">conditions</span>  <span class="nomatch">of</span>  <span class="nomatch">sensibility</span>  <span class="nomatch">require</span>  <span class="nomatch">that</span>  <span class="nomatch">perceptions</span>  <span class="nomatch">should</span>  <span class="nomatch">owe</span>  <span class="nomatch">their</span>  <span class="nomatch">existence</span>  <span class="nomatch">and</span>  <span class="nomatch">quality</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">living</span>  <span class="nomatch">organism</span>  <span class="nomatch">with</span>  <span class="nomatch">its</span>  <span class="nomatch">moral</span>  <span class="nomatch">bias</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">that</span>  <span class="nomatch">at</span>  <span class="nomatch">the</span>  <span class="nomatch">same</span>  <span class="nomatch">time</span>  <span class="nomatch">they</span>  <span class="nomatch">should</span>  <span class="nomatch">be</span>  <span class="nomatch">addressed</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">external</span>  <span class="nomatch">objects</span>  <span class="nomatch">which</span>  <span class="nomatch">entice</span>  <span class="nomatch">that</span>  <span class="nomatch">organism</span>  <span class="nomatch">or</span>  <span class="nomatch">threaten</span>  <span class="nomatch">it</span>  .</p>
+<p> <span class="nomatch">All</span>  <span class="nomatch">ambitions</span>  <span class="nomatch">must</span>  <span class="nomatch">be</span>  <span class="nomatch">defeated</span>  <span class="nomatch">when</span>  <span class="nomatch">they</span>  <span class="nomatch">ask</span>  <span class="nomatch">for</span>  <span class="nomatch">the</span>  <span class="nomatch">impossible</span>  .  <span class="nomatch">The</span>  <span class="nomatch">ambition</span>  <span class="nomatch">to</span>  <span class="nomatch">know</span>  <span class="nomatch">is</span>  <span class="nomatch">not</span>  <span class="nomatch">an</span>  <span class="nomatch">exception</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">certainly</span>  <span class="nomatch">our</span>  <span class="nomatch">perceptions</span>  <span class="nomatch">cannot</span>  <span class="nomatch">tell</span>  <span class="nomatch">us</span>  <span class="nomatch">how</span>  <span class="nomatch">the</span>  <span class="nomatch">world</span>  <span class="nomatch">would</span>  <span class="nomatch">look</span>  <span class="nomatch">if</span>  <span class="nomatch">nobody</span>  <span class="nomatch">saw</span>  <span class="nomatch">it</span>  ,  <span class="nomatch">or</span>  <span class="nomatch">how</span>  <span class="nomatch">valuable</span>  <span class="nomatch">it</span>  <span class="nomatch">would</span>  <span class="nomatch">be</span>  <span class="nomatch">if</span>  <span class="nomatch">nobody</span>  <span class="nomatch">cared</span>  <span class="nomatch">for</span>  <span class="nomatch">it</span>  .  <span class="nomatch">But</span>  <span class="nomatch">our</span>  <span class="nomatch">perceptions</span>  ,  <span class="nomatch">as</span>  <span class="nomatch">Locke</span>  <span class="nomatch">again</span>  <span class="nomatch">said</span>  ,  <span class="nomatch">are</span>  <span class="nomatch">sufficient</span>  <span class="nomatch">for</span>  <span class="nomatch">our</span>  <span class="nomatch">welfare</span>  <span class="nomatch">and</span>  <span class="nomatch">appropriate</span>  <span class="nomatch">to</span>  <span class="nomatch">our</span>  <span class="nomatch">condition</span>  .  <span class="nomatch">They</span>  <span class="nomatch">are</span>  <span class="nomatch">not</span>  <span class="nomatch">only</span>  <span class="nomatch">a</span>  <span class="nomatch">wonderful</span>  <span class="nomatch">entertainment</span>  <span class="nomatch">in</span>  <span class="nomatch">themselves</span>  ,  <span class="nomatch">but</span>  <span class="nomatch">apart</span>  <span class="nomatch">from</span>  <span class="nomatch">their</span>  <span class="nomatch">sensuous</span>  <span class="nomatch">and</span>  <span class="nomatch">grammatical</span>  <span class="nomatch">quality</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">their</span>  <span class="nomatch">distribution</span>  <span class="nomatch">and</span>  <span class="nomatch">method</span>  <span class="nomatch">of</span>  <span class="nomatch">variation</span>  ,  <span class="nomatch">they</span>  <span class="nomatch">may</span>  <span class="nomatch">inform</span>  <span class="nomatch">us</span>  <span class="nomatch">most</span>  <span class="nomatch">exactly</span>  <span class="nomatch">about</span>  <span class="nomatch">the</span>  <span class="nomatch">order</span>  <span class="nomatch">and</span>  <span class="nomatch">mechanism</span>  <span class="nomatch">of</span>  <span class="nomatch">nature</span>  .  <span class="nomatch">We</span>  <span class="nomatch">see</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">science</span>  <span class="nomatch">of</span>  <span class="nomatch">today</span>  <span class="nomatch">how</span>  <span class="nomatch">completely</span>  <span class="nomatch">the</span>  <span class="nomatch">most</span>  <span class="nomatch">accurate</span>  <span class="nomatch">knowledge</span> — <span class="nomatch">proved</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">accurate</span>  <span class="nomatch">by</span>  <span class="nomatch">its</span>  <span class="nomatch">application</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">arts</span> — <span class="nomatch">may</span>  <span class="nomatch">shed</span>  <span class="nomatch">every</span>  <span class="nomatch">pictorial</span>  <span class="nomatch">element</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">whole</span>  <span class="nomatch">language</span>  <span class="nomatch">of</span>  <span class="nomatch">experience</span>  ,  <span class="nomatch">to</span>  <span class="nomatch">become</span>  <span class="nomatch">a</span>  <span class="nomatch">pure</span>  <span class="nomatch">method</span>  <span class="nomatch">of</span>  <span class="nomatch">calculation</span>  <span class="nomatch">and</span>  <span class="nomatch">control</span>  .  <span class="nomatch">And</span>  <span class="nomatch">by</span>  <span class="nomatch">a</span>  <span class="nomatch">pleasant</span>  <span class="nomatch">compensation</span>  ,  <span class="nomatch">our</span>  <span class="nomatch">aesthetic</span>  <span class="nomatch">life</span>  <span class="nomatch">may</span>  <span class="nomatch">become</span>  <span class="nomatch">freer</span>  ,  <span class="nomatch">more</span>  <span class="nomatch">self</span> - <span class="nomatch">sufficing</span>  ,  <span class="nomatch">more</span>  <span class="nomatch">humbly</span>  <span class="nomatch">happy</span>  <span class="nomatch">in</span>  <span class="nomatch">itself</span> : <span class="nomatch">and</span>  <span class="nomatch">without</span>  <span class="nomatch">trespassing</span>  <span class="nomatch">in</span>  <span class="nomatch">any</span>  <span class="nomatch">way</span>  <span class="nomatch">beyond</span>  <span class="nomatch">the</span>  <span class="nomatch">modesty</span>  <span class="nomatch">of</span>  <span class="nomatch">nature</span>  ,  <span class="nomatch">we</span>  <span class="nomatch">may</span>  <span class="nomatch">consent</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">like</span>  <span class="nomatch">little</span>  <span class="nomatch">children</span>  ,  <span class="nomatch">chirping</span>  <span class="nomatch">our</span>  <span class="nomatch">human</span>  <span class="nomatch">note</span>  ;  <span class="nomatch">since</span>  <span class="nomatch">the</span>  <span class="nomatch">life</span>  <span class="nomatch">of</span>  <span class="nomatch">reason</span>  <span class="nomatch">in</span>  <span class="nomatch">us</span>  <span class="nomatch">may</span>  <span class="nomatch">well</span>  <span class="nomatch">become</span>  <span class="nomatch">science</span>  <span class="nomatch">in</span>  <span class="nomatch">its</span>  <span class="nomatch">validity</span>  ,  <span class="nomatch">whilst</span>  <span class="nomatch">remaining</span>  <span class="nomatch">poetry</span>  <span class="nomatch">in</span>  <span class="nomatch">its</span>  <span class="nomatch">texture</span>  .</p>
+<p> <span class="nomatch">I</span>  <span class="nomatch">think</span>  ,  <span class="nomatch">then</span>  ,  <span class="nomatch">that</span>  <span class="nomatch">by</span>  <span class="nomatch">a</span>  <span class="nomatch">slight</span>  <span class="nomatch">re</span> - <span class="nomatch">arrangement</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">pronouncements</span>  <span class="nomatch">in</span>  <span class="nomatch">natural</span>  <span class="nomatch">philosophy</span>  ,  <span class="nomatch">they</span>  <span class="nomatch">could</span>  <span class="nomatch">be</span>  <span class="nomatch">made</span>  <span class="nomatch">inwardly</span>  <span class="nomatch">consistent</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">still</span>  <span class="nomatch">faithful</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">first</span>  <span class="nomatch">presuppositions</span>  <span class="nomatch">of</span>  <span class="nomatch">common</span>  <span class="nomatch">sense</span>  ,  <span class="nomatch">although</span>  <span class="nomatch">certainly</span>  <span class="nomatch">far</span>  <span class="nomatch">more</span>  <span class="nomatch">chastened</span>  <span class="nomatch">and</span>  <span class="nomatch">sceptical</span>  <span class="nomatch">than</span>  <span class="nomatch">impulsive</span>  <span class="nomatch">opinion</span>  <span class="nomatch">is</span>  <span class="nomatch">likely</span>  <span class="nomatch">to</span>  <span class="nomatch">be</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">first</span>  <span class="nomatch">instance</span>  .</p>
+<p> <span class="nomatch">There</span>  <span class="nomatch">were</span>  <span class="nomatch">other</span>  <span class="nomatch">presuppositions</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">philosophy</span>  <span class="nomatch">of</span>  <span class="nomatch">Locke</span>  <span class="nomatch">besides</span>  <span class="nomatch">his</span>  <span class="nomatch">fundamental</span>  <span class="nomatch">naturalism</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">in</span>  <span class="nomatch">his</span>  <span class="nomatch">private</span>  <span class="nomatch">mind</span>  <span class="nomatch">probably</span>  <span class="nomatch">the</span>  <span class="nomatch">most</span>  <span class="nomatch">important</span>  <span class="nomatch">was</span>  <span class="nomatch">his</span>  <span class="nomatch">Christian</span>  <span class="nomatch">faith</span>  ,  <span class="nomatch">which</span>  <span class="nomatch">was</span>  <span class="nomatch">not</span>  <span class="nomatch">only</span>  <span class="nomatch">confident</span>  <span class="nomatch">and</span>  <span class="nomatch">sincere</span>  ,  <span class="nomatch">but</span>  <span class="nomatch">prompted</span>  <span class="nomatch">him</span>  <span class="nomatch">at</span>  <span class="nomatch">times</span>  <span class="nomatch">to</span>  <span class="nomatch">high</span>  <span class="nomatch">speculation</span>  .  <span class="nomatch">He</span>  <span class="nomatch">had</span>  <span class="nomatch">friends</span>  <span class="nomatch">among</span>  <span class="nomatch">the</span>  <span class="nomatch">Cambridge</span>  <span class="nomatch">Platonists</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">he</span>  <span class="nomatch">found</span>  <span class="nomatch">in</span>  <span class="nomatch">Newton</span>  <span class="nomatch">a</span>  <span class="nomatch">brilliant</span>  <span class="nomatch">example</span>  <span class="nomatch">of</span>  <span class="nomatch">scientific</span>  <span class="nomatch">rigour</span>  <span class="nomatch">capped</span>  <span class="nomatch">with</span>  <span class="nomatch">mystical</span>  <span class="nomatch">insights</span>  .  <span class="nomatch">Yet</span>  <span class="nomatch">if</span>  <span class="nomatch">we</span>  <span class="nomatch">consider</span>  <span class="nomatch">Locke's</span>  <span class="nomatch">philosophical</span>  <span class="nomatch">position</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">abstract</span>  ,  <span class="nomatch">his</span>  <span class="nomatch">Christianity</span>  <span class="nomatch">almost</span>  <span class="nomatch">disappears</span>  .  <span class="nomatch">In</span>  <span class="nomatch">form</span>  <span class="nomatch">his</span>  <span class="nomatch">theology</span>  <span class="nomatch">and</span>  <span class="nomatch">ethics</span>  <span class="nomatch">were</span>  <span class="nomatch">strictly</span>  <span class="nomatch">rationalistic</span>  ;  <span class="nomatch">yet</span>  <span class="nomatch">one</span>  <span class="nomatch">who</span>  <span class="nomatch">was</span>  <span class="nomatch">a</span>  <span class="nomatch">Deist</span>  <span class="nomatch">in</span>  <span class="nomatch">philosophy</span>  <span class="nomatch">might</span>  <span class="nomatch">remain</span>  <span class="nomatch">a</span>  <span class="nomatch">Christian</span>  <span class="nomatch">in</span>  <span class="nomatch">religion</span>  .  <span class="nomatch">There</span>  <span class="nomatch">was</span>  <span class="nomatch">no</span>  <span class="nomatch">great</span>  <span class="nomatch">harm</span>  <span class="nomatch">in</span>  <span class="nomatch">a</span>  <span class="nomatch">special</span>  <span class="nomatch">revelation</span>  ,  <span class="nomatch">provided</span>  <span class="nomatch">it</span>  <span class="nomatch">were</span>  <span class="nomatch">simple</span>  <span class="nomatch">and</span>  <span class="nomatch">short</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">left</span>  <span class="nomatch">the</span>  <span class="nomatch">broad</span>  <span class="nomatch">field</span>  <span class="nomatch">of</span>  <span class="nomatch">truth</span>  <span class="nomatch">open</span>  <span class="nomatch">in</span>  <span class="nomatch">almost</span>  <span class="nomatch">every</span>  <span class="nomatch">direction</span>  <span class="nomatch">to</span>  <span class="nomatch">free</span>  <span class="nomatch">and</span>  <span class="nomatch">personal</span>  <span class="nomatch">investigation</span>  .  <span class="nomatch">A</span>  <span class="nomatch">free</span>  <span class="nomatch">man</span>  <span class="nomatch">and</span>  <span class="nomatch">a</span>  <span class="nomatch">good</span>  <span class="nomatch">man</span>  <span class="nomatch">would</span>  <span class="nomatch">certainly</span>  <span class="nomatch">never</span>  <span class="nomatch">admit</span>  ,  <span class="nomatch">as</span>  <span class="nomatch">coming</span>  <span class="nomatch">from</span>  <span class="nomatch">God</span>  ,  <span class="nomatch">any</span>  <span class="nomatch">doctrine</span>  <span class="nomatch">contrary</span>  <span class="nomatch">to</span>  <span class="nomatch">his</span>  <span class="nomatch">private</span>  <span class="nomatch">reason</span>  <span class="nomatch">or</span>  <span class="nomatch">political</span>  <span class="nomatch">interest</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">moral</span>  <span class="nomatch">precepts</span>  <span class="nomatch">actually</span>  <span class="nomatch">vouchsafed</span>  <span class="nomatch">to</span>  <span class="nomatch">us</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">Gospels</span>  <span class="nomatch">were</span>  <span class="nomatch">most</span>  <span class="nomatch">acceptable</span>  ,  <span class="nomatch">seeing</span>  <span class="nomatch">that</span>  <span class="nomatch">they</span>  <span class="nomatch">added</span>  <span class="nomatch">a</span>  <span class="nomatch">sublime</span>  <span class="nomatch">eloquence</span>  <span class="nomatch">to</span>  <span class="nomatch">maxims</span>  <span class="nomatch">which</span>  <span class="nomatch">sound</span>  <span class="nomatch">reason</span>  <span class="nomatch">would</span>  <span class="nomatch">have</span>  <span class="nomatch">arrived</span>  <span class="nomatch">at</span>  <span class="nomatch">in</span>  <span class="nomatch">any</span>  <span class="nomatch">case</span>  .</p>
+<p> <span class="nomatch">Evidently</span>  <span class="nomatch">common</span>  <span class="nomatch">sense</span>  <span class="nomatch">had</span>  <span class="nomatch">nothing</span>  <span class="nomatch">to</span>  <span class="nomatch">fear</span>  <span class="nomatch">from</span>  <span class="nomatch">religious</span>  <span class="nomatch">faith</span>  <span class="nomatch">of</span>  <span class="nomatch">this</span>  <span class="nomatch">character</span>  ;  <span class="nomatch">but</span>  <span class="nomatch">the</span>  <span class="nomatch">matter</span>  <span class="nomatch">could</span>  <span class="nomatch">not</span>  <span class="nomatch">end</span>  <span class="nomatch">there</span>  .  <span class="nomatch">Common</span>  <span class="nomatch">sense</span>  <span class="nomatch">is</span>  <span class="nomatch">not</span>  <span class="nomatch">more</span>  <span class="nomatch">convinced</span>  <span class="nomatch">of</span>  <span class="nomatch">anything</span>  <span class="nomatch">than</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">difference</span>  <span class="nomatch">between</span>  <span class="nomatch">good</span>  <span class="nomatch">and</span>  <span class="nomatch">evil</span>  ,  <span class="nomatch">advantage</span>  <span class="nomatch">and</span>  <span class="nomatch">disaster</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">it</span>  <span class="nomatch">cannot</span>  <span class="nomatch">dispense</span>  <span class="nomatch">with</span>  <span class="nomatch">a</span>  <span class="nomatch">moral</span>  <span class="nomatch">interpretation</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">universe</span>  .  <span class="nomatch">Socrates</span>  ,  <span class="nomatch">who</span>  <span class="nomatch">spoke</span>  <span class="nomatch">initially</span>  <span class="nomatch">for</span>  <span class="nomatch">common</span>  <span class="nomatch">sense</span>  ,  <span class="nomatch">even</span>  <span class="nomatch">thought</span>  <span class="nomatch">the</span>  <span class="nomatch">moral</span>  <span class="nomatch">interpretation</span>  <span class="nomatch">of</span>  <span class="nomatch">existence</span>  <span class="nomatch">the</span>  <span class="nomatch">whole</span>  <span class="nomatch">of</span>  <span class="nomatch">philosophy</span>  .  <span class="nomatch">He</span>  <span class="nomatch">would</span>  <span class="nomatch">not</span>  <span class="nomatch">have</span>  <span class="nomatch">seen</span>  <span class="nomatch">anything</span>  <span class="nomatch">comic</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">satire</span>  <span class="nomatch">of</span>  <span class="nomatch">Molière</span>  <span class="nomatch">making</span>  <span class="nomatch">his</span>  <span class="nomatch">chorus</span>  <span class="nomatch">of</span>  <span class="nomatch">young</span>  <span class="nomatch">doctors</span>  <span class="nomatch">chant</span>  <span class="nomatch">in</span>  <span class="nomatch">unison</span>  <span class="nomatch">that</span>  <span class="nomatch">opium</span>  <span class="nomatch">causes</span>  <span class="nomatch">sleep</span>  <span class="nomatch">because</span>  <span class="nomatch">it</span>  <span class="nomatch">has</span>  <span class="nomatch">a</span>  <span class="nomatch">dormitive</span>  <span class="nomatch">virtue</span>  .  <span class="nomatch">The</span>  <span class="nomatch">virtues</span>  <span class="nomatch">or</span>  <span class="nomatch">moral</span>  <span class="nomatch">uses</span>  <span class="nomatch">of</span>  <span class="nomatch">things</span>  ,  <span class="nomatch">according</span>  <span class="nomatch">to</span>  <span class="nomatch">Socrates</span>  ,  <span class="nomatch">were</span>  <span class="nomatch">the</span>  <span class="nomatch">reason</span>  <span class="nomatch">why</span>  <span class="nomatch">the</span>  <span class="nomatch">things</span>  <span class="nomatch">had</span>  <span class="nomatch">been</span>  <span class="nomatch">created</span>  <span class="nomatch">and</span>  <span class="nomatch">were</span>  <span class="nomatch">what</span>  <span class="nomatch">they</span>  <span class="nomatch">were</span>  ;  <span class="nomatch">the</span>  <span class="nomatch">admirable</span>  <span class="nomatch">virtues</span>  <span class="nomatch">of</span>  <span class="nomatch">opium</span>  <span class="nomatch">defined</span>  <span class="nomatch">its</span>  <span class="nomatch">perfection</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">perfection</span>  <span class="nomatch">of</span>  <span class="nomatch">a</span>  <span class="nomatch">thing</span>  <span class="nomatch">was</span>  <span class="nomatch">the</span>  <span class="nomatch">full</span>  <span class="nomatch">manifestation</span>  <span class="nomatch">of</span>  <span class="nomatch">its</span>  <span class="nomatch">deepest</span>  <span class="nomatch">nature</span>  .  <span class="nomatch">Doubtless</span>  <span class="nomatch">this</span>  <span class="nomatch">moral</span>  <span class="nomatch">interpretation</span>  <span class="nomatch">of</span>  <span class="nomatch">the</span>  <span class="nomatch">universe</span>  <span class="nomatch">had</span>  <span class="nomatch">been</span>  <span class="nomatch">overdone</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">it</span>  <span class="nomatch">had</span>  <span class="nomatch">been</span>  <span class="nomatch">a</span>  <span class="nomatch">capital</span>  <span class="nomatch">error</span>  <span class="nomatch">in</span>  <span class="nomatch">Socrates</span>  <span class="nomatch">to</span>  <span class="nomatch">make</span>  <span class="nomatch">that</span>  <span class="nomatch">interpretation</span>  <span class="nomatch">exclusive</span>  <span class="nomatch">and</span>  <span class="nomatch">to</span>  <span class="nomatch">substitute</span>  <span class="nomatch">it</span>  <span class="nomatch">for</span>  <span class="nomatch">natural</span>  <span class="nomatch">philosophy</span>  .  <span class="nomatch">Locke</span>  ,  <span class="nomatch">who</span>  <span class="nomatch">was</span>  <span class="nomatch">himself</span>  <span class="nomatch">a</span>  <span class="nomatch">medical</span>  <span class="nomatch">man</span>  ,  <span class="nomatch">knew</span>  <span class="nomatch">what</span>  <span class="nomatch">a</span>  <span class="nomatch">black</span>  <span class="nomatch">cloak</span>  <span class="nomatch">for</span>  <span class="nomatch">ignorance</span>  <span class="nomatch">and</span>  <span class="nomatch">villainy</span>  <span class="nomatch">Scholastic</span>  <span class="nomatch">verbiage</span>  <span class="nomatch">might</span>  <span class="nomatch">be</span>  <span class="nomatch">in</span>  <span class="nomatch">that</span>  <span class="nomatch">profession</span>  .  <span class="nomatch">He</span>  <span class="nomatch">also</span>  <span class="nomatch">knew</span>  ,  <span class="nomatch">being</span>  <span class="nomatch">an</span>  <span class="nomatch">enthusiast</span>  <span class="nomatch">for</span>  <span class="nomatch">experimental</span>  <span class="nomatch">science</span>  ,  <span class="nomatch">that</span>  <span class="nomatch">in</span>  <span class="nomatch">order</span>  <span class="nomatch">to</span>  <span class="nomatch">control</span>  <span class="nomatch">the</span>  <span class="nomatch">movement</span>  <span class="nomatch">of</span>  <span class="nomatch">matter</span> — <span class="nomatch">which</span>  <span class="nomatch">is</span>  <span class="nomatch">to</span>  <span class="nomatch">realise</span>  <span class="nomatch">those</span>  <span class="nomatch">virtues</span>  <span class="nomatch">and</span>  <span class="nomatch">perfections</span> — <span class="nomatch">it</span>  <span class="nomatch">is</span>  <span class="nomatch">better</span>  <span class="nomatch">to</span>  <span class="nomatch">trace</span>  <span class="nomatch">the</span>  <span class="nomatch">movement</span>  <span class="nomatch">of</span>  <span class="nomatch">matter</span>  <span class="nomatch">materialistically</span>  ;  <span class="nomatch">for</span>  <span class="nomatch">it</span>  <span class="nomatch">is</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">act</span>  <span class="nomatch">of</span>  <span class="nomatch">manifesting</span>  <span class="nomatch">its</span>  <span class="nomatch">own</span>  <span class="nomatch">powers</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">not</span>  ,  <span class="nomatch">as</span>  <span class="nomatch">Socrates</span>  <span class="nomatch">and</span>  <span class="nomatch">the</span>  <span class="nomatch">Scholastics</span>  <span class="nomatch">fancied</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">obeying</span>  <span class="nomatch">a</span>  <span class="nomatch">foreign</span>  <span class="nomatch">magic</span>  ,  <span class="nomatch">that</span>  <span class="nomatch">matter</span>  <span class="nomatch">sometimes</span>  <span class="nomatch">assumes</span>  <span class="nomatch">or</span>  <span class="nomatch">restores</span>  <span class="nomatch">the</span>  <span class="nomatch">forms</span>  <span class="nomatch">so</span>  <span class="nomatch">precious</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">healer's</span>  <span class="nomatch">or</span>  <span class="nomatch">the</span>  <span class="nomatch">moralist's</span>  <span class="nomatch">eyes</span>  .  <span class="nomatch">At</span>  <span class="nomatch">the</span>  <span class="nomatch">same</span>  <span class="nomatch">time</span>  ,  <span class="nomatch">the</span>  <span class="nomatch">manner</span>  <span class="nomatch">in</span>  <span class="nomatch">which</span>  <span class="nomatch">the</span>  <span class="nomatch">moral</span>  <span class="nomatch">world</span>  <span class="nomatch">rests</span>  <span class="nomatch">upon</span>  <span class="nomatch">the</span>  <span class="nomatch">natural</span>  ,  <span class="nomatch">though</span>  <span class="nomatch">divined</span>  ,  <span class="nomatch">perhaps</span>  ,  <span class="nomatch">by</span>  <span class="nomatch">a</span>  <span class="nomatch">few</span>  <span class="nomatch">philosophers</span>  ,  <span class="nomatch">has</span>  <span class="nomatch">not</span>  <span class="nomatch">been</span>  <span class="nomatch">generally</span>  <span class="nomatch">understood</span>  ;  <span class="nomatch">and</span>  <span class="nomatch">Locke</span>  ,  <span class="nomatch">whose</span>  <span class="nomatch">broad</span>  <span class="nomatch">humanity</span>  <span class="nomatch">could</span>  <span class="nomatch">not</span>  <span class="nomatch">exclude</span>  <span class="nomatch">the</span>  <span class="nomatch">moral</span>  <span class="nomatch">interpretation</span>  <span class="nomatch">of</span>  <span class="nomatch">nature</span>  ,  <span class="nomatch">was</span>  <span class="nomatch">driven</span>  <span class="nomatch">in</span>  <span class="nomatch">the</span>  <span class="nomatch">end</span>  <span class="nomatch">to</span>  <span class="nomatch">the</span>  <span class="nomatch">view</span>  <span class="nomatch">of</span>  <span class="nomatch">Socrates</span>  .  <span class="nomatch">He</span>  <span class="nomatch">seriously</span>  <span class="nomatch">invoked</span>  <span class="nomatch">the</span>  <span class="nomatch">Scholastic</span>  <span class="nomatch">maxim</span>  <span class="nomatch">that</span>  <span class="nomatch">nothing</span>  <span class="nomatch">can</span>  <span class="nomatch">produce</span>  <span class="nomatch">that</span>  <span class="nomatch">which</span>  <span class="nomatch">it</span>  <span class="nomatch">does</span>  <span class="nomatch">not</span>  <span class="nomatch">contain</span>  .  <span class="nomatch">For</span>  <span class="nomatch">this</span>  <span class="nomatch">reason</span>  <span class="nomatch">the</span>  <span class="nomatch">unconscious</span>  ,  <span class="nomatch">after</span>  <span class="nomatch">all</span>  ,  <span class="nomatch">could</span>  <span class="nomatch">never</span>  <span class="nomatch">have</span>  <span class="nomatch">given</span>  <span class="nomatch">rise</span>  <span class="nomatch">to</span>  <span class="nomatch">consciousness</span>  .  <span class="nomatch">Observation</span>  <span class="nomatch">and</span>  <span class="nomatch">experiment</span>  <span class="nomatch">could</span>  <span class="nomatch">not</span>  <span class="nomatch">be</span>  <span class="nomatch">allowed</span>  <span class="nomatch">to</span>  <span class="nomatch">decide</span>  <span class="nomatch">this</span>  <span class="nomatch">point</span> : <span class="nomatch">the</span>  <span class="nomatch">moral</span>  <span class="nomatch">interpretation</span>  <span class="nomatch">of</span>  <span class="nomatch">things</span>  ,  <span class="nomatch">because</span>  <span class="nomatch">more</span>  <span class="nomatch">deeply</span>  <span class="nomatch">rooted</span>  <span class="nomatch">in</span>  <span class="nomatch">human</span>  <span class="nomatch">experience</span>  ,  <span class="nomatch">must</span>  <span class="nomatch">envelop</span>  <span class="nomatch">the</span>  <span class="nomatch">physical</span>  <span class="nomatch">interpretation</span>  ,  <span class="nomatch">and</span>  <span class="nomatch">must</span>  <span class="nomatch">have</span>  <span class="nomatch">the</span>  <span class="nomatch">last</span>  <span class="nomatch">word</span>  .</p>
+            </div>
+
+            <footer class="credits">
+                <div>阅读外语经典，了解世界文化，复兴中华文明</div>
+                <div>听语族外语软件工作室出品 湖南长沙</div>
+            </footer>
+        </article>
+
+        <footer class="credits">
+            Support by
+            <a rel="author" href="mailto:knightmade@qq.com">meng gang</a>,
+            Code licensed <a href="http://www.opensource.org/licenses/MIT" rel="license">MIT</a>/<a href="http://www.gnu.org/licenses/gpl.html" rel="license">GPL</a>.
+        </footer>
+
+<script type="text/javascript">
+
+    /**
+     * HTML5 Audio Read-Along
+     * @author Weston Ruter, X-Team
+     * @license MIT/GPL
+     * https://github.com/westonruter/html5-audio-read-along
+     */
+    var ReadAlong = {
+        text_element: null,
+        audio_element: null,
+        autofocus_current_word: true,
+
+        words: [],
+
+        init: function (args) {
+            var name;
+            for (name in args) {
+                this[name] = args[name];
+            }
+            this.generateWordList();
+            this.addEventListeners();
+            this.selectCurrentWord();
+        },
+
+        /**
+         * Build an index of all of the words that can be read along with their begin,
+         * and end times, and the DOM element representing the word.
+         */
+        generateWordList: function () {
+            var word_els = this.text_element.querySelectorAll('[data-begin]');
+            this.words = Array.prototype.map.call(word_els, function (word_el, index) {
+                var word = {
+                    'begin': parseFloat(word_el.dataset.begin),
+                    'dur': parseFloat(word_el.dataset.dur),
+                    'element': word_el
+                };
+                word_el.tabIndex = 0; // to make it focusable/interactive
+                word.index = index;
+                word.end = word.begin + word.dur;
+                word_el.dataset.index = word.index;
+                return word;
+            });
+        },
+
+        /**
+         * From the audio's currentTime, find the word that is currently being played
+         * @todo this would better be implemented as a binary search
+         */
+        getCurrentWord: function () {
+            var i;
+            var len;
+            var is_current_word;
+            var word = null;
+            for (i = 0, len = this.words.length; i < len; i += 1) {
+                is_current_word = (
+                    (
+                        this.audio_element.currentTime >= this.words[i].begin
+                        &&
+                        this.audio_element.currentTime < this.words[i].end
+                    )
+                    ||
+                    (this.audio_element.currentTime < this.words[i].begin)
+                );
+                if (is_current_word) {
+                    word = this.words[i];
+                    break;
+                }
+            }
+
+            if (!word) {
+                throw Error('Unable to find current word and we should always be able to.');
+            }
+            return word;
+        },
+
+        _current_end_select_timeout_id: null,
+        _current_next_select_timeout_id: null,
+
+        /**
+         * Select the current word and set timeout to select the next one if playing
+         */
+        selectCurrentWord: function() {
+            var that = this;
+            var current_word = this.getCurrentWord();
+            var is_playing = !this.audio_element.paused;
+
+            if (!current_word.element.classList.contains('speaking')) {
+                this.removeWordSelection();
+                current_word.element.classList.add('speaking');
+                if (this.autofocus_current_word) {
+                    current_word.element.focus();
+                }
+            }
+
+            /**
+             * The timeupdate Media event does not fire repeatedly enough to be
+             * able to rely on for updating the selected word (it hovers around
+             * 250ms resolution), so we add a setTimeout with the exact duration
+             * of the word.
+             */
+            if (is_playing) {
+                // Remove word selection when the word ceases to be spoken
+                var seconds_until_this_word_ends = current_word.end - this.audio_element.currentTime; // Note: 'word' not 'world'! ;-)
+                if (typeof this.audio_element === 'number' && !isNaN(this.audio_element)) {
+                    seconds_until_this_word_ends *= 1.0/this.audio_element.playbackRate;
+                }
+                clearTimeout(this._current_end_select_timeout_id);
+                this._current_end_select_timeout_id = setTimeout(
+                    function () {
+                        if (!that.audio_element.paused) { // we always want to have a word selected while paused
+                            current_word.element.classList.remove('speaking');
+                        }
+                    },
+                    Math.max(seconds_until_this_word_ends * 1000, 0)
+                );
+
+                // Automatically trigger selectCurrentWord when the next word begins
+                var next_word = this.words[current_word.index + 1];
+                if (next_word) {
+                    var seconds_until_next_word_begins = next_word.begin - this.audio_element.currentTime;
+
+                    var orig_seconds_until_next_word_begins = seconds_until_next_word_begins; // temp
+                    if (typeof this.audio_element === 'number' && !isNaN(this.audio_element)) {
+                        seconds_until_next_word_begins *= 1.0/this.audio_element.playbackRate;
+                    }
+                    clearTimeout(this._current_next_select_timeout_id);
+                    this._current_next_select_timeout_id = setTimeout(
+                        function () {
+                            that.selectCurrentWord();
+                        },
+                        Math.max(seconds_until_next_word_begins * 1000, 0)
+                    );
+                }
+            }
+
+        },
+
+        removeWordSelection: function() {
+            // There should only be one element with .speaking, but selecting all for good measure
+            var spoken_word_els = this.text_element.querySelectorAll('span[data-begin].speaking');
+            Array.prototype.forEach.call(spoken_word_els, function (spoken_word_el) {
+                spoken_word_el.classList.remove('speaking');
+            });
+        },
+
+
+        addEventListeners: function () {
+            var that = this;
+
+            /**
+             * Select next word (at that.audio_element.currentTime) when playing begins
+             */
+            that.audio_element.addEventListener('play', function (e) {
+                that.selectCurrentWord();
+                that.text_element.classList.add('speaking');
+            }, false);
+
+            /**
+             * Abandon seeking the next word because we're paused
+             */
+            that.audio_element.addEventListener('pause', function (e) {
+                that.selectCurrentWord(); // We always want a word to be selected
+                that.text_element.classList.remove('speaking');
+            }, false);
+
+            /**
+             * Seek by selecting a word (event delegation)
+             */
+            function on_select_word_el(e) {
+                if (!e.target.dataset.begin) {
+                    return;
+                }
+                e.preventDefault();
+
+                var i = e.target.dataset.index;
+                that.audio_element.currentTime = that.words[i].begin + 0.01; //Note: times apparently cannot be exactly set and sometimes select too early
+                that.selectCurrentWord();
+            }
+            that.text_element.addEventListener('click', on_select_word_el, false);
+            that.text_element.addEventListener('keypress', function (e) {
+                if ( (e.charCode || e.keyCode) === 13 /*Enter*/) {
+                    on_select_word_el.call(this, e);
+                }
+            }, false);
+
+            /**
+             * Spacebar toggles playback
+             */
+            document.addEventListener('keypress', function (e) {
+                if ( (e.charCode || e.keyCode) === 32 /*Space*/) {
+                    e.preventDefault();
+                    if (that.audio_element.paused) {
+                        that.audio_element.play();
+                    }
+                    else {
+                        that.audio_element.pause();
+                    }
+                }
+            }, false);
+
+            /**
+             * First click handler sets currentTime to the word, and second click
+             * here then causes it to play.
+             * @todo Should it stop playing once the duration is over?
+             */
+            that.text_element.addEventListener('dblclick', function (e) {
+                e.preventDefault();
+                that.audio_element.play();
+            }, false);
+
+            /**
+             * Select a word when seeking
+             */
+            that.audio_element.addEventListener('seeked', function (e) {
+                that.selectCurrentWord();
+
+                /**
+                 * Address probem with Chrome where sometimes it seems to get stuck upon seeked:
+                 * http://code.google.com/p/chromium/issues/detail?id=99749
+                 */
+                var audio_element = this;
+                if (!audio_element.paused) {
+                    var previousTime = audio_element.currentTime;
+                    setTimeout(function () {
+                        if (!audio_element.paused && previousTime === audio_element.currentTime) {
+                            audio_element.currentTime += 0.01; // Attempt to unstick
+                        }
+                    }, 500);
+                }
+            }, false);
+
+            /**
+             * Select a word when seeking
+             */
+            that.audio_element.addEventListener('ratechange', function (e) {
+                that.selectCurrentWord();
+            }, false);
+        }
+    };
+
+    /*global ReadAlong */
+    window.addEventListener('load', function (e) {
+        try {
+            var args = {
+                text_element: document.getElementById('passage-text'),
+                audio_element: document.getElementById('passage-audio'),
+                autofocus_current_word: document.getElementById('autofocus-current-word').checked
+            };
+
+            if (!args.audio_element.canPlayType) {
+                // No error messaging is needed because error message appears in <audio> fallback
+                throw new Error('HTML5 Audio not supported');
+            }
+            if (args.audio_element.networkState === args.audio_element.NETWORK_NO_SOURCE) {
+                document.querySelector('.passage-audio-unavailable').hidden = false;
+                throw new Error('Cannot play any of the available sources');
+            }
+
+            var supports_playback_rate = (function (audio) {
+                if (typeof audio.playbackRate !== 'number' || isNaN(audio.playbackRate)) {
+                    return false;
+                }
+
+                // For Opera, since it doesn't currently support playbackRate and yet
+                // has it defined as 1.0, we can detect Opera support by changing
+                // the playbackRate and see if the change sticks.
+                var original_playback_rate = audio.playbackRate;
+                audio.playbackRate += 1.0;
+                var is_playback_rate_changed = (original_playback_rate !== audio.playbackRate);
+                audio.playbackRate = original_playback_rate;
+                return is_playback_rate_changed;
+            }(args.audio_element));
+
+            if (supports_playback_rate) {
+                var rate_range_element = document.getElementById('playback-rate');
+                rate_range_element.disabled = false;
+                rate_range_element.addEventListener('change', function (e) {
+                    args.audio_element.playbackRate = this.valueAsNumber;
+                }, false);
+            }
+            else {
+                document.querySelector('.playback-rate-unavailable').hidden = false;
+            }
+
+            ReadAlong.init(args);
+
+            document.getElementById('autofocus-current-word').addEventListener('change', function (e) {
+                ReadAlong.autofocus_current_word = this.checked;
+            }, false);
+
+            document.querySelector('.passage-audio').hidden = false;
+            if (supports_playback_rate) {
+                document.querySelector('.playback-rate').hidden = false;
+            }
+            document.querySelector('.autofocus-current-word').hidden = false;
+        } catch (err) {
+            console.error(err);
+        }
+        document.body.classList.add('initialized');
+        document.querySelector('.loading').hidden = true;
+
+        var ElementClass = {
+            dict: {},
+
+            create: function(class_name) {
+                var tmp = class_name.split(/[\s\t\r\n]+/);
+                var dict = {};
+                for (var i in tmp) {
+                    var x = tmp[i];
+                    if (x && !(x in dict)) {
+                        dict[x] = true;
+                    }
+                }
+                this.dict = dict;
+                return this;
+            },
+
+            hasClass: function(class_name) {
+                return class_name in this.dict;
+            },
+
+            addClass: function(class_name) {
+                this.dict[class_name] = true;
+            },
+
+            removeClass: function(class_name) {
+                delete this.dict[class_name];
+            },
+
+            toString: function() {
+                var tmp = [];
+                for (var x in this.dict) {
+                    tmp.push(x);
+                }
+                return tmp.join(' ');
+            },
+        };
+
+        window.addEventListener('scroll', function(e) {
+            var bodyClass = ElementClass.create(document.querySelector('body').className);
+            if (window.scrollY >= 100) {
+                bodyClass.addClass('sticky-header');
+            } else {
+                bodyClass.removeClass('sticky-header');
+            }
+            document.querySelector('body').className = bodyClass.toString();
+        }, false);
+
+    }, false);
+
+
+</script>
+
+
+    </body>
+</html>
