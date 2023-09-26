@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>amelia_01_fielding_64kb - HTML5 Audio Read</title>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<style>
+
+html {
+    background: #333;
+    font-family: Verdana, sans-serif;
+}
+body {
+    background: white;
+    padding: 1em;
+    border-radius: 1em;
+}
+a {
+    color: #0E2560;
+}
+h2 {
+    margin-bottom: 1em;
+}
+.passage-audio {
+    height: 2em;
+}
+#passage-audio {
+    width: 100%;
+    max-height: 2em;
+}
+#passage-text.speaking {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.autofocus-current-word,
+.playback-rate {
+    font-size: smaller;
+}
+.autofocus-current-word label,
+.playback-rate label {
+    font-weight: bold;
+}
+q {
+    quotes: "“" "”" "‘" "’";
+}
+.section-heading {
+    display: none;
+}
+.passage p {
+    line-height: 1.4em;
+}
+.verse-start {
+    line-height: 0;
+}
+.initialized span[data-begin]:focus,
+.initialized span[data-begin]:hover {
+    background-color: #FFFFCA;
+    box-shadow: 0px 0px 4px #FFFFCA;
+}
+.initialized span[data-begin].speaking {
+    background-color: yellow;
+    box-shadow: 0px 0px 4px yellow;
+}
+.initialized span[data-begin] {
+    cursor: pointer;
+}
+.error {
+    color: red;
+}
+
+article > footer {
+    border-top: solid 1px gray;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+
+footer {
+    margin-bottom: 0.5em;
+    line-height: 1.4em;
+    font-size: small;
+}
+footer img {
+    vertical-align: text-bottom;
+}
+</style>
+    </head>
+    <body>
+        <h1>amelia_01_fielding_64kb</h1>
+
+        <article>
+            <p class="loading">
+                <em><img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" alt="Initializing audio"> Loading audio…</em>
+            </p>
+
+            <p class="passage-audio" hidden>
+                <audio id="passage-audio" class="passage" controls>
+                    <source src="amelia_01_fielding_64kb.mp3" type="audio/mp3" />
+                    <em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em>
+                </audio>
+            </p>
+            <p class="passage-audio-unavailable" hidden>
+                <em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>
+            </p>
+
+            <p class="playback-rate" hidden title="Note that increaseing the reading rate will decrease accuracy of word highlights">
+                <label for="playback-rate">Reading rate:</label>
+                <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" disabled onchange='this.nextElementSibling.textContent = String(Math.round(this.valueAsNumber * 10) / 10) + "\u00D7";'>
+                <output>1&times;</output>
+            </p>
+            <p class="playback-rate-unavailable" hidden>
+                <em>(It seems your browser does not support <code>HTMLMediaElement.playbackRate</code>, so you will not be able to change the speech rate.)</em>
+            </p>
+            <p class="autofocus-current-word" hidden>
+                <input type="checkbox" id="autofocus-current-word" checked>
+                <label for="autofocus-current-word">Auto-focus/auto-scroll</label>
+            </p>
+
+            <noscript>
+                <p class="error"><em><strong>Notice:</strong> You must have JavaScript enabled/available to try this HTML5 Audio read along.</em></p>
+            </noscript>
+
+            <div id="passage-text" class="passage">
+                <h3 class="section-heading">amelia_01_fielding_64kb</h3>
+                <p>﻿<span data-begin="20.819" data-dur="0.610">Amelia</span>, <span data-begin="21.590" data-dur="0.160">by</span> <span data-begin="21.779" data-dur="0.269">Henry</span> <span data-begin="22.049" data-dur="0.550">Fielding</span></p><p>
+<span data-begin="22.600" data-dur="0.650">Book</span> <span data-begin="23.250" data-dur="0.199">I</span>.</p><p>
+<span data-begin="23.449" data-dur="0.650">Chapter</span> <span data-begin="24.100" data-dur="0.520">1</span></p><p>
+<span data-begin="24.619" data-dur="0.030">Containing</span> <span data-begin="24.649" data-dur="0.110">the</span> <span data-begin="24.760" data-dur="0.710">exordium</span>, &<span data-begin="26.319" data-dur="1.410">c</span>.</p><p>
+<span data-begin="27.729" data-dur="0.110">The</span> <span data-begin="27.840" data-dur="0.380">various</span> <span data-begin="28.250" data-dur="0.590">accidents</span> <span data-begin="28.840" data-dur="0.170">which</span> <span data-begin="29.010" data-dur="0.380">befel</span> <span data-begin="29.389" data-dur="0.049">a</span> <span data-begin="29.439" data-dur="0.299">very</span> <span data-begin="29.739" data-dur="0.359">worthy</span> <span data-begin="30.099" data-dur="0.510">couple</span> <span data-begin="30.639" data-dur="0.260">after</span> <span data-begin="30.899" data-dur="0.099">their</span> <span data-begin="31.000" data-dur="0.550">uniting</span> <span data-begin="31.549" data-dur="0.080">in</span> <span data-begin="31.629" data-dur="0.089">the</span> <span data-begin="31.719" data-dur="0.240">state</span> <span data-begin="31.959" data-dur="0.060">of</span> <span data-begin="32.020" data-dur="0.310">matrimony</span> <span data-begin="32.329" data-dur="0.299">will</span> <span data-begin="32.630" data-dur="0.489">be</span> <span data-begin="33.119" data-dur="0.149">the</span> subject of <span data-begin="33.270" data-dur="0.650">the</span> <span data-begin="33.919" data-dur="0.420">following</span> <span data-begin="34.340" data-dur="0.510">history</span>. <span data-begin="35.739" data-dur="0.099">The</span> <span data-begin="35.840" data-dur="0.560">distresses</span> <span data-begin="36.399" data-dur="0.210">which</span> <span data-begin="36.610" data-dur="0.170">they</span> <span data-begin="36.779" data-dur="0.340">waded</span> <span data-begin="37.149" data-dur="0.350">through</span> <span data-begin="37.610" data-dur="0.110">were</span> <span data-begin="37.719" data-dur="0.199">some</span> <span data-begin="37.919" data-dur="0.160">of</span> <span data-begin="38.079" data-dur="0.220">them</span> <span data-begin="38.299" data-dur="0.250">so</span> <span data-begin="38.549" data-dur="0.570">exquisite</span>, <span data-begin="39.500" data-dur="0.149">and</span> <span data-begin="39.649" data-dur="0.089">the</span> <span data-begin="39.779" data-dur="0.550">incidents</span> <span data-begin="40.329" data-dur="0.160">which</span> <span data-begin="40.489" data-dur="0.450">produced</span> <span data-begin="40.939" data-dur="0.210">these</span> <span data-begin="41.149" data-dur="0.229">so</span> <span data-begin="41.379" data-dur="0.789">extraordinary</span>, <span data-begin="42.459" data-dur="0.149">that</span> <span data-begin="42.610" data-dur="0.130">they</span> <span data-begin="42.739" data-dur="0.310">seemed</span> <span data-begin="43.049" data-dur="0.120">to</span> <span data-begin="43.169" data-dur="0.510">require</span> <span data-begin="43.680" data-dur="0.170">not</span> <span data-begin="43.889" data-dur="0.260">only</span> <span data-begin="44.149" data-dur="0.110">the</span> <span data-begin="44.259" data-dur="0.370">utmost</span> <span data-begin="44.629" data-dur="0.489">malice</span>, <span data-begin="45.250" data-dur="0.229">but</span> <span data-begin="45.479" data-dur="0.110">the</span> <span data-begin="45.590" data-dur="0.359">utmost</span> <span data-begin="45.950" data-dur="0.590">invention</span>, <span data-begin="46.809" data-dur="0.160">which</span> <span data-begin="46.969" data-dur="0.680">superstition</span> <span data-begin="47.649" data-dur="0.170">hath</span> <span data-begin="47.879" data-dur="0.269">ever</span> <span data-begin="48.149" data-dur="0.599">attributed</span> <span data-begin="48.799" data-dur="0.140">to</span> <span data-begin="48.939" data-dur="0.539">Fortune</span>: <span data-begin="49.849" data-dur="0.110">though</span> <span data-begin="49.989" data-dur="0.240">whether</span> <span data-begin="50.259" data-dur="0.229">any</span> <span data-begin="50.489" data-dur="0.359">such</span> <span data-begin="50.849" data-dur="0.240">being</span> <span data-begin="51.090" data-dur="0.500">interfered</span> <span data-begin="51.590" data-dur="0.110">in</span> <span data-begin="51.699" data-dur="0.080">the</span> <span data-begin="51.779" data-dur="0.500">case</span>, <span data-begin="52.319" data-dur="0.229">or</span>, <span data-begin="52.549" data-dur="0.620">indeed</span>, <span data-begin="53.369" data-dur="0.260">whether</span> <span data-begin="53.629" data-dur="0.170">there</span> <span data-begin="53.799" data-dur="0.199">be</span> <span data-begin="54.000" data-dur="0.160">any</span> <span data-begin="54.159" data-dur="0.299">such</span> <span data-begin="54.459" data-dur="0.210">being</span> <span data-begin="54.669" data-dur="0.080">in</span> <span data-begin="54.750" data-dur="0.099">the</span> <span data-begin="54.849" data-dur="0.620">universe</span>, <span data-begin="55.539" data-dur="0.130">is</span> <span data-begin="55.669" data-dur="0.070">a</span> <span data-begin="55.739" data-dur="0.299">matter</span> <span data-begin="56.039" data-dur="0.260">which</span> <span data-begin="56.329" data-dur="0.160">I</span> <span data-begin="56.489" data-dur="0.190">by</span> <span data-begin="56.709" data-dur="0.199">no</span> <span data-begin="56.909" data-dur="0.290">means</span> <span data-begin="57.199" data-dur="0.350">presume</span> <span data-begin="57.549" data-dur="0.099">to</span> <span data-begin="57.649" data-dur="0.539">determine</span> <span data-begin="58.219" data-dur="0.160">in</span> <span data-begin="58.379" data-dur="0.060">the</span> <span data-begin="58.439" data-dur="0.450">affirmative</span>. <span data-begin="59.899" data-dur="0.130">To</span> <span data-begin="60.029" data-dur="0.269">speak</span> <span data-begin="60.299" data-dur="0.070">a</span> <span data-begin="60.369" data-dur="0.260">bold</span> <span data-begin="60.629" data-dur="0.429">truth</span>, <span data-begin="61.179" data-dur="0.199">I</span> <span data-begin="61.379" data-dur="0.420">am</span>, <span data-begin="61.980" data-dur="0.340">after</span> <span data-begin="62.320" data-dur="0.359">much</span> <span data-begin="62.779" data-dur="0.410">mature</span> <span data-begin="63.190" data-dur="0.849">deliberation</span>, <span data-begin="64.289" data-dur="0.440">inclined</span> <span data-begin="64.730" data-dur="0.110">to</span> <span data-begin="64.839" data-dur="0.610">suspect</span> <span data-begin="65.480" data-dur="0.120">that</span> <span data-begin="65.600" data-dur="0.089">the</span> <span data-begin="65.690" data-dur="0.359">public</span> <span data-begin="66.049" data-dur="0.290">voice</span> <span data-begin="66.339" data-dur="0.310">hath</span>, <span data-begin="66.799" data-dur="0.170">in</span> <span data-begin="66.969" data-dur="0.170">all</span> <span data-begin="67.139" data-dur="0.510">ages</span>, <span data-begin="67.929" data-dur="0.179">done</span> <span data-begin="68.109" data-dur="0.280">much</span> <span data-begin="68.419" data-dur="0.590">injustice</span> <span data-begin="69.009" data-dur="0.120">to</span> <span data-begin="69.129" data-dur="0.520">Fortune</span>, <span data-begin="69.969" data-dur="0.140">and</span> <span data-begin="70.110" data-dur="0.149">hath</span> <span data-begin="70.259" data-dur="0.500">convicted</span> <span data-begin="70.790" data-dur="0.170">her</span> <span data-begin="70.959" data-dur="0.089">of</span> <span data-begin="71.049" data-dur="0.240">many</span> <span data-begin="71.290" data-dur="0.450">facts</span> <span data-begin="71.739" data-dur="0.060">in</span> <span data-begin="71.799" data-dur="0.190">which</span> <span data-begin="71.989" data-dur="0.120">she</span> <span data-begin="72.110" data-dur="0.160">had</span> <span data-begin="72.299" data-dur="0.240">not</span> <span data-begin="72.539" data-dur="0.110">the</span> <span data-begin="72.649" data-dur="0.290">least</span> <span data-begin="72.940" data-dur="0.580">concern</span>. <span data-begin="74.409" data-dur="0.140">I</span> <span data-begin="74.549" data-dur="0.470">question</span> <span data-begin="75.020" data-dur="0.380">much</span> <span data-begin="75.399" data-dur="0.250">whether</span> <span data-begin="75.649" data-dur="0.110">we</span> <span data-begin="75.759" data-dur="0.220">may</span> <span data-begin="75.979" data-dur="0.380">not</span>, <span data-begin="76.399" data-dur="0.140">by</span> <span data-begin="76.539" data-dur="0.440">natural</span> <span data-begin="76.979" data-dur="0.470">means</span>, <span data-begin="77.749" data-dur="0.299">account</span> <span data-begin="78.049" data-dur="0.089">for</span> <span data-begin="78.139" data-dur="0.070">the</span> <span data-begin="78.209" data-dur="0.560">success</span> <span data-begin="78.770" data-dur="0.110">of</span> <span data-begin="78.879" data-dur="0.520">knaves</span>, <span data-begin="79.600" data-dur="0.080">the</span> <span data-begin="79.679" data-dur="0.520">calamities</span> <span data-begin="80.199" data-dur="0.060">of</span> <span data-begin="80.289" data-dur="0.550">fools</span>, <span data-begin="81.039" data-dur="0.140">with</span> <span data-begin="81.179" data-dur="0.149">all</span> <span data-begin="81.329" data-dur="0.060">the</span> <span data-begin="81.389" data-dur="0.590">miseries</span> <span data-begin="81.979" data-dur="0.089">in</span> <span data-begin="82.069" data-dur="0.210">which</span> <span data-begin="82.280" data-dur="0.190">men</span> <span data-begin="82.469" data-dur="0.110">of</span> <span data-begin="82.579" data-dur="0.240">sense</span> <span data-begin="82.860" data-dur="0.470">sometimes</span> <span data-begin="83.329" data-dur="0.359">involve</span> <span data-begin="83.690" data-dur="0.599">themselves</span>, <span data-begin="84.709" data-dur="0.130">by</span> <span data-begin="84.869" data-dur="0.329">quitting</span> <span data-begin="85.199" data-dur="0.070">the</span> <span data-begin="85.309" data-dur="0.480">directions</span> <span data-begin="85.789" data-dur="0.080">of</span> <span data-begin="85.870" data-dur="0.610">Prudence</span>, <span data-begin="86.819" data-dur="0.190">and</span> <span data-begin="87.009" data-dur="0.429">following</span> <span data-begin="87.440" data-dur="0.080">the</span> <span data-begin="87.519" data-dur="0.370">blind</span> <span data-begin="87.890" data-dur="0.440">guidance</span> <span data-begin="88.329" data-dur="0.110">of</span> <span data-begin="88.440" data-dur="0.110">a</span> <span data-begin="88.550" data-dur="0.500">predominant</span> <span data-begin="89.050" data-dur="0.560">passion</span>; <span data-begin="90.319" data-dur="0.160">in</span> <span data-begin="90.480" data-dur="0.510">short</span>, <span data-begin="91.129" data-dur="0.170">for</span> <span data-begin="91.300" data-dur="0.140">all</span> <span data-begin="91.440" data-dur="0.089">the</span> <span data-begin="91.530" data-dur="0.489">ordinary</span> <span data-begin="92.019" data-dur="0.550">phenomena</span> <span data-begin="92.569" data-dur="0.220">which</span> <span data-begin="92.789" data-dur="0.099">are</span> <span data-begin="92.890" data-dur="0.429">imputed</span> <span data-begin="93.319" data-dur="0.070">to</span> <span data-begin="93.419" data-dur="0.530">Fortune</span>; <span data-begin="94.309" data-dur="0.340">whom</span>, <span data-begin="94.649" data-dur="0.640">perhaps</span>, <span data-begin="95.289" data-dur="0.149">men</span> <span data-begin="95.440" data-dur="0.459">accuse</span> <span data-begin="95.899" data-dur="0.120">with</span> <span data-begin="96.019" data-dur="0.190">no</span> <span data-begin="96.239" data-dur="0.250">less</span> <span data-begin="96.489" data-dur="0.530">absurdity</span> <span data-begin="97.019" data-dur="0.110">in</span> <span data-begin="97.129" data-dur="0.440">life</span>, <span data-begin="97.829" data-dur="0.140">than</span> <span data-begin="97.969" data-dur="0.060">a</span> <span data-begin="98.030" data-dur="0.290">bad</span> <span data-begin="98.359" data-dur="0.350">player</span> <span data-begin="98.710" data-dur="0.390">complains</span> <span data-begin="99.100" data-dur="0.080">of</span> <span data-begin="99.210" data-dur="0.190">ill</span> <span data-begin="99.399" data-dur="0.329">luck</span> <span data-begin="99.759" data-dur="0.099">at</span> <span data-begin="99.859" data-dur="0.080">the</span> <span data-begin="99.940" data-dur="0.170">game</span> <span data-begin="100.109" data-dur="0.099">of</span> <span data-begin="100.210" data-dur="0.590">chess</span>.</p><p>
+<span data-begin="101.719" data-dur="0.199">But</span> <span data-begin="101.919" data-dur="0.060">if</span> <span data-begin="101.979" data-dur="0.199">men</span> <span data-begin="102.179" data-dur="0.060">are</span> <span data-begin="102.239" data-dur="0.530">sometimes</span> <span data-begin="102.769" data-dur="0.390">guilty</span> <span data-begin="103.159" data-dur="0.120">of</span> <span data-begin="103.280" data-dur="0.220">laying</span> <span data-begin="103.499" data-dur="0.420">improper</span> <span data-begin="103.919" data-dur="0.329">blame</span> <span data-begin="104.249" data-dur="0.110">on</span> <span data-begin="104.359" data-dur="0.179">this</span> <span data-begin="104.539" data-dur="0.560">imaginary</span> <span data-begin="105.129" data-dur="0.399">being</span>, <span data-begin="105.879" data-dur="0.149">they</span> <span data-begin="106.030" data-dur="0.089">are</span> <span data-begin="106.120" data-dur="0.489">altogether</span> <span data-begin="106.609" data-dur="0.329">as</span> <span data-begin="106.940" data-dur="0.260">apt</span> <span data-begin="107.199" data-dur="0.199">to</span> <span data-begin="107.399" data-dur="0.269">make</span> <span data-begin="107.669" data-dur="0.149">her</span> <span data-begin="107.819" data-dur="0.500">amends</span> <span data-begin="108.319" data-dur="0.160">by</span> <span data-begin="108.479" data-dur="0.539">ascribing</span> <span data-begin="109.019" data-dur="0.089">to</span> <span data-begin="109.109" data-dur="0.199">her</span> <span data-begin="109.309" data-dur="0.440">honours</span> <span data-begin="109.780" data-dur="0.160">which</span> <span data-begin="109.940" data-dur="0.229">she</span> <span data-begin="110.199" data-dur="0.240">as</span> <span data-begin="110.440" data-dur="0.250">little</span> <span data-begin="110.719" data-dur="0.659">deserves</span>. <span data-begin="112.199" data-dur="0.149">To</span> <span data-begin="112.350" data-dur="0.459">retrieve</span> <span data-begin="112.809" data-dur="0.110">the</span> <span data-begin="112.919" data-dur="0.170">ill</span> <span data-begin="113.089" data-dur="0.780">consequences</span> <span data-begin="113.870" data-dur="0.080">of</span> <span data-begin="113.949" data-dur="0.070">a</span> <span data-begin="114.019" data-dur="0.359">foolish</span> <span data-begin="114.379" data-dur="0.599">conduct</span>, <span data-begin="115.249" data-dur="0.130">and</span> <span data-begin="115.379" data-dur="0.120">by</span> <span data-begin="115.530" data-dur="0.470">struggling</span> <span data-begin="115.999" data-dur="0.520">manfully</span> <span data-begin="116.519" data-dur="0.130">with</span> <span data-begin="116.649" data-dur="0.450">distress</span> <span data-begin="117.100" data-dur="0.110">to</span> <span data-begin="117.209" data-dur="0.370">subdue</span> <span data-begin="117.579" data-dur="0.210">it</span>, <span data-begin="118.140" data-dur="0.190">is</span> <span data-begin="118.329" data-dur="0.130">one</span> <span data-begin="118.460" data-dur="0.080">of</span> <span data-begin="118.539" data-dur="0.110">the</span> <span data-begin="118.649" data-dur="0.450">noblest</span> <span data-begin="119.129" data-dur="0.399">efforts</span> <span data-begin="119.530" data-dur="0.110">of</span> <span data-begin="119.640" data-dur="0.310">wisdom</span> <span data-begin="119.949" data-dur="0.110">and</span> <span data-begin="120.059" data-dur="0.520">virtue</span>. <span data-begin="121.530" data-dur="0.390">Whoever</span>, <span data-begin="121.919" data-dur="0.599">therefore</span>, <span data-begin="122.789" data-dur="0.329">calls</span> <span data-begin="123.119" data-dur="0.220">such</span> <span data-begin="123.339" data-dur="0.030">a</span> <span data-begin="123.369" data-dur="0.269">man</span> <span data-begin="123.640" data-dur="0.570">fortunate</span>, <span data-begin="124.409" data-dur="0.190">is</span> <span data-begin="124.600" data-dur="0.390">guilty</span> <span data-begin="124.989" data-dur="0.140">of</span> <span data-begin="125.129" data-dur="0.160">no</span> <span data-begin="125.289" data-dur="0.299">less</span> <span data-begin="125.589" data-dur="0.799">impropriety</span> <span data-begin="126.390" data-dur="0.110">in</span> <span data-begin="126.500" data-dur="0.539">speech</span> <span data-begin="127.159" data-dur="0.190">than</span> <span data-begin="127.379" data-dur="0.299">he</span> <span data-begin="127.680" data-dur="0.140">would</span> <span data-begin="127.820" data-dur="0.380">be</span> <span data-begin="128.280" data-dur="0.130">who</span> <span data-begin="128.409" data-dur="0.160">should</span> <span data-begin="128.570" data-dur="0.320">call</span> <span data-begin="128.890" data-dur="0.070">the</span> <span data-begin="128.960" data-dur="0.979">statuary</span> <span data-begin="130.079" data-dur="0.149">or</span> <span data-begin="130.229" data-dur="0.110">the</span> <span data-begin="130.339" data-dur="0.359">poet</span> <span data-begin="130.729" data-dur="0.570">fortunate</span> <span data-begin="131.719" data-dur="0.080">who</span> <span data-begin="131.799" data-dur="0.440">carved</span> <span data-begin="132.239" data-dur="0.110">a</span> <span data-begin="132.379" data-dur="0.459">Venus</span> <span data-begin="132.879" data-dur="0.120">or</span> <span data-begin="133.000" data-dur="0.220">who</span> <span data-begin="133.259" data-dur="0.269">writ</span> <span data-begin="133.559" data-dur="0.120">an</span> <span data-begin="133.680" data-dur="0.530">Iliad</span>.</p><p>
+<span data-begin="135.549" data-dur="0.399">Life</span> <span data-begin="135.949" data-dur="0.110">may</span> <span data-begin="136.059" data-dur="0.140">as</span> <span data-begin="136.199" data-dur="0.440">properly</span> <span data-begin="136.639" data-dur="0.130">be</span> <span data-begin="136.769" data-dur="0.370">called</span> <span data-begin="137.139" data-dur="0.070">an</span> <span data-begin="137.239" data-dur="0.370">art</span> <span data-begin="137.609" data-dur="0.089">as</span> <span data-begin="137.699" data-dur="0.190">any</span> <span data-begin="137.889" data-dur="0.350">other</span>; <span data-begin="138.760" data-dur="0.140">and</span> <span data-begin="138.899" data-dur="0.099">the</span> <span data-begin="139.000" data-dur="0.240">great</span> <span data-begin="139.269" data-dur="0.560">incidents</span> <span data-begin="139.859" data-dur="0.130">in</span> <span data-begin="139.989" data-dur="0.229">it</span> <span data-begin="140.279" data-dur="0.099">are</span> <span data-begin="140.380" data-dur="0.229">no</span> <span data-begin="140.609" data-dur="0.290">more</span> <span data-begin="140.899" data-dur="0.110">to</span> <span data-begin="141.039" data-dur="0.099">be</span> <span data-begin="141.139" data-dur="0.480">considered</span> <span data-begin="141.619" data-dur="0.149">as</span> <span data-begin="141.769" data-dur="0.170">mere</span> <span data-begin="141.969" data-dur="0.789">accidents</span> <span data-begin="142.759" data-dur="0.120">than</span> <span data-begin="142.880" data-dur="0.070">the</span> <span data-begin="142.949" data-dur="0.370">several</span> <span data-begin="143.319" data-dur="0.459">members</span> <span data-begin="143.779" data-dur="0.099">of</span> <span data-begin="143.880" data-dur="0.060">a</span> <span data-begin="143.939" data-dur="0.370">fine</span> <span data-begin="144.309" data-dur="0.580">statue</span> <span data-begin="144.920" data-dur="0.149">or</span> <span data-begin="145.069" data-dur="0.060">a</span> <span data-begin="145.129" data-dur="0.299">noble</span> <span data-begin="145.430" data-dur="0.459">poem</span>. <span data-begin="146.770" data-dur="0.120">The</span> <span data-begin="146.889" data-dur="0.429">critics</span> <span data-begin="147.319" data-dur="0.099">in</span> <span data-begin="147.420" data-dur="0.210">all</span> <span data-begin="147.629" data-dur="0.290">these</span> <span data-begin="147.920" data-dur="0.049">are</span> <span data-begin="147.969" data-dur="0.210">not</span> <span data-begin="148.180" data-dur="0.500">content</span> <span data-begin="148.709" data-dur="0.089">with</span> <span data-begin="148.799" data-dur="0.320">seeing</span> <span data-begin="149.119" data-dur="0.440">anything</span> <span data-begin="149.590" data-dur="0.070">to</span> <span data-begin="149.689" data-dur="0.120">be</span> <span data-begin="149.809" data-dur="0.399">great</span> <span data-begin="150.260" data-dur="0.320">without</span> <span data-begin="150.579" data-dur="0.320">knowing</span> <span data-begin="150.899" data-dur="0.320">why</span> <span data-begin="151.219" data-dur="0.210">and</span> <span data-begin="151.430" data-dur="0.130">how</span> <span data-begin="151.639" data-dur="0.070">it</span> <span data-begin="151.709" data-dur="0.220">came</span> <span data-begin="151.930" data-dur="0.099">to</span> <span data-begin="152.029" data-dur="0.190">be</span> <span data-begin="152.219" data-dur="0.420">so</span>. <span data-begin="153.629" data-dur="0.179">By</span> <span data-begin="153.809" data-dur="0.470">examining</span> <span data-begin="154.279" data-dur="0.650">carefully</span> <span data-begin="154.959" data-dur="0.060">the</span> <span data-begin="155.019" data-dur="0.390">several</span> <span data-begin="155.409" data-dur="0.750">gradations</span> <span data-begin="156.159" data-dur="0.170">which</span> <span data-begin="156.329" data-dur="0.590">conduce</span> <span data-begin="156.920" data-dur="0.120">to</span> <span data-begin="157.039" data-dur="0.240">bring</span> <span data-begin="157.349" data-dur="0.250">every</span> <span data-begin="157.599" data-dur="0.320">model</span> <span data-begin="157.920" data-dur="0.130">to</span> <span data-begin="158.049" data-dur="0.690">perfection</span>, <span data-begin="158.969" data-dur="0.140">we</span> <span data-begin="159.109" data-dur="0.210">learn</span> <span data-begin="159.319" data-dur="0.390">truly</span> <span data-begin="159.739" data-dur="0.149">to</span> <span data-begin="159.889" data-dur="0.269">know</span> <span data-begin="160.189" data-dur="0.089">that</span> <span data-begin="160.309" data-dur="0.620">science</span> <span data-begin="160.959" data-dur="0.099">in</span> <span data-begin="161.059" data-dur="0.170">which</span> <span data-begin="161.229" data-dur="0.099">the</span> <span data-begin="161.329" data-dur="0.329">model</span> <span data-begin="161.659" data-dur="0.149">is</span> <span data-begin="161.809" data-dur="0.429">formed</span>: <span data-begin="162.669" data-dur="0.220">as</span> <span data-begin="162.889" data-dur="0.489">histories</span> <span data-begin="163.380" data-dur="0.130">of</span> <span data-begin="163.509" data-dur="0.199">this</span> <span data-begin="163.709" data-dur="0.429">kind</span>, <span data-begin="164.139" data-dur="0.580">therefore</span>, <span data-begin="165.000" data-dur="0.120">may</span> <span data-begin="165.119" data-dur="0.500">properly</span> <span data-begin="165.619" data-dur="0.120">be</span> <span data-begin="165.739" data-dur="0.250">called</span> <span data-begin="165.989" data-dur="0.390">models</span> <span data-begin="166.379" data-dur="0.080">of</span> <span data-begin="166.489" data-dur="0.250">human</span> <span data-begin="166.739" data-dur="0.350">life</span>, <span data-begin="167.500" data-dur="0.539">so</span>, <span data-begin="168.079" data-dur="0.199">by</span> <span data-begin="168.279" data-dur="0.410">observing</span> <span data-begin="168.689" data-dur="0.489">minutely</span> <span data-begin="169.180" data-dur="0.089">the</span> <span data-begin="169.270" data-dur="0.359">several</span> <span data-begin="169.659" data-dur="0.580">incidents</span> <span data-begin="170.459" data-dur="0.210">which</span> <span data-begin="170.669" data-dur="0.269">tend</span> <span data-begin="170.939" data-dur="0.089">to</span> <span data-begin="171.029" data-dur="0.099">the</span> <span data-begin="171.129" data-dur="0.810">catastrophe</span> <span data-begin="172.209" data-dur="0.099">or</span> <span data-begin="172.309" data-dur="0.480">completion</span> <span data-begin="172.790" data-dur="0.070">of</span> <span data-begin="172.860" data-dur="0.060">the</span> <span data-begin="172.919" data-dur="0.459">whole</span>, <span data-begin="173.759" data-dur="0.190">and</span> <span data-begin="173.950" data-dur="0.070">the</span> <span data-begin="174.020" data-dur="0.320">minute</span> <span data-begin="174.340" data-dur="0.539">causes</span> <span data-begin="174.919" data-dur="0.220">whence</span> <span data-begin="175.139" data-dur="0.179">those</span> <span data-begin="175.349" data-dur="0.459">incidents</span> <span data-begin="175.809" data-dur="0.070">are</span> <span data-begin="175.879" data-dur="0.650">produced</span>, <span data-begin="176.860" data-dur="0.130">we</span> <span data-begin="176.989" data-dur="0.260">shall</span> <span data-begin="177.279" data-dur="0.299">best</span> <span data-begin="177.579" data-dur="0.099">be</span> <span data-begin="177.680" data-dur="0.680">instructed</span> <span data-begin="178.409" data-dur="0.140">in</span> <span data-begin="178.549" data-dur="0.199">this</span> <span data-begin="178.750" data-dur="0.210">most</span> <span data-begin="178.959" data-dur="0.359">useful</span> <span data-begin="179.319" data-dur="0.099">of</span> <span data-begin="179.419" data-dur="0.179">all</span> <span data-begin="179.599" data-dur="0.500">arts</span>, <span data-begin="180.360" data-dur="0.120">which</span> <span data-begin="180.509" data-dur="0.210">I</span> <span data-begin="180.719" data-dur="0.390">call</span> <span data-begin="181.199" data-dur="0.120">the</span> <span data-begin="181.349" data-dur="0.280">art</span> <span data-begin="181.669" data-dur="0.089">of</span> <span data-begin="181.789" data-dur="0.290">life</span>.</p>
+            </div>
+
+        </article>
+
+        <footer class="credits">
+            <p>阅读外语经典，了解世界文化，复兴中华文明</p>
+            <p>听语族外语软件工作室出品 湖南长沙 联系人：李涉川 微信 Tingyuzu.</p>
+        </footer>
+
+    </body>
+<script type="text/javascript">
+/**
+ * HTML5 Audio Read-Along
+ * @author Weston Ruter, X-Team
+ * @license MIT/GPL
+ * https://github.com/westonruter/html5-audio-read-along
+ */
+var ReadAlong = {
+    text_element: null,
+    audio_element: null,
+    autofocus_current_word: true,
+
+    words: [],
+
+    init: function (args) {
+        var name;
+        for (name in args) {
+            this[name] = args[name];
+        }
+        this.generateWordList();
+        this.addEventListeners();
+        this.selectCurrentWord();
+    },
+
+    /**
+     * Build an index of all of the words that can be read along with their begin,
+     * and end times, and the DOM element representing the word.
+     */
+    generateWordList: function () {
+        var word_els = this.text_element.querySelectorAll('[data-begin]');
+        this.words = Array.prototype.map.call(word_els, function (word_el, index) {
+            var word = {
+                'begin': parseFloat(word_el.dataset.begin),
+                'dur': parseFloat(word_el.dataset.dur),
+                'element': word_el
+            };
+            word_el.tabIndex = 0; // to make it focusable/interactive
+            word.index = index;
+            word.end = word.begin + word.dur;
+            word_el.dataset.index = word.index;
+            return word;
+        });
+    },
+
+    /**
+     * From the audio's currentTime, find the word that is currently being played
+     * @todo this would better be implemented as a binary search
+     */
+    getCurrentWord: function () {
+        var i;
+        var len;
+        var is_current_word;
+        var word = null;
+        for (i = 0, len = this.words.length; i < len; i += 1) {
+            is_current_word = (
+                (
+                    this.audio_element.currentTime >= this.words[i].begin
+                    &&
+                    this.audio_element.currentTime < this.words[i].end
+                )
+                ||
+                (this.audio_element.currentTime < this.words[i].begin)
+            );
+            if (is_current_word) {
+                word = this.words[i];
+                break;
+            }
+        }
+
+        if (!word) {
+            throw Error('Unable to find current word and we should always be able to.');
+        }
+        return word;
+    },
+
+    _current_end_select_timeout_id: null,
+    _current_next_select_timeout_id: null,
+
+    /**
+     * Select the current word and set timeout to select the next one if playing
+     */
+    selectCurrentWord: function() {
+        var that = this;
+        var current_word = this.getCurrentWord();
+        var is_playing = !this.audio_element.paused;
+
+        if (!current_word.element.classList.contains('speaking')) {
+            this.removeWordSelection();
+            current_word.element.classList.add('speaking');
+            if (this.autofocus_current_word) {
+                current_word.element.focus();
+            }
+        }
+
+        /**
+         * The timeupdate Media event does not fire repeatedly enough to be
+         * able to rely on for updating the selected word (it hovers around
+         * 250ms resolution), so we add a setTimeout with the exact duration
+         * of the word.
+         */
+        if (is_playing) {
+            // Remove word selection when the word ceases to be spoken
+            var seconds_until_this_word_ends = current_word.end - this.audio_element.currentTime; // Note: 'word' not 'world'! ;-)
+            if (typeof this.audio_element === 'number' && !isNaN(this.audio_element)) {
+                seconds_until_this_word_ends *= 1.0/this.audio_element.playbackRate;
+            }
+            clearTimeout(this._current_end_select_timeout_id);
+            this._current_end_select_timeout_id = setTimeout(
+                function () {
+                    if (!that.audio_element.paused) { // we always want to have a word selected while paused
+                        current_word.element.classList.remove('speaking');
+                    }
+                },
+                Math.max(seconds_until_this_word_ends * 1000, 0)
+            );
+
+            // Automatically trigger selectCurrentWord when the next word begins
+            var next_word = this.words[current_word.index + 1];
+            if (next_word) {
+                var seconds_until_next_word_begins = next_word.begin - this.audio_element.currentTime;
+
+                var orig_seconds_until_next_word_begins = seconds_until_next_word_begins; // temp
+                if (typeof this.audio_element === 'number' && !isNaN(this.audio_element)) {
+                    seconds_until_next_word_begins *= 1.0/this.audio_element.playbackRate;
+                }
+                clearTimeout(this._current_next_select_timeout_id);
+                this._current_next_select_timeout_id = setTimeout(
+                    function () {
+                        that.selectCurrentWord();
+                    },
+                    Math.max(seconds_until_next_word_begins * 1000, 0)
+                );
+            }
+        }
+
+    },
+
+    removeWordSelection: function() {
+        // There should only be one element with .speaking, but selecting all for good measure
+        var spoken_word_els = this.text_element.querySelectorAll('span[data-begin].speaking');
+        Array.prototype.forEach.call(spoken_word_els, function (spoken_word_el) {
+            spoken_word_el.classList.remove('speaking');
+        });
+    },
+
+
+    addEventListeners: function () {
+        var that = this;
+
+        /**
+         * Select next word (at that.audio_element.currentTime) when playing begins
+         */
+        that.audio_element.addEventListener('play', function (e) {
+            that.selectCurrentWord();
+            that.text_element.classList.add('speaking');
+        }, false);
+
+        /**
+         * Abandon seeking the next word because we're paused
+         */
+        that.audio_element.addEventListener('pause', function (e) {
+            that.selectCurrentWord(); // We always want a word to be selected
+            that.text_element.classList.remove('speaking');
+        }, false);
+
+        /**
+         * Seek by selecting a word (event delegation)
+         */
+        function on_select_word_el(e) {
+            if (!e.target.dataset.begin) {
+                return;
+            }
+            e.preventDefault();
+
+            var i = e.target.dataset.index;
+            that.audio_element.currentTime = that.words[i].begin + 0.01; //Note: times apparently cannot be exactly set and sometimes select too early
+            that.selectCurrentWord();
+        }
+        that.text_element.addEventListener('click', on_select_word_el, false);
+        that.text_element.addEventListener('keypress', function (e) {
+            if ( (e.charCode || e.keyCode) === 13 /*Enter*/) {
+                on_select_word_el.call(this, e);
+            }
+        }, false);
+
+        /**
+         * Spacebar toggles playback
+         */
+        document.addEventListener('keypress', function (e) {
+            if ( (e.charCode || e.keyCode) === 32 /*Space*/) {
+                e.preventDefault();
+                if (that.audio_element.paused) {
+                    that.audio_element.play();
+                }
+                else {
+                    that.audio_element.pause();
+                }
+            }
+        }, false);
+
+        /**
+         * First click handler sets currentTime to the word, and second click
+         * here then causes it to play.
+         * @todo Should it stop playing once the duration is over?
+         */
+        that.text_element.addEventListener('dblclick', function (e) {
+            e.preventDefault();
+            that.audio_element.play();
+        }, false);
+
+        /**
+         * Select a word when seeking
+         */
+        that.audio_element.addEventListener('seeked', function (e) {
+            that.selectCurrentWord();
+
+            /**
+             * Address probem with Chrome where sometimes it seems to get stuck upon seeked:
+             * http://code.google.com/p/chromium/issues/detail?id=99749
+             */
+            var audio_element = this;
+            if (!audio_element.paused) {
+                var previousTime = audio_element.currentTime;
+                setTimeout(function () {
+                    if (!audio_element.paused && previousTime === audio_element.currentTime) {
+                        audio_element.currentTime += 0.01; // Attempt to unstick
+                    }
+                }, 500);
+            }
+        }, false);
+
+        /**
+         * Select a word when seeking
+         */
+        that.audio_element.addEventListener('ratechange', function (e) {
+            that.selectCurrentWord();
+        }, false);
+    }
+};
+</script>
+<script type="text/javascript">
+/*global ReadAlong */
+window.addEventListener('load', function (e) {
+    try {
+        var args = {
+            text_element: document.getElementById('passage-text'),
+            audio_element: document.getElementById('passage-audio'),
+            autofocus_current_word: document.getElementById('autofocus-current-word').checked
+        };
+
+        if (!args.audio_element.canPlayType) {
+            // No error messaging is needed because error message appears in <audio> fallback
+            throw new Error('HTML5 Audio not supported');
+        }
+        if (args.audio_element.networkState === args.audio_element.NETWORK_NO_SOURCE) {
+            document.querySelector('.passage-audio-unavailable').hidden = false;
+            throw new Error('Cannot play any of the available sources');
+        }
+
+        var supports_playback_rate = (function (audio) {
+            if (typeof audio.playbackRate !== 'number' || isNaN(audio.playbackRate)) {
+                return false;
+            }
+
+            // For Opera, since it doesn't currently support playbackRate and yet
+            // has it defined as 1.0, we can detect Opera support by changing
+            // the playbackRate and see if the change sticks.
+            var original_playback_rate = audio.playbackRate;
+            audio.playbackRate += 1.0;
+            var is_playback_rate_changed = (original_playback_rate !== audio.playbackRate);
+            audio.playbackRate = original_playback_rate;
+            return is_playback_rate_changed;
+        }(args.audio_element));
+
+        if (supports_playback_rate) {
+            var rate_range_element = document.getElementById('playback-rate');
+            rate_range_element.disabled = false;
+            rate_range_element.addEventListener('change', function (e) {
+                args.audio_element.playbackRate = this.valueAsNumber;
+            }, false);
+        }
+        else {
+            document.querySelector('.playback-rate-unavailable').hidden = false;
+        }
+
+        ReadAlong.init(args);
+
+        document.getElementById('autofocus-current-word').addEventListener('change', function (e) {
+            ReadAlong.autofocus_current_word = this.checked;
+        }, false);
+
+        document.querySelector('.passage-audio').hidden = false;
+        if (supports_playback_rate) {
+            document.querySelector('.playback-rate').hidden = false;
+        }
+        document.querySelector('.autofocus-current-word').hidden = false;
+    }
+    catch (err) {
+        console.error(err);
+    }
+    document.body.classList.add('initialized');
+    document.querySelector('.loading').hidden = true;
+}, false);
+</script>
+</html>
